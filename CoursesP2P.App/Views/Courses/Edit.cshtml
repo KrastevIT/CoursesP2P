@@ -1,0 +1,36 @@
+﻿@model CourseEditViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col mt-3">
+            <div class="card bg-light text-center" style="width: 18rem;">
+                <form asp-controller="Courses" asp-action="Edit" method="post">
+                    <img class="card-img-top" src="@Model.Image" alt="Card image cap" style="width:286px;height:180px;">
+                    <div class="card-body">
+                        <h5>Name</h5>
+                        <input class="form-control" asp-for="@Model.Name" />
+                        <h5>Description</h5>
+                        <input class="form-control" asp-for="@Model.Description" />
+                        <h5>Price</h5>
+                        <input class="form-control" asp-for="@Model.Price" />
+                        <h5>Category</h5>
+                        <select asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()" class="form-control"></select>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-push-2">
+                                <input type="submit" value="Update" class="btn btn-success" />
+                                <a asp-controller="Lecturers" asp-action="Index" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

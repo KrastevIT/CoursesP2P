@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200107135354_updateId.cs" />
+    <Compile Remove="Migrations\20200107135354_updateId.Designer.cs" />
+    <Compile Remove="Migrations\20200107140042_updateId.cs" />
+    <Compile Remove="Migrations\20200107140042_updateId.Designer.cs" />
+    <Compile Remove="Migrations\20200107150747_InitialCoursesP2P.cs" />
+    <Compile Remove="Migrations\20200107150747_InitialCoursesP2P.Designer.cs" />
+    <Compile Remove="Migrations\20200107151053_InitialCoursesP2P.cs" />
+    <Compile Remove="Migrations\20200107151053_InitialCoursesP2P.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoursesP2P.Models\CoursesP2P.Models.csproj" />
+  </ItemGroup>
+
+</Project>

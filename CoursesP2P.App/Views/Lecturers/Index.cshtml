@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CourseViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container">
+    <a asp-controller="Courses" asp-action="Create" class="btn btn-success btn-lg">Create new course</a>
+
+    @if (!Model.Any())
+    {
+        <h2>Not Found Courses</h2>
+        return;
+    }
+
+    <div class="row mt-3">
+        @foreach (var course in Model)
+        {
+            <div class="col mt-3">
+                <div class="card bg-light text-center" style="width: 18rem;">
+                    <img class="card-img-top" src="@course.Image" alt="Card image cap" style="width:286px;height:180px;">
+                    <div class="card-body">
+                        <h5 class="card-title">@course.Name</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Lectures 0</li>
+                        <li class="list-group-item">@course.Category</li>
+                        <li class="list-group-item">@course.Price $</li>
+                    </ul>
+                    <div class="card-body">
+                        <a asp-controller="Courses" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-secondary">Edit</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

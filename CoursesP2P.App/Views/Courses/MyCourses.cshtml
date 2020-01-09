@@ -1,0 +1,28 @@
+﻿@model IEnumerable<CourseViewModel>
+@{
+    ViewData["Title"] = "MyCourses";
+}
+
+<h1>My Enrolled Courses</h1>
+
+
+<div class="container">
+    <div class="row mt-3">
+        @foreach (var course in Model)
+        {
+            <div class="col mt-3">
+                <div class="card bg-light text-center" style="width: 18rem;">
+                    <img class="card-img-top" src="@course.Image" alt="Card image cap" style="width:286px;height:180px;">
+                    <div class="card-body">
+                        <h5 class="card-title">@course.Name</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        @*<li class="list-group-item">by @course.LecturerFullName</li>*@
+                        <li class="list-group-item">@course.Category</li>
+                        <li class="list-group-item">Lectures 0</li>
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+</div>
