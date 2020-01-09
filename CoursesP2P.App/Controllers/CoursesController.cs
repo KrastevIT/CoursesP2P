@@ -103,21 +103,31 @@ namespace CoursesP2P.App.Controllers
         {
             var student = await this.userManager.GetUserAsync(this.User);
 
-            var courses = student.EnrolledCourses.Select(x => x.Course).ToList();
+            var studenCourses =  this.coursesP2PDbContext.StudentCourses.Where(x => x.StudentId == student.Id).ToList();
+
+            //foreach (var course in studenCourses)
+            //{
+            //    var model = new CourseViewModel()
+            //    {
+            //        Name = course.Name,
+            //        Category = course,
+            //        Image = course.Image
+            //    };
+            //}
 
             var models = new List<CourseViewModel>();
 
-            foreach (var course in courses)
-            {
-                var model = new CourseViewModel()
-                {
-                    Name = course.Name,
-                    Category = course.Category,
-                    Image = course.Image
-                };
+            //foreach (var course in courses)
+            //{
+            //    var model = new CourseViewModel()
+            //    {
+            //        Name = course.Name,
+            //        Category = course.Category,
+            //        Image = course.Image
+            //    };
 
-                models.Add(model);
-            }
+            //    models.Add(model);
+            //}
 
             return View(models);
         }
@@ -125,8 +135,13 @@ namespace CoursesP2P.App.Controllers
         public async Task<IActionResult> Add(int id)
         {
             var course = this.coursesP2PDbContext.Courses.Find(id);
+            if (course.Id == id)
+            {
+                return RedirectToActionPermanentPreserveMethod("Index", "Home");
+            }
 
-            var lecturer = course.Lecturer.FirstName;
+            //DOTO
+            // var lecturer = course.Lecturer.FirstName;
 
             var student = await this.userManager.GetUserAsync(this.User);
 
@@ -138,9 +153,9 @@ namespace CoursesP2P.App.Controllers
                 StudentId = student.Id
             };
 
-            student.EnrolledCourses.Add(studentCourse);
+            course.Students.Add(studentCourse);
 
-            this.coursesP2PDbContext.Users.Update(student);
+            student.EnrolledCourses.Add(studentCourse);
 
             this.coursesP2PDbContext.SaveChanges();
 
