@@ -105,6 +105,7 @@ namespace CoursesP2P.App.Controllers
 
             var studenCourses =  this.coursesP2PDbContext.StudentCourses.Where(x => x.StudentId == student.Id).ToList();
 
+
             //foreach (var course in studenCourses)
             //{
             //    var model = new CourseViewModel()
