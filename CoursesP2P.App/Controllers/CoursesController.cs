@@ -107,29 +107,19 @@ namespace CoursesP2P.App.Controllers
 
             var courses = this.coursesP2PDbContext.Courses.Where(x => coursesId.Contains(x.Id)).ToList();
 
-            //foreach (var course in studenCourses)
-            //{
-            //    var model = new CourseViewModel()
-            //    {
-            //        Name = course.,
-            //        Category = course,
-            //        Image = course.Image
-            //    };
-            //}
-
             var models = new List<CourseViewModel>();
 
-            //foreach (var course in courses)
-            //{
-            //    var model = new CourseViewModel()
-            //    {
-            //        Name = course.Name,
-            //        Category = course.Category,
-            //        Image = course.Image
-            //    };
+            foreach (var course in courses)
+            {
+                var model = new CourseViewModel()
+                {
+                    Name = course.Name,
+                    Category = course.Category,
+                    Image = course.Image
+                };
 
-            //    models.Add(model);
-            //}
+                models.Add(model);
+            }
 
             return View(models);
         }
@@ -143,13 +133,12 @@ namespace CoursesP2P.App.Controllers
 
             var student = await this.userManager.GetUserAsync(this.User);
 
-            var studentCourse = new StudentCourse
+            student.EnrolledCourses.Add(new StudentCourse
             {
-                CourseId = course.Id,
-                StudentId = student.Id
-            };
+                Course = course
+            });
 
-            this.coursesP2PDbContext.StudentCourses.Add(studentCourse);
+            this.coursesP2PDbContext.Users.Update(student);
 
             this.coursesP2PDbContext.SaveChanges();
 
