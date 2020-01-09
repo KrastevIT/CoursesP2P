@@ -136,10 +136,6 @@ namespace CoursesP2P.App.Controllers
         public async Task<IActionResult> Add(int id)
         {
             var course = this.coursesP2PDbContext.Courses.Find(id);
-            if (course.Id == id)
-            {
-                return RedirectToActionPermanentPreserveMethod("Index", "Home");
-            }
 
             //DOTO
             // var lecturer = course.Lecturer.FirstName;
@@ -148,15 +144,11 @@ namespace CoursesP2P.App.Controllers
 
             var studentCourse = new StudentCourse
             {
-                Course = course,
                 CourseId = course.Id,
-                Student = student,
                 StudentId = student.Id
             };
 
-            course.Students.Add(studentCourse);
-
-            student.EnrolledCourses.Add(studentCourse);
+            this.coursesP2PDbContext.StudentCourses.Add(studentCourse);
 
             this.coursesP2PDbContext.SaveChanges();
 
