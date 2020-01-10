@@ -32,13 +32,13 @@ namespace CoursesP2P.App.Controllers
 
             foreach (var course in courses)
             {
-                var lecturer = this.coursesP2PDbContext.Users.Where(x => x.Id == course.LecturerId).FirstOrDefault();
+                var instructor = this.coursesP2PDbContext.Users.FirstOrDefault(x => x.Id == course.InstructorId);
 
                 var model = new CourseViewModel
                 {
                     Id = course.Id,
                     Name = course.Name,
-                    LecturerFullName = lecturer.FirstName + ' ' + lecturer.LastName,
+                    LecturerFullName = instructor.FirstName + ' ' + instructor.LastName,
                     Price = course.Price,
                     Category = course.Category,
                     Image = course.Image

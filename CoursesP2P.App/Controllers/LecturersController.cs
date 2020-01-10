@@ -26,7 +26,7 @@ namespace CoursesP2P.App.Controllers
         {
             var lecturer = await this.userManager.GetUserAsync(this.User);
 
-            var courses = coursesP2PDbContext.Courses.Where(x => x.LecturerId == lecturer.Id).ToList();
+            var courses = coursesP2PDbContext.Courses.Where(x => x.InstructorId == lecturer.Id).ToList();
 
             var models = new List<CourseViewModel>();
 

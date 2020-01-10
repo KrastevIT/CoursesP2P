@@ -11,6 +11,10 @@ namespace CoursesP2P.Data
         {
         }
 
+        public DbSet<Instructor> Instructors { get; set; }
+
+        public DbSet<Student> Students { get; set; }
+
         public DbSet<Course> Courses { get; set; }
 
         public DbSet<Lecture> Lectures { get; set; }
@@ -38,18 +42,11 @@ namespace CoursesP2P.Data
             builder.Entity<Course>(course =>
             {
                 course
-                .HasOne(c => c.Lecturer)
-                .WithMany(l => l.CreatedCourses)
-                .HasForeignKey(c => c.LecturerId);
+                .HasOne(c => c.Instructor)
+                .WithMany(i => i.Courses)
+                .HasForeignKey(c => c.InstructorId);
             });
 
-            builder.Entity<Lecture>(lecture =>
-            {
-                lecture
-                .HasOne(l => l.Course)
-                .WithMany(c => c.Lectures)
-                .HasForeignKey(l => l.CourseId);
-            });
 
             base.OnModelCreating(builder);
         }

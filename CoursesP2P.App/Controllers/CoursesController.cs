@@ -54,7 +54,7 @@ namespace CoursesP2P.App.Controllers
                 Price = model.Price,
                 Category = model.Category,
                 Image = dbPath,
-                Lecturer = user,
+                InstructorId = user.Id,
             };
 
             coursesP2PDbContext.Courses.Add(course);
@@ -138,12 +138,13 @@ namespace CoursesP2P.App.Controllers
 
             var student = await this.userManager.GetUserAsync(this.User);
 
-            student.EnrolledCourses.Add(new StudentCourse
+            var studentCourse = new StudentCourse 
             {
-                Course = course
-            });
+                StudentId = student.Id,
+                CourseId = course.Id
+            };
 
-            this.coursesP2PDbContext.Users.Update(student);
+            this.coursesP2PDbContext.StudentCourses.Add(studentCourse);
 
             this.coursesP2PDbContext.SaveChanges();
 
