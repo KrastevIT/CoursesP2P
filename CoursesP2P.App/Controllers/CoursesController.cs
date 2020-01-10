@@ -33,6 +33,10 @@ namespace CoursesP2P.App.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCourseBindingModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Create");
+            }
 
             var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
 

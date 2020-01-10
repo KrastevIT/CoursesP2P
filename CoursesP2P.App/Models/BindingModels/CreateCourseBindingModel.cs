@@ -1,5 +1,4 @@
-﻿using CoursesP2P.Models;
-using CoursesP2P.Models.Enum;
+﻿using CoursesP2P.Models.Enum;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -9,13 +8,15 @@ namespace CoursesP2P.App.Models.BindingModels
     public class CreateCourseBindingModel
     {
         [Required]
+        [MinLength(1)]
+        [MaxLength(50)]
         public string Name { get; set; }
 
         [Required]
         public string Description { get; set; }
 
         [Required]
-        [Range(typeof(decimal), "0", "79228162514264337593543950335")]
+        [Range(0, 5000.00, ErrorMessage = "Invalid Target Price; Max 5000.00")]
         public decimal Price { get; set; }
 
         [Required]
