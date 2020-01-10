@@ -2,7 +2,7 @@
 
 namespace CoursesP2P.App.Models.ViewModels
 {
-    public class CourseViewModel
+    public class CourseInstructorViewModel
     {
         public int Id { get; set; }
 
@@ -13,8 +13,5 @@ namespace CoursesP2P.App.Models.ViewModels
         public Category Category { get; set; }
 
         public string Image { get; set; }
-
-        public string InstructorFullName { get; set; }
-
     }
 }

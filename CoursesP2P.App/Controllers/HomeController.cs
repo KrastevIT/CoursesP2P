@@ -1,8 +1,6 @@
 ﻿using CoursesP2P.App.Models;
 using CoursesP2P.App.Models.ViewModels;
 using CoursesP2P.Data;
-using CoursesP2P.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -32,13 +30,11 @@ namespace CoursesP2P.App.Controllers
 
             foreach (var course in courses)
             {
-                var instructor = this.coursesP2PDbContext.Users.FirstOrDefault(x => x.Id == course.InstructorId);
-
                 var model = new CourseViewModel
                 {
                     Id = course.Id,
                     Name = course.Name,
-                    InstructorFullName = instructor.FirstName + ' ' + instructor.LastName,
+                    InstructorFullName = course.InstructorFullName,
                     Price = course.Price,
                     Category = course.Category,
                     Image = course.Image

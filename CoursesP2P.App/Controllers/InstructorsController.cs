@@ -24,19 +24,18 @@ namespace CoursesP2P.App.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var lecturer = await this.userManager.GetUserAsync(this.User);
+            var instructor = await this.userManager.GetUserAsync(this.User);
 
-            var courses = coursesP2PDbContext.Courses.Where(x => x.InstructorId == lecturer.Id).ToList();
+            var courses = coursesP2PDbContext.Courses.Where(x => x.InstructorId == instructor.Id).ToList();
 
-            var models = new List<CourseViewModel>();
+            var models = new List<CourseInstructorViewModel>();
 
             foreach (var course in courses)
             {
-                var model = new CourseViewModel
+                var model = new CourseInstructorViewModel
                 {
                     Id = course.Id,
                     Name = course.Name,
-                    InstructorFullName = lecturer.FirstName + ' ' + lecturer.LastName,
                     Price = course.Price,
                     Category = course.Category,
                     Image = course.Image
