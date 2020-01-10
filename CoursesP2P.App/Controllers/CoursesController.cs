@@ -143,8 +143,12 @@ namespace CoursesP2P.App.Controllers
         {
             var course = this.coursesP2PDbContext.Courses.Find(id);
 
+            var instructor = await this.userManager.GetUserAsync(this.User);
+
+            var isCreatedCourseFromCurrentInstructor = course.InstructorId == instructor.Id;
+
             var exists = this.coursesP2PDbContext.StudentCourses.Any(x => x.CourseId == id);
-            if (exists)
+            if (exists || isCreatedCourseFromCurrentInstructor)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -162,6 +166,23 @@ namespace CoursesP2P.App.Controllers
             this.coursesP2PDbContext.SaveChanges();
 
             return RedirectToAction("MyCourses");
+        }
+
+        public IActionResult Details(int id)
+        {
+            var course = this.coursesP2PDbContext.Courses.Find(id);
+
+            var model = new CourseDetailsViewModel
+            {
+                Id = course.Id,
+                Name = course.Name,
+                Description = course.Description,
+                Price = course.Price,
+                Category = course.Category,
+                Image = course.Image
+            };
+
+            return View(model);
         }
     }
 }

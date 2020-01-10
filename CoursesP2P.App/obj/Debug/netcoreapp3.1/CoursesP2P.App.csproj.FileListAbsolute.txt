@@ -150,3 +150,4 @@ C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\D
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\CoursesP2P.App.dll
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\CoursesP2P.App.pdb
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\Razor\Views\Instructors\Index.cshtml.g.cs
+C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\Razor\Views\Courses\Details.cshtml.g.cs
