@@ -8,17 +8,25 @@ namespace CoursesP2P.Models
     {
         public int Id { get; set; }
 
+        [Required]
+        [MinLength(1)]
+        [MaxLength(50)]
         public string Name { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
-        [Range(typeof(decimal), "0", "79228162514264337593543950335")]
+        [Required]
+        [Range(0, 5000.00, ErrorMessage = "Invalid Target Price; Max 5000.00")]
         public decimal Price { get; set; }
 
+        [Required]
         public Category Category { get; set; }
 
+        [Required]
         public string Image { get; set; }
 
+        [Required]
         public string InstructorFullName { get; set; }
 
         public string InstructorId { get; set; }
