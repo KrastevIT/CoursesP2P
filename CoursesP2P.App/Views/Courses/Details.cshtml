@@ -16,7 +16,9 @@
     <div class="row">
 
         <div class="col-md-8">
-            <img class="img-fluid" src="@Model.Image" alt="">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
+            </div>
         </div>
 
         <div class="col-md-4">
@@ -29,8 +31,8 @@
                 <li>Consectetur</li>
                 <li>Adipiscing Elit</li>
             </ul>
-            <div>
-                <a asp-controller="Courses" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-success btn-lg">Buy</a>
+            <div class="text-lg-center">
+                <a asp-controller="Courses" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-lg">Buy</a>
             </div>
         </div>
 
@@ -75,13 +77,11 @@
     </div>*@
 
 
-<div class="w-50 p-3">
-    <div class="video-container">
-        <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
-        </div>
-    </div>
-</div>
+
+
+   
+
+
 
 
 
