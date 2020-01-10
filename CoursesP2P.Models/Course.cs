@@ -19,6 +19,8 @@ namespace CoursesP2P.Models
 
         public string Image { get; set; }
 
+        public string InstructorFullName { get; set; }
+
         public string InstructorId { get; set; }
 
         public Instructor Instructor { get; set; }

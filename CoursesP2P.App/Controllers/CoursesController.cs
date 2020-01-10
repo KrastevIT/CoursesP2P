@@ -54,6 +54,7 @@ namespace CoursesP2P.App.Controllers
                 Price = model.Price,
                 Category = model.Category,
                 Image = dbPath,
+                InstructorFullName = user.FirstName + ' ' + user.LastName,
                 InstructorId = user.Id,
             };
 
@@ -103,10 +104,6 @@ namespace CoursesP2P.App.Controllers
         {
             var student = await this.userManager.GetUserAsync(this.User);
 
-           // var coursesId = this.coursesP2PDbContext.StudentCourses.Where(x => x.StudentId == student.Id).Select(x => x.CourseId).ToList();
-
-           // var courses1 = this.coursesP2PDbContext.Courses.Where(x => coursesId.Contains(x.Id)).ToList();
-
             var courses = this.coursesP2PDbContext.StudentCourses
                 .Where(sc => sc.StudentId == student.Id)
                 .Select(c => c.Course)
@@ -120,7 +117,8 @@ namespace CoursesP2P.App.Controllers
                 {
                     Name = course.Name,
                     Category = course.Category,
-                    Image = course.Image
+                    Image = course.Image,
+                    LecturerFullName = course.InstructorFullName
                 };
 
                 models.Add(model);
@@ -138,7 +136,7 @@ namespace CoursesP2P.App.Controllers
 
             var student = await this.userManager.GetUserAsync(this.User);
 
-            var studentCourse = new StudentCourse 
+            var studentCourse = new StudentCourse
             {
                 StudentId = student.Id,
                 CourseId = course.Id
