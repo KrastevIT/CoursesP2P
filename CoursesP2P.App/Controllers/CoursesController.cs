@@ -118,7 +118,7 @@ namespace CoursesP2P.App.Controllers
                     Name = course.Name,
                     Category = course.Category,
                     Image = course.Image,
-                    LecturerFullName = course.InstructorFullName
+                    InstructorFullName = course.InstructorFullName
                 };
 
                 models.Add(model);

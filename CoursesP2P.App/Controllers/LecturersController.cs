@@ -36,7 +36,7 @@ namespace CoursesP2P.App.Controllers
                 {
                     Id = course.Id,
                     Name = course.Name,
-                    LecturerFullName = lecturer.FirstName + ' ' + lecturer.LastName,
+                    InstructorFullName = lecturer.FirstName + ' ' + lecturer.LastName,
                     Price = course.Price,
                     Category = course.Category,
                     Image = course.Image
