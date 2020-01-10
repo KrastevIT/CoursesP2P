@@ -5,7 +5,6 @@
 
 <h1>Create</h1>
 
-
 <form enctype="multipart/form-data" asp-controller="Courses" asp-action="Create" method="post" class="form-horizontal">
     <div class="form-group">
         <label class="control-label col-sm-2" asp-for="Name"></label>
@@ -52,7 +51,9 @@
     </div>
 </form>
 
-
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 
 
 
