@@ -137,7 +137,6 @@ C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\D
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\Razor\Views\Courses\Edit.cshtml.g.cs
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\Razor\Views\Courses\MyCourses.cshtml.g.cs
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\Razor\Views\Lecturers\Index.cshtml.g.cs
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
@@ -150,3 +149,4 @@ C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\D
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\CoursesP2P.App.csproj.CopyComplete
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\CoursesP2P.App.dll
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\CoursesP2P.App.pdb
+C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.App\obj\Debug\netcoreapp3.1\Razor\Views\Instructors\Index.cshtml.g.cs

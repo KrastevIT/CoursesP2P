@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace CoursesP2P.App.Controllers
 {
-    public class LecturersController : Controller
+    public class InstructorsController : Controller
     {
         private readonly CoursesP2PDbContext coursesP2PDbContext;
         private readonly UserManager<User> userManager;
 
-        public LecturersController(CoursesP2PDbContext coursesP2PDbContext, UserManager<User> userManager)
+        public InstructorsController(CoursesP2PDbContext coursesP2PDbContext, UserManager<User> userManager)
         {
             this.coursesP2PDbContext = coursesP2PDbContext;
             this.userManager = userManager;
