@@ -46,12 +46,23 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Required]
+            [MinLength(2)]
+            [MaxLength(50)]
             public string FirstName { get; set; }
 
+            [Required]
+            [MinLength(2)]
+            [MaxLength(50)]
             public string LastName { get; set; }
 
+            [Required]
+            [Range(0, 120)]
             public int Age { get; set; }
 
+            [Required]
+            [MinLength(2)]
+            [MaxLength(50)]
             public string City { get; set; }
 
             [Required]
