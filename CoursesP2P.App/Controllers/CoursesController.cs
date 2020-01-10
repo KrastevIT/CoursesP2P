@@ -127,12 +127,16 @@ namespace CoursesP2P.App.Controllers
             return View(models);
         }
 
+        [Authorize]
         public async Task<IActionResult> Add(int id)
         {
             var course = this.coursesP2PDbContext.Courses.Find(id);
 
-            //DOTO
-            // var lecturer = course.Lecturer.FirstName;
+            var exists = this.coursesP2PDbContext.StudentCourses.Any(x => x.CourseId == id);
+            if (exists)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             var student = await this.userManager.GetUserAsync(this.User);
 
