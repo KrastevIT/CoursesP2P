@@ -13,6 +13,7 @@
     <Compile Remove="Migrations\20200107150747_InitialCoursesP2P.Designer.cs" />
     <Compile Remove="Migrations\20200107151053_InitialCoursesP2P.cs" />
     <Compile Remove="Migrations\20200107151053_InitialCoursesP2P.Designer.cs" />
+    <Compile Remove="Migrations\20200110095719_Initial.cs" />
   </ItemGroup>
 
   <ItemGroup>

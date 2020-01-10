@@ -105,7 +105,12 @@ namespace CoursesP2P.App.Controllers
 
             var coursesId = this.coursesP2PDbContext.StudentCourses.Where(x => x.StudentId == student.Id).Select(x => x.CourseId).ToList();
 
-            var courses = this.coursesP2PDbContext.Courses.Where(x => coursesId.Contains(x.Id)).ToList();
+            var courses1 = this.coursesP2PDbContext.Courses.Where(x => coursesId.Contains(x.Id)).ToList();
+
+            var courses = this.coursesP2PDbContext.StudentCourses
+                .Where(sc => sc.StudentId == student.Id)
+                .Select(c => c.Course)
+                .ToList();
 
             var models = new List<CourseViewModel>();
 

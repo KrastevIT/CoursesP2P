@@ -2670,10 +2670,7 @@
         },
         "runtime": {
           "bin/placeholder/CoursesP2P.Data.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       },
       "CoursesP2P.Models/1.0.0": {
         "type": "project",
@@ -2687,10 +2684,7 @@
         },
         "runtime": {
           "bin/placeholder/CoursesP2P.Models.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
+        }
       }
     }
   },
