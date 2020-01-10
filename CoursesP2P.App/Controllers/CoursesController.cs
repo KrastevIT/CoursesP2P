@@ -42,6 +42,13 @@ namespace CoursesP2P.App.Controllers
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/Images", fileName);
 
+            bool exists = System.IO.Directory.Exists("wwwroot/Images");
+
+            if (!exists)
+            {
+                Directory.CreateDirectory("wwwroot/Images");
+            }
+
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await model.Image.CopyToAsync(stream);
@@ -65,7 +72,7 @@ namespace CoursesP2P.App.Controllers
             coursesP2PDbContext.Courses.Add(course);
             coursesP2PDbContext.SaveChanges();
 
-            return RedirectToActionPermanentPreserveMethod("Index", "Lecturers");
+            return RedirectToAction("Index", "Instructors");
         }
 
         public IActionResult Edit(int id)
