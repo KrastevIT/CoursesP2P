@@ -19,11 +19,9 @@ namespace CoursesP2P.Models
 
         public string Image { get; set; }
 
-        public string LecturerId { get; set; }
+        public string InstructorId { get; set; }
 
-        public User Lecturer { get; set; }
-
-        public ICollection<Lecture> Lectures { get; set; } = new HashSet<Lecture>();
+        public Instructor Instructor { get; set; }
 
         public ICollection<StudentCourse> Students { get; set; } = new HashSet<StudentCourse>();
     }

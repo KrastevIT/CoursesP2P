@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
 
 namespace CoursesP2P.Models
 {
@@ -12,9 +11,5 @@ namespace CoursesP2P.Models
         public int Age { get; set; }
 
         public string City { get; set; }
-
-        public ICollection<StudentCourse> EnrolledCourses { get; set; } = new HashSet<StudentCourse>();
-
-        public ICollection<Course> CreatedCourses { get; set; } = new HashSet<Course>();
     }
 }
