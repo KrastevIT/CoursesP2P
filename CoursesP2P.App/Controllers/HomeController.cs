@@ -30,6 +30,8 @@ namespace CoursesP2P.App.Controllers
 
             foreach (var course in courses)
             {
+                var nameLength = course.Name.Substring(0, course.Name.Length + 46);
+
                 var model = new CourseViewModel
                 {
                     Id = course.Id,
