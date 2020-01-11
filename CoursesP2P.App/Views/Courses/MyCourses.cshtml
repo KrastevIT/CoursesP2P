@@ -3,25 +3,30 @@
     ViewData["Title"] = "MyCourses";
 }
 
-<h1>My Enrolled Courses</h1>
+<h1 class="text-center">My Enrolled Courses</h1>
 
+
+<br />
 
 <div class="container">
-    <div class="row mt-3">
+    <div class="row">
         @foreach (var course in Model)
         {
-            <div class="col mt-3">
-                <div class="card bg-light text-center" style="width: 18rem;">
-                    <img class="card-img-top" src="@course.Image" alt="Card image cap" style="width:286px;height:180px;">
-                    <div class="card-body">
-                        <h5 class="card-title">@course.Name</h5>
+            <div class="col-md-4">
+                <figure class="card card-product">
+                    <div class="img-wrap"><img src="@course.Image" style="width:348px;height:220px;"></div>
+                    <figcaption class="info-wrap">
+                        <h4 class="title">@course.Name</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">by @course.InstructorFullName</li>
+                            <li class="list-group-item">@course.Category</li>
+                            <li class="list-group-item">Lectures 0</li>
+                        </ul>
+                    </figcaption>
+                    <div class="text-center">
+                        <a asp-controller="Lectures" asp-action="Index" asp-route-id="@course.Id" class="btn btn-sm btn-outline-info">View Lectures</a>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">by @course.InstructorFullName</li>
-                        <li class="list-group-item">@course.Category</li>
-                        <li class="list-group-item">Lectures 0</li>
-                    </ul>
-                </div>
+                </figure>
             </div>
         }
     </div>

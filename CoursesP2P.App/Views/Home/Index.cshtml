@@ -26,19 +26,17 @@
                         <div class="rating-wrap">
                             <div class="label-rating">132 reviews</div>
                             <div class="label-rating">154 orders </div>
-                        </div> <!-- rating-wrap.// -->
+                        </div> 
                     </figcaption>
                     <div class="bottom-wrap">
                         <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-sm btn-outline-info float-right">Details</a>
                         <a asp-controller="Courses" asp-action="Add" asp-route-id="@course.Id" class="btn btn-sm btn-outline-danger float-right">Order Now</a>
                         <div class="price-wrap h5">
                             <span class="price-new">$@course.Price</span>
-                        </div> <!-- price-wrap.// -->
-                    </div> <!-- bottom-wrap.// -->
+                        </div>
+                    </div> 
                 </figure>
-            </div> <!-- col // -->
+            </div> 
         }
-    </div> <!-- row.// -->
-
+    </div> 
 </div>
-<!--container.//-->
