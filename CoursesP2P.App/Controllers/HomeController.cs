@@ -30,10 +30,10 @@ namespace CoursesP2P.App.Controllers
 
             foreach (var course in courses)
             {
-                if (course.Name.Length >= 46)
-                {
-                    var name = course.Name = course.Name.Substring(0, 46);
-                }
+                //if (course.Name.Length >= 43)
+                //{
+                //    course.Name = course.Name.Substring(0, 43);
+                //}
 
                 var model = new CourseViewModel
                 {
