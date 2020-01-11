@@ -3,38 +3,10 @@
     ViewData["Title"] = "Home Page";
 }
 
-    <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    </div>
-
-
-<div class="container">
-    <div class="row mt-3">
-        @foreach (var course in Model)
-        {
-            <div class="col mt-3">
-                <div class="card bg-light text-center" style="width: 18rem;">
-                    <img class="img-thumbnail" src="@course.Image" alt="Card image cap" style="width:286px;height:180px;">
-                    <div class="card-body">
-                        <h5 class="card-title">@course.Name</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">by @course.InstructorFullName</li>
-                        <li class="list-group-item">@course.Category</li>
-                        <li class="list-group-item">Lectures 0</li>
-                        <li class="list-group-item">Price @course.Price $</li>
-                    </ul>
-                    <div class="card-body">
-                        <a asp-controller="Courses" asp-action="Add" asp-route-id="@course.Id" class="btn btn-outline-danger">Buy</a>
-                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-outline-info">Details</a>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-
 
 
 <div class="container">
@@ -50,7 +22,6 @@
                             <li class="list-group-item">by @course.InstructorFullName</li>
                             <li class="list-group-item">@course.Category</li>
                             <li class="list-group-item">Lectures 0</li>
-                            <li class="list-group-item">Price @course.Price $</li>
                         </ul>
                         <div class="rating-wrap">
                             <div class="label-rating">132 reviews</div>
@@ -58,10 +29,10 @@
                         </div> <!-- rating-wrap.// -->
                     </figcaption>
                     <div class="bottom-wrap">
-                        <a asp-controller="Courses" asp-action="Add" asp-route-id="@course.Id" class="btn btn-sm btn-primary float-right">Order Now</a>
-                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-sm btn-primary float-right">Details</a>
+                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-sm btn-outline-info float-right">Details</a>
+                        <a asp-controller="Courses" asp-action="Add" asp-route-id="@course.Id" class="btn btn-sm btn-outline-danger float-right">Order Now</a>
                         <div class="price-wrap h5">
-                            <span class="price-new">$1280</span> <del class="price-old">$1980</del>
+                            <span class="price-new">$@course.Price</span>
                         </div> <!-- price-wrap.// -->
                     </div> <!-- bottom-wrap.// -->
                 </figure>
