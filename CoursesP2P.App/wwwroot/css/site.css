@@ -114,29 +114,42 @@ body {
 }
 
 
+/*My Card CSS*/
 
-
-
-
-.course-instance-box {
-    border-radius: 10px;
+.card-product .img-wrap {
+    border-radius: 3px 3px 0 0;
     overflow: hidden;
-    background: #234465;
-    font-size: 12px;
-    width: 270px;
-    margin: auto;
+    position: relative;
+    height: 220px;
+    text-align: center;
 }
 
-.box-img {
-    background-size: cover !important;
-    background-position: right top !important;
-    height: 140px;
-    margin: 0 auto;
-    width: 100%;
+    .card-product .img-wrap img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: cover;
+    }
+
+.card-product .info-wrap {
+    overflow: hidden;
+    padding: 15px;
+    border-top: 1px solid #eee;
 }
 
-.box-content {
-    padding: 10px;
+.card-product .bottom-wrap {
+    padding: 15px;
+    border-top: 1px solid #eee;
+}
+
+.label-rating {
+    margin-right: 10px;
+    color: #333;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.card-product .price-old {
+    color: #999;
 }
 
 
