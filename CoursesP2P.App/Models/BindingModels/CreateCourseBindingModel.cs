@@ -24,6 +24,5 @@ namespace CoursesP2P.App.Models.BindingModels
 
         [Required]
         public IFormFile Image { get; set; }
-
     }
 }

@@ -107,7 +107,7 @@ namespace CoursesP2P.App.Controllers
 
             this.coursesP2PDbContext.SaveChanges();
 
-            return RedirectToActionPermanentPreserveMethod("Index", "Lecturers");
+            return RedirectToAction("Index", "Instructors");
         }
 
         [Authorize]

@@ -33,7 +33,7 @@ namespace CoursesP2P.App.Controllers
         [HttpPost]
         public IActionResult Add(AddLecturesBindingModel model, int id)
         {
-            //TODO
+            //TODO upload large Video file
             var course = this.coursesP2PDbContext.Courses.FirstOrDefault(x => x.Id == id);
 
             var lecture = new Lecture
