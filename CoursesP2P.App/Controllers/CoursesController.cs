@@ -25,6 +25,40 @@ namespace CoursesP2P.App.Controllers
         }
 
         [Authorize]
+        public async Task<IActionResult> MyCourses()
+        {
+            var student = await this.userManager.GetUserAsync(this.User);
+
+            var courses = this.coursesP2PDbContext.StudentCourses
+                .Where(sc => sc.StudentId == student.Id)
+                .Select(c => c.Course)
+                .ToList();
+
+            var models = new List<CourseViewModel>();
+
+            foreach (var course in courses)
+            {
+                var model = new CourseViewModel()
+                {
+                    Name = course.Name,
+                    Category = course.Category,
+                    Image = course.Image,
+                    InstructorFullName = course.InstructorFullName
+                };
+
+                models.Add(model);
+            }
+
+            return View(models);
+        }
+
+        public IActionResult Category()
+        {
+            return View();
+        }
+
+
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -108,34 +142,6 @@ namespace CoursesP2P.App.Controllers
             this.coursesP2PDbContext.SaveChanges();
 
             return RedirectToAction("Index", "Instructors");
-        }
-
-        [Authorize]
-        public async Task<IActionResult> MyCourses()
-        {
-            var student = await this.userManager.GetUserAsync(this.User);
-
-            var courses = this.coursesP2PDbContext.StudentCourses
-                .Where(sc => sc.StudentId == student.Id)
-                .Select(c => c.Course)
-                .ToList();
-
-            var models = new List<CourseViewModel>();
-
-            foreach (var course in courses)
-            {
-                var model = new CourseViewModel()
-                {
-                    Name = course.Name,
-                    Category = course.Category,
-                    Image = course.Image,
-                    InstructorFullName = course.InstructorFullName
-                };
-
-                models.Add(model);
-            }
-
-            return View(models);
         }
 
         [Authorize]

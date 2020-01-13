@@ -6,11 +6,12 @@
     <title>@ViewData["Title"] - CoursesP2P.App</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CoursesP2P</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -21,18 +22,24 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Categories
+                                <i class="fas fa-align-justify"></i> Categories
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Development</a>
-                                <a class="dropdown-item" href="#">Marketing</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-laptop-code"></i> Development</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-bullhorn"></i> Marketing</a>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="MyCourses">My Courses</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="MyCourses"><i class="fas fa-graduation-cap"></i> My Courses</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Instructors" asp-action="Index">Instructor</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Instructors" asp-action="Index"><i class="fas fa-briefcase"></i> Instructor</a>
+                        </li>
+                        <li class="nav-item">
+                            <form class="form-inline my-2 my-lg-0" method="get" asp-controller="Home" asp-action="Search">
+                                <input class="form-control mr-sm-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-light my-2 my-sm-0" type="submit"> <span class="fa fa-search"></span></button>
+                            </form>
                         </li>
                     </ul>
                 </div>

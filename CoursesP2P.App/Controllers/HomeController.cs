@@ -51,6 +51,34 @@ namespace CoursesP2P.App.Controllers
             return View(models);
         }
 
+        public IActionResult Search(string searchTerm)
+        {
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                return RedirectToAction("Index");
+            }
+
+            var searchResult = new List<CourseViewModel>();
+
+            var foundCourses = this.coursesP2PDbContext
+                .Courses
+                .Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()))
+                .Select(course => new CourseViewModel()
+                {
+                    Id = course.Id,
+                    Name = course.Name,
+                    InstructorFullName = course.InstructorFullName,
+                    Price = course.Price,
+                    Category = course.Category,
+                    Image = course.Image
+                })
+                .ToList();
+
+            searchResult.AddRange(foundCourses);
+
+            return View(searchResult);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
