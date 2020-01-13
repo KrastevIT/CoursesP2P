@@ -15,7 +15,11 @@
         {
             <div class="col-md-4">
                 <figure class="card card-product">
-                    <div class="img-wrap"><img src="@course.Image" style="width:348px;height:220px;"></div>
+                    <div class="img-wrap">
+                        <a href="@Url.Action("Details", "Courses", new { id=course.Id})">
+                            <img src="@course.Image" style="width:348px;height:220px;">
+                        </a>
+                    </div>
                     <figcaption class="info-wrap">
                         <h4 class="title">@course.Name</h4>
                         <ul class="list-group list-group-flush">
@@ -26,7 +30,7 @@
                         <div class="rating-wrap">
                             <div class="label-rating">132 reviews</div>
                             <div class="label-rating">154 orders </div>
-                        </div> 
+                        </div>
                     </figcaption>
                     <div class="bottom-wrap">
                         <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-sm btn-outline-info float-right">Details</a>
@@ -34,9 +38,9 @@
                         <div class="price-wrap h5">
                             <span class="price-new">$@course.Price</span>
                         </div>
-                    </div> 
+                    </div>
                 </figure>
-            </div> 
+            </div>
         }
-    </div> 
+    </div>
 </div>
