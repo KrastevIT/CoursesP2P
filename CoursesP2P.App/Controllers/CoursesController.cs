@@ -52,7 +52,7 @@ namespace CoursesP2P.App.Controllers
             return View(models);
         }
 
-        public IActionResult Category()
+        public IActionResult Category(string category)
         {
             return View();
         }
