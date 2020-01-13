@@ -4,6 +4,8 @@
 }
 <div class="container">
     <a asp-controller="Courses" asp-action="Create" class="btn btn-success btn-lg">Create new course</a>
+    <br />
+    <br />
 
     @if (!Model.Any())
     {
@@ -29,7 +31,8 @@
                         </div>
                     </figcaption>
                     <div class="bottom-wrap">
-                        <a asp-controller="Courses" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-sm btn-outline-danger float-right">Edit</a>
+                        <a asp-controller="Courses" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-sm btn-outline-danger float-right">Edit Course</a>
+                        <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-sm btn-outline-success float-right">Add Lecture</a>
                         <div class="price-wrap h5">
                             <span class="price-new">$@course.Price</span>
                         </div>
