@@ -47,7 +47,6 @@ namespace CoursesP2P.Data
                 .HasForeignKey(c => c.InstructorId);
             });
 
-
             base.OnModelCreating(builder);
         }
     }

@@ -30,19 +30,26 @@ namespace CoursesP2P.App.Controllers
 
             var models = new List<CourseInstructorViewModel>();
 
+            var enrolled = new List<StudentCourse>();
+
             foreach (var course in courses)
             {
+                 enrolled = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList();
+
                 var model = new CourseInstructorViewModel
                 {
                     Id = course.Id,
                     Name = course.Name,
                     Price = course.Price,
                     Category = course.Category,
-                    Image = course.Image
+                    Image = course.Image,
                 };
 
                 models.Add(model);
             }
+
+            ViewBag.courses = courses.Count;
+            ViewBag.enrolled = enrolled.Count;
 
             return View(models);
         }
