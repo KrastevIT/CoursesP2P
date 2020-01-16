@@ -1,6 +1,7 @@
 ﻿using CoursesP2P.App.Models;
 using CoursesP2P.App.Models.ViewModels;
 using CoursesP2P.Data;
+using CoursesP2P.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -28,8 +29,12 @@ namespace CoursesP2P.App.Controllers
 
             var models = new List<CourseViewModel>();
 
+            int enrolled = 0;
+
             foreach (var course in courses)
             {
+                enrolled = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList().Count();
+
                 //if (course.Name.Length >= 43)
                 //{
                 //    course.Name = course.Name.Substring(0, 43);
@@ -42,7 +47,8 @@ namespace CoursesP2P.App.Controllers
                     InstructorFullName = course.InstructorFullName,
                     Price = course.Price,
                     Category = course.Category,
-                    Image = course.Image
+                    Image = course.Image,
+                    Orders = enrolled
                 };
 
                 models.Add(model);

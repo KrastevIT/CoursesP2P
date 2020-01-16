@@ -13,5 +13,7 @@ namespace CoursesP2P.App.Models.ViewModels
         public Category Category { get; set; }
 
         public string Image { get; set; }
+
+        public int Orders { get; set; }
     }
 }

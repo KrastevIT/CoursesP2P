@@ -30,11 +30,11 @@ namespace CoursesP2P.App.Controllers
 
             var models = new List<CourseInstructorViewModel>();
 
-            var enrolled = new List<StudentCourse>();
+            int enrolled = 0;
 
             foreach (var course in courses)
             {
-                 enrolled = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList();
+                enrolled = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList().Count();
 
                 var model = new CourseInstructorViewModel
                 {
@@ -43,13 +43,14 @@ namespace CoursesP2P.App.Controllers
                     Price = course.Price,
                     Category = course.Category,
                     Image = course.Image,
+                    Orders = enrolled
                 };
 
                 models.Add(model);
             }
 
             ViewBag.courses = courses.Count;
-            ViewBag.enrolled = enrolled.Count;
+            ViewBag.enrolled = enrolled;
 
             return View(models);
         }

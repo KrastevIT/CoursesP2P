@@ -149,21 +149,24 @@ namespace CoursesP2P.App.Controllers
         {
             var course = this.coursesP2PDbContext.Courses.Find(id);
 
-            var instructor = await this.userManager.GetUserAsync(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
 
-            var isCreatedCourseFromCurrentInstructor = course.InstructorId == instructor.Id;
+            var isCreatedCourseFromCurrentInstructor = course.InstructorId == user.Id;
 
-            var exists = this.coursesP2PDbContext.StudentCourses.Any(x => x.CourseId == id);
-            if (exists || isCreatedCourseFromCurrentInstructor)
+            var existsCourse = this.coursesP2PDbContext.StudentCourses
+                .Where(x => x.StudentId == user.Id)
+                .ToList()
+                .Any(x => x.CourseId == course.Id);
+
+          //  var existsCourse = student == null ? false : student.Any(x => x.CourseId == course.Id);
+            if (existsCourse || isCreatedCourseFromCurrentInstructor)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var student = await this.userManager.GetUserAsync(this.User);
-
             var studentCourse = new StudentCourse
             {
-                StudentId = student.Id,
+                StudentId = user.Id,
                 CourseId = course.Id
             };
 
