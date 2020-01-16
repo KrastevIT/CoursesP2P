@@ -158,7 +158,6 @@ namespace CoursesP2P.App.Controllers
                 .ToList()
                 .Any(x => x.CourseId == course.Id);
 
-          //  var existsCourse = student == null ? false : student.Any(x => x.CourseId == course.Id);
             if (existsCourse || isCreatedCourseFromCurrentInstructor)
             {
                 return RedirectToAction("Index", "Home");
