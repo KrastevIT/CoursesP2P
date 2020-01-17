@@ -168,6 +168,11 @@ namespace CoursesP2P.App.Controllers
                 CourseId = course.Id
             };
 
+            var instructor = this.userManager.Users.FirstOrDefault(x => x.Id == course.InstructorId);
+            instructor.Profit = instructor.Profit += course.Price;
+
+            this.coursesP2PDbContext.Users.Update(instructor);
+
             this.coursesP2PDbContext.StudentCourses.Add(studentCourse);
 
             this.coursesP2PDbContext.SaveChanges();

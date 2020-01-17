@@ -23,12 +23,12 @@ namespace CoursesP2P.App.Controllers
         }
 
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var instructorId = this.userManager.GetUserId(this.User);
+            var instructor = await this.userManager.GetUserAsync(this.User);
 
             var courses = this.coursesP2PDbContext.Users
-                .Where(c => c.Id == instructorId)
+                .Where(c => c.Id == instructor.Id)
                 .SelectMany(x => x.CreatedCourses).ToList();
 
             var models = new List<CourseInstructorViewModel>();
@@ -50,14 +50,16 @@ namespace CoursesP2P.App.Controllers
                 models.Add(model);
             }
 
-            var enrolledCourses = courses.SelectMany(x => x.Students).Select(x => x.Course).ToList();
-            var totalProfit = enrolledCourses.Select(x => x.Price).Sum();
+            var soldCourses = courses
+                .SelectMany(x => x.Students)
+                .Select(x => x.Course)
+                .Count();
 
             var instructorDashboardViewModel = new InstructorDashboardViewModel
             {
                 CreatedCourses = courses.Count,
-                EnrolledCourses = enrolledCourses.Count,
-                Profit = totalProfit
+                EnrolledCourses = soldCourses,
+                Profit = instructor.Profit
             };
 
             var tuple = new Tuple<IEnumerable<CourseInstructorViewModel>, InstructorDashboardViewModel>(models, instructorDashboardViewModel);
