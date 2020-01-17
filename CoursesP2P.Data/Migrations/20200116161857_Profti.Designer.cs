@@ -4,14 +4,16 @@ using CoursesP2P.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoursesP2P.Data.Migrations
 {
     [DbContext(typeof(CoursesP2PDbContext))]
-    partial class CoursesP2PDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200116161857_Profti")]
+    partial class Profti
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,6 +123,10 @@ namespace CoursesP2P.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -182,6 +188,8 @@ namespace CoursesP2P.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -319,10 +327,27 @@ namespace CoursesP2P.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CoursesP2P.Models.Instructor", b =>
+                {
+                    b.HasBaseType("CoursesP2P.Models.User");
+
+                    b.Property<decimal>("Profit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasDiscriminator().HasValue("Instructor");
+                });
+
+            modelBuilder.Entity("CoursesP2P.Models.Student", b =>
+                {
+                    b.HasBaseType("CoursesP2P.Models.User");
+
+                    b.HasDiscriminator().HasValue("Student");
+                });
+
             modelBuilder.Entity("CoursesP2P.Models.Course", b =>
                 {
-                    b.HasOne("CoursesP2P.Models.User", "Instructor")
-                        .WithMany("CreatedCourses")
+                    b.HasOne("CoursesP2P.Models.Instructor", "Instructor")
+                        .WithMany("Courses")
                         .HasForeignKey("InstructorId");
                 });
 
@@ -343,7 +368,7 @@ namespace CoursesP2P.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CoursesP2P.Models.User", "Student")
+                    b.HasOne("CoursesP2P.Models.Student", "Student")
                         .WithMany("EnrolledCourses")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)

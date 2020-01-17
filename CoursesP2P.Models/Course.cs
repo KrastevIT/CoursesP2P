@@ -31,7 +31,7 @@ namespace CoursesP2P.Models
 
         public string InstructorId { get; set; }
 
-        public Instructor Instructor { get; set; }
+        public User Instructor { get; set; }
 
         public ICollection<StudentCourse> Students { get; set; } = new HashSet<StudentCourse>();
 

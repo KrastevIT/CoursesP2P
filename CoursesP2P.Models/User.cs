@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CoursesP2P.Models
@@ -23,5 +24,9 @@ namespace CoursesP2P.Models
         [MinLength(2)]
         [MaxLength(50)]
         public string City { get; set; }
+
+        public ICollection<Course> CreatedCourses { get; set; } = new HashSet<Course>();
+
+        public ICollection<StudentCourse> EnrolledCourses { get; set; } = new HashSet<StudentCourse>();
     }
 }

@@ -4,7 +4,7 @@
     {
         public string StudentId { get; set; }
 
-        public Student Student { get; set; }
+        public User Student { get; set; }
 
         public int CourseId { get; set; }
 

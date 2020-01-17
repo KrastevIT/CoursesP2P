@@ -169,7 +169,6 @@ namespace CoursesP2P.App.Controllers
                 CourseId = course.Id
             };
 
-
             this.coursesP2PDbContext.StudentCourses.Add(studentCourse);
 
             this.coursesP2PDbContext.SaveChanges();
