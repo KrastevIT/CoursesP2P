@@ -57,7 +57,6 @@ namespace CoursesP2P.App.Controllers
             return View();
         }
 
-
         [Authorize]
         public IActionResult Create()
         {

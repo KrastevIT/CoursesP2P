@@ -22,21 +22,19 @@ namespace CoursesP2P.App.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var instructor = await this.userManager.GetUserAsync(this.User);
+            var instructorId = this.userManager.GetUserId(this.User);
 
             var courses = this.coursesP2PDbContext.Users
-                .Where(c => c.Id == instructor.Id)
+                .Where(c => c.Id == instructorId)
                 .SelectMany(x => x.CreatedCourses).ToList();
 
             var models = new List<CourseInstructorViewModel>();
 
-            int enrolled = 0;
-
             foreach (var course in courses)
             {
-                enrolled = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList().Count();
+                var orders = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList().Count();
 
                 var model = new CourseInstructorViewModel
                 {
@@ -45,14 +43,18 @@ namespace CoursesP2P.App.Controllers
                     Price = course.Price,
                     Category = course.Category,
                     Image = course.Image,
-                    Orders = enrolled
+                    Orders = orders
                 };
 
                 models.Add(model);
             }
 
+            var enrolledCourses = courses.SelectMany(x => x.Students).Select(x => x.Course).ToList();
+            var totalProfit = enrolledCourses.Select(x => x.Price).Sum();
+
             ViewBag.courses = courses.Count;
-            ViewBag.enrolled = enrolled;
+            ViewBag.enrolled = enrolledCourses.Count;
+            ViewBag.profit = totalProfit;
 
             return View(models);
         }
