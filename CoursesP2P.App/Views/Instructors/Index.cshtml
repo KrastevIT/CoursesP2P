@@ -1,72 +1,72 @@
-﻿@model IEnumerable<CourseInstructorViewModel>
+﻿@model Tuple<IEnumerable<CourseInstructorViewModel>, InstructorDashboardViewModel>
 @{
     ViewData["Title"] = "Index";
 }
 
-    <div class="container">
-        <div class="text-center">
-            <h1 class="text-center">My Created Courses</h1>
-            <br />
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="text-center">
-                        <p class="card-category"><i class="fas fa-plus-circle"></i> Courses</p>
-                        <p class="card-title">@ViewBag.courses
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="text-center">
-                        <p class="card-category"><i class="fas fa-check"></i> Enrollments</p>
-                        <p class="card-title">@ViewBag.enrolled
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="text-center">
-                        <p class="card-category"><i class="fas fa-dollar-sign"></i> Total profit</p>
-                        <p class="card-title">$@ViewBag.profit
-                    </div>
+<div class="container">
+    <div class="text-center">
+        <h1 class="text-center">My Created Courses</h1>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="text-center">
+                    <p class="card-category"><i class="fas fa-plus-circle"></i> Courses</p>
+                    <p class="card-title">@Model.Item2.CreatedCourses
                 </div>
             </div>
         </div>
-        <div class="text-center">
-            <br />
-            <a asp-controller="Courses" asp-action="Create" class="btn btn-success btn-lg">Create new course</a>
-            <br />
-            <br />
-        </div>
-        <div class="row">
-            @foreach (var course in Model)
-            {
-                <div class="col-md-4">
-                    <figure class="card card-product">
-                        <div class="img-wrap"><img src="@course.Image" style="width:348px;height:220px;"></div>
-                        <figcaption class="info-wrap">
-                            <h4 class="title">@course.Name</h4>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">@course.Category</li>
-                                <li class="list-group-item">Lectures 0</li>
-                            </ul>
-                            <div class="rating-wrap">
-                                <div class="label-rating">132 reviews</div>
-                                <div class="label-rating">@course.Orders orders </div>
-                            </div>
-                        </figcaption>
-                        <div class="bottom-wrap">
-                            <a asp-controller="Courses" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-sm btn-outline-danger float-right">Edit Course</a>
-                            <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-sm btn-outline-success float-right">Add Lecture</a>
-                            <div class="price-wrap h5">
-                                <span class="price-new">$@course.Price</span>
-                            </div>
-                        </div>
-                    </figure>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="text-center">
+                    <p class="card-category"><i class="fas fa-check"></i> Enrollments</p>
+                    <p class="card-title">@Model.Item2.EnrolledCourses
                 </div>
-            }
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="text-center">
+                    <p class="card-category"><i class="fas fa-dollar-sign"></i> Total profit</p>
+                    <p class="card-title">$@Model.Item2.Profit
+                </div>
+            </div>
         </div>
     </div>
+    <div class="text-center">
+        <br />
+        <a asp-controller="Courses" asp-action="Create" class="btn btn-success btn-lg">Create new course</a>
+        <br />
+        <br />
+    </div>
+    <div class="row">
+        @foreach (var course in Model.Item1)
+        {
+            <div class="col-md-4">
+                <figure class="card card-product">
+                    <div class="img-wrap"><img src="@course.Image" style="width:348px;height:220px;"></div>
+                    <figcaption class="info-wrap">
+                        <h4 class="title">@course.Name</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">@course.Category</li>
+                            <li class="list-group-item">Lectures 0</li>
+                        </ul>
+                        <div class="rating-wrap">
+                            <div class="label-rating">132 reviews</div>
+                            <div class="label-rating">@course.Orders orders </div>
+                        </div>
+                    </figcaption>
+                    <div class="bottom-wrap">
+                        <a asp-controller="Courses" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-sm btn-outline-danger float-right">Edit Course</a>
+                        <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-sm btn-outline-success float-right">Add Lecture</a>
+                        <div class="price-wrap h5">
+                            <span class="price-new">$@course.Price</span>
+                        </div>
+                    </div>
+                </figure>
+            </div>
+        }
+    </div>
+</div>
 

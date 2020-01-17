@@ -4,6 +4,7 @@ using CoursesP2P.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,11 +53,16 @@ namespace CoursesP2P.App.Controllers
             var enrolledCourses = courses.SelectMany(x => x.Students).Select(x => x.Course).ToList();
             var totalProfit = enrolledCourses.Select(x => x.Price).Sum();
 
-            ViewBag.courses = courses.Count;
-            ViewBag.enrolled = enrolledCourses.Count;
-            ViewBag.profit = totalProfit;
+            var instructorDashboardViewModel = new InstructorDashboardViewModel
+            {
+                CreatedCourses = courses.Count,
+                EnrolledCourses = enrolledCourses.Count,
+                Profit = totalProfit
+            };
 
-            return View(models);
+            var tuple = new Tuple<IEnumerable<CourseInstructorViewModel>, InstructorDashboardViewModel>(models, instructorDashboardViewModel);
+
+            return View(tuple);
         }
     }
 }
