@@ -33,6 +33,7 @@ namespace CoursesP2P.App.Controllers
 
             foreach (var course in courses)
             {
+                //TODO ORDERS
                 enrolled = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList().Count();
 
                 //if (course.Name.Length >= 43)

@@ -2,6 +2,7 @@
 using CoursesP2P.App.Models.ViewModels;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
+using CoursesP2P.Models.Enum;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -52,9 +53,37 @@ namespace CoursesP2P.App.Controllers
             return View(models);
         }
 
-        public IActionResult Category(string category)
+        public IActionResult Category(string id)
         {
-            return View();
+            var isValidEnum = Enum.TryParse(typeof(Category), id, true, out object category);
+            if (!isValidEnum)
+            {
+                return NotFound();
+            }
+
+            var coursesByCategory = this.coursesP2PDbContext.Courses
+                .Where(x => x.Category == (Category)category)
+                .ToList();
+
+            var models = new List<CourseViewModel>();
+
+            foreach (var course in coursesByCategory)
+            {
+                var model = new CourseViewModel
+                {
+                    Id = course.Id,
+                    Name = course.Name,
+                    InstructorFullName = course.InstructorFullName,
+                    Price = course.Price,
+                    Category = course.Category,
+                    Image = course.Image,
+                    //TODO Orders
+                };
+
+                models.Add(model);
+            }
+
+            return View(models);
         }
 
         [Authorize]
