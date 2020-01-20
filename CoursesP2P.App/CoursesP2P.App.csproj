@@ -21,4 +21,9 @@
     <ProjectReference Include="..\CoursesP2P.Data\CoursesP2P.Data.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Videos\" />
+  </ItemGroup>
+
 </Project>

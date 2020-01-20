@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CoursesP2P.App.Models.BindingModels;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoursesP2P.App.Controllers
@@ -12,10 +14,12 @@ namespace CoursesP2P.App.Controllers
     public class LecturesController : Controller
     {
         private readonly CoursesP2PDbContext coursesP2PDbContext;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public LecturesController(CoursesP2PDbContext coursesP2PDbContext)
+        public LecturesController(CoursesP2PDbContext coursesP2PDbContext, IWebHostEnvironment webHostEnvironment)
         {
             this.coursesP2PDbContext = coursesP2PDbContext;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -31,21 +35,32 @@ namespace CoursesP2P.App.Controllers
         }
 
         [HttpPost]
+        [RequestFormLimits(MultipartBodyLengthLimit = 1000000000)]
+        [RequestSizeLimit(1000000000)]
         public IActionResult Add(AddLecturesBindingModel model, int id)
         {
-            //TODO upload large Video file
-            var course = this.coursesP2PDbContext.Courses.FirstOrDefault(x => x.Id == id);
+            var fileName = $"{this.webHostEnvironment.WebRootPath}\\Videos\\{model.Video.FileName}";
 
-            var lecture = new Lecture
+            using (FileStream fileStream = System.IO.File.Create(fileName))
             {
-                Name = model.Name,
-                CourseId = id
-            };
+                model.Video.CopyTo(fileStream);
+                fileStream.Flush();
+            }
 
-            course.Lectures.Add(lecture);
-            this.coursesP2PDbContext.SaveChanges();
+            //TODO upload large Video file
+            //var course = this.coursesP2PDbContext.Courses.FirstOrDefault(x => x.Id == id);
+
+            //var lecture = new Lecture
+            //{
+            //    Name = model.Name,
+            //    CourseId = id
+            //};
+
+            //course.Lectures.Add(lecture);
+            //this.coursesP2PDbContext.SaveChanges();
 
             return RedirectToAction("Index", "Instructors");
+
         }
     }
 }

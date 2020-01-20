@@ -2670,7 +2670,10 @@
         },
         "runtime": {
           "bin/placeholder/CoursesP2P.Data.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "CoursesP2P.Models/1.0.0": {
         "type": "project",
@@ -2684,7 +2687,10 @@
         },
         "runtime": {
           "bin/placeholder/CoursesP2P.Models.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -8587,11 +8593,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P.App\\CoursesP2P.App.csproj",
+      "projectUniqueName": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P\\CoursesP2P.App\\CoursesP2P.App.csproj",
       "projectName": "CoursesP2P.App",
-      "projectPath": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P.App\\CoursesP2P.App.csproj",
+      "projectPath": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P\\CoursesP2P.App\\CoursesP2P.App.csproj",
       "packagesPath": "C:\\Users\\Кристиян Кръстев\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P.App\\obj\\",
+      "outputPath": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P\\CoursesP2P.App\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -8610,8 +8616,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P.Data\\CoursesP2P.Data.csproj": {
-              "projectPath": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P.Data\\CoursesP2P.Data.csproj"
+            "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P\\CoursesP2P.Data\\CoursesP2P.Data.csproj": {
+              "projectPath": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P\\CoursesP2P.Data\\CoursesP2P.Data.csproj"
             }
           }
         }

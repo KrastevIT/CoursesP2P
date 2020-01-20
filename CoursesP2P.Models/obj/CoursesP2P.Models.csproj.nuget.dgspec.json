@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P.Models\\CoursesP2P.Models.csproj": {}
+    "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P\\CoursesP2P.Models\\CoursesP2P.Models.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P.Models\\CoursesP2P.Models.csproj": {
+    "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P\\CoursesP2P.Models\\CoursesP2P.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P.Models\\CoursesP2P.Models.csproj",
+        "projectUniqueName": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P\\CoursesP2P.Models\\CoursesP2P.Models.csproj",
         "projectName": "CoursesP2P.Models",
-        "projectPath": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P.Models\\CoursesP2P.Models.csproj",
+        "projectPath": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P\\CoursesP2P.Models\\CoursesP2P.Models.csproj",
         "packagesPath": "C:\\Users\\Кристиян Кръстев\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P.Models\\obj\\",
+        "outputPath": "C:\\Users\\Кристиян Кръстев\\Desktop\\CoursesP2P\\CoursesP2P\\CoursesP2P.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

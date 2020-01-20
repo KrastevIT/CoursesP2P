@@ -6,3 +6,11 @@ C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.Models\ob
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.Models\obj\Debug\netcoreapp3.1\CoursesP2P.Models.AssemblyInfo.cs
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.Models\obj\Debug\netcoreapp3.1\CoursesP2P.Models.dll
 C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P.Models\obj\Debug\netcoreapp3.1\CoursesP2P.Models.pdb
+C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P\CoursesP2P.Models\bin\Debug\netcoreapp3.1\CoursesP2P.Models.deps.json
+C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P\CoursesP2P.Models\bin\Debug\netcoreapp3.1\CoursesP2P.Models.dll
+C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P\CoursesP2P.Models\bin\Debug\netcoreapp3.1\CoursesP2P.Models.pdb
+C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P\CoursesP2P.Models\obj\Debug\netcoreapp3.1\CoursesP2P.Models.csprojAssemblyReference.cache
+C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P\CoursesP2P.Models\obj\Debug\netcoreapp3.1\CoursesP2P.Models.AssemblyInfoInputs.cache
+C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P\CoursesP2P.Models\obj\Debug\netcoreapp3.1\CoursesP2P.Models.AssemblyInfo.cs
+C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P\CoursesP2P.Models\obj\Debug\netcoreapp3.1\CoursesP2P.Models.dll
+C:\Users\Кристиян Кръстев\Desktop\CoursesP2P\CoursesP2P\CoursesP2P.Models\obj\Debug\netcoreapp3.1\CoursesP2P.Models.pdb
