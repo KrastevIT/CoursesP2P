@@ -1,11 +1,29 @@
-﻿
+﻿@model IEnumerable<LectureViewModel>
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Lectures</h1>
+<h1>Course content</h1>
 
-<div class="embed-responsive embed-responsive-16by9">
-    <iframe class="embed-responsive-item" src="/Videos/test.mp4" allowfullscreen></iframe>
+@*@foreach (var lecture in Model)
+    {
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="@lecture.Video" allowfullscreen></iframe>
+        </div>
+    }*@
+
+<div class="row">
+    @foreach (var lecture in Model)
+    {
+        <div class="col-md-4">
+            <div class="card border-dark mb-3" style="max-width: 18rem;">
+                <div class="card-header text-center">@lecture.Name</div>
+                <div class="card-body text-dark">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="@lecture.Video" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
-

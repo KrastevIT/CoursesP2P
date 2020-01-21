@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CoursesP2P.App.Models.BindingModels;
+using CoursesP2P.App.Models.ViewModels;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -22,9 +23,26 @@ namespace CoursesP2P.App.Controllers
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
-            return View();
+            var lectures = this.coursesP2PDbContext.Lectures
+                .Where(x => x.CourseId == id)
+                .ToList();
+
+            var models = new List<LectureViewModel>();
+
+            foreach (var lecture in lectures)
+            {
+                var model = new LectureViewModel
+                {
+                    Name = lecture.Name,
+                    Video = lecture.Video
+                };
+
+                models.Add(model);
+            }
+
+            return View(models);
         }
 
         public IActionResult Add(int id)
@@ -57,9 +75,6 @@ namespace CoursesP2P.App.Controllers
 
             var dbPath = "/Videos/" + guidName;
 
-
-            //TODO ADD DBPATH IN DATABASE 
-
             var lecture = new Lecture
             {
                 Name = model.Name,
@@ -70,7 +85,7 @@ namespace CoursesP2P.App.Controllers
             this.coursesP2PDbContext.Lectures.Add(lecture);
             this.coursesP2PDbContext.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Instructors");
         }
     }
 }

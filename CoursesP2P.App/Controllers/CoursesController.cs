@@ -39,12 +39,16 @@ namespace CoursesP2P.App.Controllers
 
             foreach (var course in courses)
             {
+                var lectures = this.coursesP2PDbContext.Lectures.Where(x => x.CourseId == course.Id).Count();
+
                 var model = new CourseViewModel()
                 {
+                    Id = course.Id,
                     Name = course.Name,
                     Category = course.Category,
                     Image = course.Image,
-                    InstructorFullName = course.InstructorFullName
+                    InstructorFullName = course.InstructorFullName,
+                    Lectures = lectures
                 };
 
                 models.Add(model);

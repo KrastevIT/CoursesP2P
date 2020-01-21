@@ -1,7 +1,6 @@
 ﻿using CoursesP2P.App.Models;
 using CoursesP2P.App.Models.ViewModels;
 using CoursesP2P.Data;
-using CoursesP2P.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -41,6 +40,8 @@ namespace CoursesP2P.App.Controllers
                 //    course.Name = course.Name.Substring(0, 43);
                 //}
 
+                var lectures = this.coursesP2PDbContext.Lectures.Where(x => x.CourseId == course.Id).Count();
+
                 var model = new CourseViewModel
                 {
                     Id = course.Id,
@@ -49,7 +50,8 @@ namespace CoursesP2P.App.Controllers
                     Price = course.Price,
                     Category = course.Category,
                     Image = course.Image,
-                    Orders = enrolled
+                    Orders = enrolled,
+                    Lectures = lectures
                 };
 
                 models.Add(model);
