@@ -39,39 +39,38 @@ namespace CoursesP2P.App.Controllers
         [RequestSizeLimit(1000000000)]
         public IActionResult Add(AddLecturesBindingModel model, int id)
         {
-            //var guidName = Guid.NewGuid().ToString() + Path.GetExtension(model.Video.FileName);
+            var guidName = Guid.NewGuid().ToString() + Path.GetExtension(model.Video.FileName);
 
-            //var filePath = $"{this.webHostEnvironment.WebRootPath}\\Videos\\{guidName}";
+            var filePath = $"{this.webHostEnvironment.WebRootPath}\\Videos\\{guidName}";
 
-            //bool exists = System.IO.Directory.Exists("wwwroot/Videos");
-            //if (!exists)
-            //{
-            //    Directory.CreateDirectory("wwwroot/Videos");
-            //}
+            bool exists = System.IO.Directory.Exists("wwwroot/Videos");
+            if (!exists)
+            {
+                Directory.CreateDirectory("wwwroot/Videos");
+            }
 
-            //using (FileStream fileStream = System.IO.File.Create(filePath))
-            //{
-            //    model.Video.CopyTo(fileStream);
-            //    fileStream.Flush();
-            //}
+            using (FileStream fileStream = System.IO.File.Create(filePath))
+            {
+                model.Video.CopyTo(fileStream);
+                fileStream.Flush();
+            }
 
-            //var dbPath = "/Videos/" + guidName;
+            var dbPath = "/Videos/" + guidName;
 
 
-            ////TODO ADD DBPATH IN DATABASE 
+            //TODO ADD DBPATH IN DATABASE 
 
-            //var lecture = new Lecture
-            //{
-            //    Name = model.Name,
-            //    CourseId = id,
-            //    Video = dbPath,
-            //};
+            var lecture = new Lecture
+            {
+                Name = model.Name,
+                CourseId = id,
+                Video = dbPath,
+            };
 
-            //this.coursesP2PDbContext.Lectures.Add(lecture);
-            //this.coursesP2PDbContext.SaveChanges();
+            this.coursesP2PDbContext.Lectures.Add(lecture);
+            this.coursesP2PDbContext.SaveChanges();
 
             return RedirectToAction("Index");
-
         }
     }
 }

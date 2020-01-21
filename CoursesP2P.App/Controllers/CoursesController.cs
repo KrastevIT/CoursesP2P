@@ -136,41 +136,6 @@ namespace CoursesP2P.App.Controllers
             return RedirectToAction("Index", "Instructors");
         }
 
-        public IActionResult Edit(int id)
-        {
-            var course = this.coursesP2PDbContext.Courses.Find(id);
-
-            var model = new CourseEditViewModel
-            {
-                Id = course.Id,
-                Name = course.Name,
-                Description = course.Description,
-                Price = course.Price,
-                Category = course.Category,
-                Image = course.Image
-            };
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(CourseEditViewModel model)
-        {
-            var course = this.coursesP2PDbContext.Courses.FirstOrDefault(x => x.Id == model.Id);
-            if (course == null)
-            {
-                return NotFound();
-            }
-            model.Image = course.Image;
-
-            this.coursesP2PDbContext.Entry(course)
-                 .CurrentValues.SetValues(model);
-
-            this.coursesP2PDbContext.SaveChanges();
-
-            return RedirectToAction("Index", "Instructors");
-        }
-
         [Authorize]
         public async Task<IActionResult> Add(int id)
         {

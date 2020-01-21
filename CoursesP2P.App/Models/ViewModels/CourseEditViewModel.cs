@@ -1,5 +1,5 @@
 ﻿using CoursesP2P.Models.Enum;
-using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace CoursesP2P.App.Models.ViewModels
 {
@@ -16,5 +16,7 @@ namespace CoursesP2P.App.Models.ViewModels
         public Category Category { get; set; }
 
         public string Image { get; set; }
+
+        public ICollection<string> LecturesName { get; set; } = new List<string>();
     }
 }
