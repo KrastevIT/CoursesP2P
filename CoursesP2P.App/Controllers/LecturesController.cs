@@ -39,27 +39,38 @@ namespace CoursesP2P.App.Controllers
         [RequestSizeLimit(1000000000)]
         public IActionResult Add(AddLecturesBindingModel model, int id)
         {
-            var fileName = $"{this.webHostEnvironment.WebRootPath}\\Videos\\{model.Video.FileName}";
+            //var guidName = Guid.NewGuid().ToString() + Path.GetExtension(model.Video.FileName);
 
-            using (FileStream fileStream = System.IO.File.Create(fileName))
-            {
-                model.Video.CopyTo(fileStream);
-                fileStream.Flush();
-            }
+            //var filePath = $"{this.webHostEnvironment.WebRootPath}\\Videos\\{guidName}";
 
-            //TODO upload large Video file
-            //var course = this.coursesP2PDbContext.Courses.FirstOrDefault(x => x.Id == id);
+            //bool exists = System.IO.Directory.Exists("wwwroot/Videos");
+            //if (!exists)
+            //{
+            //    Directory.CreateDirectory("wwwroot/Videos");
+            //}
+
+            //using (FileStream fileStream = System.IO.File.Create(filePath))
+            //{
+            //    model.Video.CopyTo(fileStream);
+            //    fileStream.Flush();
+            //}
+
+            //var dbPath = "/Videos/" + guidName;
+
+
+            ////TODO ADD DBPATH IN DATABASE 
 
             //var lecture = new Lecture
             //{
             //    Name = model.Name,
-            //    CourseId = id
+            //    CourseId = id,
+            //    Video = dbPath,
             //};
 
-            //course.Lectures.Add(lecture);
+            //this.coursesP2PDbContext.Lectures.Add(lecture);
             //this.coursesP2PDbContext.SaveChanges();
 
-            return RedirectToAction("Index", "Instructors");
+            return RedirectToAction("Index");
 
         }
     }

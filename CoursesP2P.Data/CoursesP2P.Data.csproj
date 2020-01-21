@@ -14,6 +14,14 @@
     <Compile Remove="Migrations\20200107151053_InitialCoursesP2P.cs" />
     <Compile Remove="Migrations\20200107151053_InitialCoursesP2P.Designer.cs" />
     <Compile Remove="Migrations\20200110095719_Initial.cs" />
+    <Compile Remove="Migrations\20200121090806_EditLectureId.cs" />
+    <Compile Remove="Migrations\20200121090806_EditLectureId.Designer.cs" />
+    <Compile Remove="Migrations\20200121091052_EditLectureId.cs" />
+    <Compile Remove="Migrations\20200121091052_EditLectureId.Designer.cs" />
+    <Compile Remove="Migrations\20200121091916_EditLectureId.cs" />
+    <Compile Remove="Migrations\20200121091916_EditLectureId.Designer.cs" />
+    <Compile Remove="Migrations\20200121092149_RemovedLecture.cs" />
+    <Compile Remove="Migrations\20200121092149_RemovedLecture.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,10 +3,6 @@
     ViewData["Title"] = "Add";
 }
 
-    <form ... style="background: url('@Url.Content("~/Images/2e599df4-ffba-4f6b-85b7-1ee8c2db720c.jpg")');">
-        
-    </form>
-
 <h1>Add Lectures</h1>
 
 <form enctype="multipart/form-data" asp-controller="Lectures" asp-action="Add" asp-route-id="@ViewBag.id" method="post" class="form-horizontal">
@@ -30,23 +26,10 @@
     <div class="form-group">
         <div class="col-sm-10 col-sm-push-2">
             <input type="submit" value="Add" class="btn btn-success" />
-            <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Cancel</a>
+            <a asp-controller="Instructors" asp-action="Index" class="btn btn-danger">Cancel</a>
         </div>
     </div>
 </form>
-
-@*<form enctype="multipart/form-data" method="post">
-        <dl>
-            <dt>
-                <label asp-for="@Model.Video"></label>
-            </dt>
-            <dd>
-                <input asp-for="@Model.Video" type="file">
-                <span asp-validation-for="@Model.Video"></span>
-            </dd>
-        </dl>
-        <input asp-page-handler="Upload" class="btn" type="submit" value="Upload" />
-    </form>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

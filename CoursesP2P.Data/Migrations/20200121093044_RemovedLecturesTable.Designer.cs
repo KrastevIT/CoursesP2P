@@ -4,14 +4,16 @@ using CoursesP2P.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoursesP2P.Data.Migrations
 {
     [DbContext(typeof(CoursesP2PDbContext))]
-    partial class CoursesP2PDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200121093044_RemovedLecturesTable")]
+    partial class RemovedLecturesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,35 +59,6 @@ namespace CoursesP2P.Data.Migrations
                     b.HasIndex("InstructorId");
 
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("CoursesP2P.Models.Lecture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Presentation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Video")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("Lectures");
                 });
 
             modelBuilder.Entity("CoursesP2P.Models.StudentCourse", b =>
@@ -329,15 +302,6 @@ namespace CoursesP2P.Data.Migrations
                     b.HasOne("CoursesP2P.Models.User", "Instructor")
                         .WithMany("CreatedCourses")
                         .HasForeignKey("InstructorId");
-                });
-
-            modelBuilder.Entity("CoursesP2P.Models.Lecture", b =>
-                {
-                    b.HasOne("CoursesP2P.Models.Course", "Course")
-                        .WithMany("Lectures")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CoursesP2P.Models.StudentCourse", b =>
