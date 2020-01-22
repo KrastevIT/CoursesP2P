@@ -92,10 +92,31 @@ namespace CoursesP2P.App.Controllers
         {
             var lecture = this.coursesP2PDbContext.Lectures.FirstOrDefault(x => x.Id == id);
 
+            var lecturesOfCourse = this.coursesP2PDbContext.Lectures
+                .Where(x => x.CourseId == lecture.CourseId)
+                .ToList();
+
+            var modelVideos = new List<VideoLectureViewModel>();
+
+            foreach (var video in lecturesOfCourse)
+            {
+
+                var modelVideoLecture = new VideoLectureViewModel
+                {
+                    Id = video.Id,
+                    Name = video.Name,
+                    VideoPath = video.Video
+                };
+
+                modelVideos.Add(modelVideoLecture);
+            }
+
             var model = new VideoViewModel
+
             {
                 Name = lecture.Name,
-                VideoPath = lecture.Video
+                VideoPath = lecture.Video,
+                Lectures = modelVideos
             };
 
             return View(model);

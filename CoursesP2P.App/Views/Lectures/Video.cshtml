@@ -3,23 +3,31 @@
     ViewData["Title"] = "Video";
 }
 
-    <div class="container">
-        <h1 class="my-4">
-            <small>@Model.Name</small>
-        </h1>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="@Model.VideoPath" allowfullscreen></iframe>
-                </div>
+<div class="container">
+    <h1 class="my-4">
+        <small>@Model.Name</small>
+    </h1>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="@Model.VideoPath" allowfullscreen></iframe>
             </div>
-            <div class="col-md-4">
-                @*<h3 class="my-3">Description</h3>
-                <p></p>
-                <h3 class="my-3">What you'll learn</h3>
-                <ul>
-                    <li>Lorem Ipsum</li>
-                </ul>*@
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    Lectures
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var lecture in Model.Lectures)
+                    {
+                        <li class="list-group-item">
+                            <a asp-controller="Lectures" asp-action="Video" asp-route-id="@lecture.Id"
+                               class="list-group-item list-group-item-action text-center"><i class="fas fa-play"></i> @lecture.Name</a>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
     </div>
+</div>

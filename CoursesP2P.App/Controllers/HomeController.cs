@@ -28,18 +28,14 @@ namespace CoursesP2P.App.Controllers
 
             var models = new List<CourseViewModel>();
 
-            int enrolled = 0;
-
             foreach (var course in courses)
             {
-                //TODO ORDERS
-                enrolled = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList().Count();
-
                 //if (course.Name.Length >= 43)
                 //{
                 //    course.Name = course.Name.Substring(0, 43);
                 //}
 
+                var enrolled = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList().Count();
                 var lectures = this.coursesP2PDbContext.Lectures.Where(x => x.CourseId == course.Id).Count();
 
                 var model = new CourseViewModel
