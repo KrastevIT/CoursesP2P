@@ -16,7 +16,6 @@
                 <form asp-controller="Instructors" asp-action="Edit" method="post">
                     <div class="img-wrap"><img src="@Model.Image" style="width:348px;height:220px;"></div>
                     <figcaption class="info-wrap">
-                        <h4 class="title">@Model.Name</h4>
                         <h5>Name</h5>
                         <input class="form-control" asp-for="@Model.Name" />
                         <h5>Description</h5>
@@ -41,16 +40,9 @@
             <div class="list-group">
                 @foreach (var lecturesName in Model.LecturesName)
                 {
-                    <a href="#" class="list-group-item list-group-item-action">@lecturesName</a>
+                    <a href="#" class="list-group-item list-group-item-action text-center">@lecturesName</a>
                 }
             </div>
         </div>
-
-
-
     </div>
 </div>
-
-
-
-
