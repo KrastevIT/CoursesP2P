@@ -29,6 +29,11 @@ namespace CoursesP2P.Models
         public string Image { get; set; }
 
         [Required]
+        [MinLength(3)]
+        [MaxLength(90)]
+        public string Skills { get; set; }
+
+        [Required]
         public string InstructorFullName { get; set; }
 
         public string InstructorId { get; set; }

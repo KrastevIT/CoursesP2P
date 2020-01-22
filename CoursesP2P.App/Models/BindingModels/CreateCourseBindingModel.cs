@@ -22,6 +22,11 @@ namespace CoursesP2P.App.Models.BindingModels
         public decimal Price { get; set; }
 
         [Required]
+        [MinLength(3)]
+        [MaxLength(90)]
+        public string Skills { get; set; }
+
+        [Required]
         public Category Category { get; set; }
 
         [Required]
