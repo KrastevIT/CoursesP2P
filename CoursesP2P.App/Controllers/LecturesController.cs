@@ -78,9 +78,8 @@ namespace CoursesP2P.App.Controllers
             var lecture = new Lecture
             {
                 Name = model.Name,
-                Description = model.Description,
                 CourseId = id,
-                Video = dbPath,
+                Video = dbPath
             };
 
             this.coursesP2PDbContext.Lectures.Add(lecture);
@@ -96,7 +95,6 @@ namespace CoursesP2P.App.Controllers
             var model = new VideoViewModel
             {
                 Name = lecture.Name,
-                Description = lecture.Description,
                 VideoPath = lecture.Video
             };
 

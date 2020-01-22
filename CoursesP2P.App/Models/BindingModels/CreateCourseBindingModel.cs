@@ -13,6 +13,8 @@ namespace CoursesP2P.App.Models.BindingModels
         public string Name { get; set; }
 
         [Required]
+        [MinLength(22)]
+        [MaxLength(500)]
         public string Description { get; set; }
 
         [Required]
