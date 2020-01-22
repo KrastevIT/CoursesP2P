@@ -1,10 +1,6 @@
 ﻿using CoursesP2P.Models;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CoursesP2P.App.Models.BindingModels
 {
@@ -16,6 +12,9 @@ namespace CoursesP2P.App.Models.BindingModels
         [MaxLength(50)]
         public string Name { get; set; }
 
+        [Required]
+        [MinLength(22)]
+        [MaxLength(500)]
         public string Description { get; set; }
 
         public int CourseId { get; set; }
