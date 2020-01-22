@@ -6,7 +6,7 @@
 <div class="container">
     <h1 class="my-4">
         @Model.Name
-        <small>Secondary Text</small>
+        <small>$@Model.Price</small>
     </h1>
     <div class="row">
         <div class="col-md-8">
@@ -17,12 +17,12 @@
         <div class="col-md-4">
             <h3 class="my-3">Description</h3>
             <p>@Model.Description</p>
-            <h3 class="my-3">Course Details</h3>
+            <h3 class="my-3">Lectures</h3>
             <ul>
-                <li>Lorem Ipsum</li>
-                <li>Dolor Sit Amet</li>
-                <li>Consectetur</li>
-                <li>Adipiscing Elit</li>
+                @foreach (var lectureName in Model.LectureName)
+                {
+                    <li>@lectureName</li>
+                }
             </ul>
             <div class="text-lg-center">
                 <a asp-controller="Courses" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-lg">Buy</a>
@@ -35,7 +35,7 @@
 
 
 
-   
+
 
 
 

@@ -1,4 +1,5 @@
 ﻿using CoursesP2P.Models.Enum;
+using System.Collections.Generic;
 
 namespace CoursesP2P.App.Models.ViewModels
 {
@@ -12,10 +13,6 @@ namespace CoursesP2P.App.Models.ViewModels
 
         public decimal Price { get; set; }
 
-        public Category Category { get; set; }
-
-        public string Image { get; set; }
-
-        public string InstructorFullName { get; set; }
+        public ICollection<string> LectureName { get; set; } = new List<string>();
     }
 }

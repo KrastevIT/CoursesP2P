@@ -180,6 +180,10 @@ namespace CoursesP2P.App.Controllers
         public IActionResult Details(int id)
         {
             var course = this.coursesP2PDbContext.Courses.Find(id);
+            var lecturesName = this.coursesP2PDbContext.Lectures
+                .Where(x => x.CourseId == course.Id)
+                .Select(x => x.Name)
+                .ToList();
 
             var model = new CourseDetailsViewModel
             {
@@ -187,8 +191,7 @@ namespace CoursesP2P.App.Controllers
                 Name = course.Name,
                 Description = course.Description,
                 Price = course.Price,
-                Category = course.Category,
-                Image = course.Image
+                LectureName = lecturesName
             };
 
             return View(model);
