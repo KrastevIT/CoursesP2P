@@ -16,7 +16,7 @@ namespace CoursesP2P.App.Models.BindingModels
         [MaxLength(50)]
         public string Name { get; set; }
 
-        public string Presentation { get; set; }
+        public string Description { get; set; }
 
         public int CourseId { get; set; }
 

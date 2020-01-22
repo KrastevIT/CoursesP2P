@@ -15,5 +15,7 @@ namespace CoursesP2P.App.Models.ViewModels
         public string Image { get; set; }
 
         public int Orders { get; set; }
+
+        public int Lectures { get; set; }
     }
 }

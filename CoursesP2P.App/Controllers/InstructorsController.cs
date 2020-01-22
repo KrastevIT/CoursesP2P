@@ -35,8 +35,8 @@ namespace CoursesP2P.App.Controllers
 
             foreach (var course in courses)
             {
-                // TODO ORDERS
                 var orders = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList().Count();
+                var lectures = this.coursesP2PDbContext.Lectures.Where(x => x.CourseId == course.Id).Count();
 
                 var model = new CourseInstructorViewModel
                 {
@@ -45,7 +45,8 @@ namespace CoursesP2P.App.Controllers
                     Price = course.Price,
                     Category = course.Category,
                     Image = course.Image,
-                    Orders = orders
+                    Orders = orders,
+                    Lectures = lectures
                 };
 
                 models.Add(model);

@@ -11,7 +11,7 @@ namespace CoursesP2P.Models
         [MaxLength(50)]
         public string Name { get; set; }
 
-        public string Presentation { get; set; }
+        public string Description { get; set; }
 
         [Required]
         public string Video { get; set; }
