@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using CoursesP2P.App.Models.BindingModels;
+﻿using CoursesP2P.App.Models.BindingModels;
 using CoursesP2P.App.Models.ViewModels;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace CoursesP2P.App.Controllers
 {
