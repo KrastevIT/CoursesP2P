@@ -13,6 +13,8 @@ namespace CoursesP2P.App.Models.ViewModels
 
         public decimal Price { get; set; }
 
+        public ICollection<string> Skills { get; set; } = new List<string>();
+
         public ICollection<string> LectureName { get; set; } = new List<string>();
     }
 }

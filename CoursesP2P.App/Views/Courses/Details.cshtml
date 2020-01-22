@@ -35,7 +35,10 @@
     <div class="jumbotron">
         <div class="container">
             <h1 class="display-4 text-center">What you'll learn</h1>
-            <p class="lead text-center"><i class="fas fa-check"></i> This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+            @foreach (var skills in Model.Skills)
+            {
+                <p class="lead text-center"><i class="fas fa-check"></i> @skills</p>
+            }
         </div>
     </div>
 </div>

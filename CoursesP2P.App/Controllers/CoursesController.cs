@@ -190,13 +190,19 @@ namespace CoursesP2P.App.Controllers
                 .Select(x => x.Name)
                 .ToList();
 
+            var splitSkills = course.Skills.Split('*')
+                .Select(x => x.Trim())
+                .Where(x => x != string.Empty)
+                .ToList();
+
             var model = new CourseDetailsViewModel
             {
                 Id = course.Id,
                 Name = course.Name,
                 Description = course.Description,
                 Price = course.Price,
-                LectureName = lecturesName
+                LectureName = lecturesName,
+                Skills = splitSkills
             };
 
             return View(model);
