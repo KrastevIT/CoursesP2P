@@ -3,43 +3,21 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Course content</h1>
+<h1 class="text-center">Course content</h1>
 
-@*@foreach (var lecture in Model)
-    {
-        <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="@lecture.Video" allowfullscreen></iframe>
-        </div>
-    }*@
-
-
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+<div class="container">
+    <div class="row">
+        @foreach (var lecture in Model)
+        {
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="Lectures" asp-action="Video" asp-route-id="@lecture.Id"
+                           class="list-group-item list-group-item-action text-center"><i class="fas fa-play"></i> @lecture.Name</a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
+        }
     </div>
 </div>
+

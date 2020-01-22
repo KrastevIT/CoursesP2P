@@ -2,6 +2,8 @@
 {
     public class LectureViewModel
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public string Presentation { get; set; }

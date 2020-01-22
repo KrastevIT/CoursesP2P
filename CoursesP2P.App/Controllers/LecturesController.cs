@@ -35,6 +35,7 @@ namespace CoursesP2P.App.Controllers
             {
                 var model = new LectureViewModel
                 {
+                    Id = lecture.Id,
                     Name = lecture.Name,
                     Video = lecture.Video
                 };
@@ -86,6 +87,19 @@ namespace CoursesP2P.App.Controllers
             this.coursesP2PDbContext.SaveChanges();
 
             return RedirectToAction("Index", "Instructors");
+        }
+
+        public IActionResult Video(int id)
+        {
+            var lecture = this.coursesP2PDbContext.Lectures.FirstOrDefault(x => x.Id == id);
+
+            var model = new VideoViewModel
+            {
+                Name = lecture.Name,
+                VideoPath = lecture.Video
+            };
+
+            return View(model);
         }
     }
 }
