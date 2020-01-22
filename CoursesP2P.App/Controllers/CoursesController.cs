@@ -136,6 +136,7 @@ namespace CoursesP2P.App.Controllers
                 Image = dbPath,
                 InstructorFullName = user.FirstName + ' ' + user.LastName,
                 InstructorId = user.Id,
+                Skills = model.Skills
             };
 
             coursesP2PDbContext.Courses.Add(course);

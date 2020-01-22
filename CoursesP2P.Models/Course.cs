@@ -30,7 +30,7 @@ namespace CoursesP2P.Models
 
         [Required]
         [MinLength(3)]
-        [MaxLength(90)]
+        [MaxLength(1000)]
         public string Skills { get; set; }
 
         [Required]

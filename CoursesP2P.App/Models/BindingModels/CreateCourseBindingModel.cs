@@ -23,7 +23,7 @@ namespace CoursesP2P.App.Models.BindingModels
 
         [Required]
         [MinLength(3)]
-        [MaxLength(90)]
+        [MaxLength(1000)]
         public string Skills { get; set; }
 
         [Required]
