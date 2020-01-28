@@ -1,3 +1,4 @@
+using CoursesP2P.App.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +27,7 @@ namespace CoursesP2P.App
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CoursesP2PDbContext>();
 
             services.AddControllersWithViews();
@@ -54,6 +56,8 @@ namespace CoursesP2P.App
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.SeedDatabase();
 
             app.UseEndpoints(endpoints =>
             {

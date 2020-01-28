@@ -49,11 +49,13 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
             [Required]
             [MinLength(2)]
             [MaxLength(50)]
+            [Display(Name = "Firt Name")]
             public string FirstName { get; set; }
 
             [Required]
             [MinLength(2)]
             [MaxLength(50)]
+            [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
             [Required]
