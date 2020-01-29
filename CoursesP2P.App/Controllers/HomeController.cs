@@ -49,21 +49,13 @@ namespace CoursesP2P.App.Controllers
 
             var searchResult = new List<CourseViewModel>();
 
-            var foundCourses = this.coursesP2PDbContext
-                .Courses
-                .Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()))
-                .Select(course => new CourseViewModel()
-                {
-                    Id = course.Id,
-                    Name = course.Name,
-                    InstructorFullName = course.InstructorFullName,
-                    Price = course.Price,
-                    Category = course.Category,
-                    Image = course.Image
-                })
-                .ToList();
+            var foundCourses = this.coursesP2PDbContext.Courses
+               .Include(x => x.Lectures)
+               .Where(x => x.Name.ToLower()
+               .Contains(searchTerm.ToLower()))
+               .ToList();
 
-            searchResult.AddRange(foundCourses);
+            foundCourses.ForEach(course => searchResult.Add(this.mapper.Map<CourseViewModel>(course)));
 
             return View(searchResult);
         }

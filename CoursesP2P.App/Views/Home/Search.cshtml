@@ -19,11 +19,11 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">by @course.InstructorFullName</li>
                             <li class="list-group-item">@course.Category</li>
-                            <li class="list-group-item">Lectures 0</li>
+                            <li class="list-group-item">Lectures @course.Lectures.Count</li>
                         </ul>
                         <div class="rating-wrap">
-                            <div class="label-rating">132 reviews</div>
-                            <div class="label-rating">154 orders </div>
+                            <div class="label-rating">0 reviews</div>
+                            <div class="label-rating">@course.Orders orders </div>
                         </div>
                     </figcaption>
                     <div class="bottom-wrap">
