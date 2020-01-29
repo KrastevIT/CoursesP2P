@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CourseViewModel>
+﻿@model IEnumerable<CourseEnrolledViewModel>
 @{
     ViewData["Title"] = "MyCourses";
 }
@@ -24,7 +24,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">by @course.InstructorFullName</li>
                             <li class="list-group-item">@course.Category</li>
-                            <li class="list-group-item">Lectures @course.Lectures</li>
+                            <li class="list-group-item">Lectures @course.Lectures.Count</li>
                         </ul>
                     </figcaption>
                     <div class="text-center">

@@ -7,6 +7,7 @@ using CoursesP2P.Models.Enum;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,30 +38,15 @@ namespace CoursesP2P.App.Controllers
             var student = await this.userManager.GetUserAsync(this.User);
 
             var courses = this.coursesP2PDbContext.StudentCourses
-                .Where(sc => sc.StudentId == student.Id)
-                .Select(c => c.Course)
+                .Where(x => x.StudentId == student.Id)
+                .Include(x => x.Course)
+                .ThenInclude(x => x.Lectures)
+                .Select(x => x.Course)
                 .ToList();
 
-            var models = new List<CourseViewModel>();
+            var models = new List<CourseEnrolledViewModel>();
 
-            foreach (var course in courses)
-            {
-                var lectures = this.coursesP2PDbContext.Lectures.Where(x => x.CourseId == course.Id).Count();
-
-                var model = new CourseViewModel()
-                {
-                    Id = course.Id,
-                    Name = course.Name,
-                    Category = course.Category,
-                    Image = course.Image,
-                    InstructorFullName = course.InstructorFullName,
-                    Lectures = lectures
-                };
-
-                var model2 = this.mapper.Map<CourseEnrolledViewModel>(course);
-
-                models.Add(model);
-            }
+            courses.ForEach(course => models.Add(this.mapper.Map<CourseEnrolledViewModel>(course)));
 
             return View(models);
         }

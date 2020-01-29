@@ -1,4 +1,5 @@
-﻿using CoursesP2P.App.Models.BindingModels;
+﻿using AutoMapper;
+using CoursesP2P.App.Models.BindingModels;
 using CoursesP2P.App.Models.ViewModels;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
@@ -14,11 +15,16 @@ namespace CoursesP2P.App.Controllers
     public class LecturesController : Controller
     {
         private readonly CoursesP2PDbContext coursesP2PDbContext;
+        private readonly IMapper mapper;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public LecturesController(CoursesP2PDbContext coursesP2PDbContext, IWebHostEnvironment webHostEnvironment)
+        public LecturesController(
+            CoursesP2PDbContext coursesP2PDbContext,
+            IMapper mapper,
+            IWebHostEnvironment webHostEnvironment)
         {
             this.coursesP2PDbContext = coursesP2PDbContext;
+            this.mapper = mapper;
             this.webHostEnvironment = webHostEnvironment;
         }
 
@@ -81,6 +87,8 @@ namespace CoursesP2P.App.Controllers
                 CourseId = id,
                 Video = dbPath
             };
+
+           // var lecture2 = this.mapper.Map<Lecture>(model);
 
             this.coursesP2PDbContext.Lectures.Add(lecture);
             this.coursesP2PDbContext.SaveChanges();

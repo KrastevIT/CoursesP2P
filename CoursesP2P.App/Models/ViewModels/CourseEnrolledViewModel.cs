@@ -1,9 +1,13 @@
-﻿using CoursesP2P.Models.Enum;
+﻿using CoursesP2P.Models;
+using CoursesP2P.Models.Enum;
+using System.Collections.Generic;
 
 namespace CoursesP2P.App.Models.ViewModels
 {
     public class CourseEnrolledViewModel
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public decimal Price { get; set; }
@@ -12,11 +16,8 @@ namespace CoursesP2P.App.Models.ViewModels
 
         public string Image { get; set; }
 
-        //Id = course.Id,
-        //            Name = course.Name,
-        //            Category = course.Category,
-        //            Image = course.Image,
-        //            InstructorFullName = course.InstructorFullName,
-        //            Lectures = lectures
+        public ICollection<CourseLecturesViewModel> Lectures { get; set; }
+
+        public string InstructorFullName { get; set; }
     }
 }
