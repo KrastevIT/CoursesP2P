@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CoursesP2P.App.Models;
-using CoursesP2P.App.Models.ViewModels;
+using CoursesP2P.App.Models.ViewModels.Course;
 using CoursesP2P.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using CoursesP2P.App.Models.BindingModels;
+using CoursesP2P.App.Models.BindingModels.Lecture;
 using CoursesP2P.App.Models.ViewModels;
+using CoursesP2P.App.Models.ViewModels.Lecture;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -63,6 +64,8 @@ namespace CoursesP2P.App.Controllers
         [RequestSizeLimit(1000000000)]
         public IActionResult Add(AddLecturesBindingModel model, int id)
         {
+            model.CourseId = id;
+
             var guidName = Guid.NewGuid().ToString() + Path.GetExtension(model.Video.FileName);
 
             var filePath = $"{this.webHostEnvironment.WebRootPath}\\Videos\\{guidName}";
@@ -81,14 +84,8 @@ namespace CoursesP2P.App.Controllers
 
             var dbPath = "/Videos/" + guidName;
 
-            var lecture = new Lecture
-            {
-                Name = model.Name,
-                CourseId = id,
-                Video = dbPath
-            };
-
-           // var lecture2 = this.mapper.Map<Lecture>(model);
+            var lecture = this.mapper.Map<Lecture>(model);
+            lecture.Video = dbPath;
 
             this.coursesP2PDbContext.Lectures.Add(lecture);
             this.coursesP2PDbContext.SaveChanges();

@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using CoursesP2P.App.Models.BindingModels;
-using CoursesP2P.App.Models.ViewModels;
+using CoursesP2P.App.Models.BindingModels.Lecture;
+using CoursesP2P.App.Models.ViewModels.Course;
 using CoursesP2P.Models;
-using System.Linq;
 
 namespace CoursesP2P.App.Mapping
 {

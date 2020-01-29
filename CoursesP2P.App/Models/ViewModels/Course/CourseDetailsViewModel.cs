@@ -1,7 +1,6 @@
-﻿using CoursesP2P.Models.Enum;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace CoursesP2P.App.Models.ViewModels
+namespace CoursesP2P.App.Models.ViewModels.Course
 {
     public class CourseDetailsViewModel
     {

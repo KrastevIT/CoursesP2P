@@ -1,4 +1,4 @@
-﻿namespace CoursesP2P.App.Models.ViewModels
+﻿namespace CoursesP2P.App.Models.ViewModels.Instructor
 {
     public class InstructorDashboardViewModel
     {

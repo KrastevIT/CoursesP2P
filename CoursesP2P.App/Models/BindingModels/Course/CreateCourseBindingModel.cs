@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CoursesP2P.App.Models.BindingModels
+namespace CoursesP2P.App.Models.BindingModels.Course
 {
     public class CreateCourseBindingModel
     {

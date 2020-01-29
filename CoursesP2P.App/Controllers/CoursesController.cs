@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CoursesP2P.App.Models.BindingModels;
-using CoursesP2P.App.Models.ViewModels;
+using CoursesP2P.App.Models.BindingModels.Course;
+using CoursesP2P.App.Models.ViewModels.Course;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Models.Enum;
