@@ -60,30 +60,14 @@ namespace CoursesP2P.App.Controllers
             }
 
             var coursesByCategory = this.coursesP2PDbContext.Courses
+                .Include(x => x.Lectures)
+                .ToList()
                 .Where(x => x.Category == (Category)category)
                 .ToList();
 
             var models = new List<CourseViewModel>();
 
-            foreach (var course in coursesByCategory)
-            {
-                var enrolled = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList().Count();
-                var lectures = this.coursesP2PDbContext.Lectures.Where(x => x.CourseId == course.Id).Count();
-
-                var model = new CourseViewModel
-                {
-                    Id = course.Id,
-                    Name = course.Name,
-                    InstructorFullName = course.InstructorFullName,
-                    Price = course.Price,
-                    Category = course.Category,
-                    Image = course.Image,
-                    Lectures = lectures,
-                    Orders = enrolled
-                };
-
-                models.Add(model);
-            }
+            coursesByCategory.ForEach(course => models.Add(this.mapper.Map<CourseViewModel>(course)));
 
             return View(models);
         }
@@ -166,6 +150,8 @@ namespace CoursesP2P.App.Controllers
 
             var instructor = this.userManager.Users.FirstOrDefault(x => x.Id == course.InstructorId);
             instructor.Profit = instructor.Profit += course.Price;
+
+            course.Orders++;
 
             this.coursesP2PDbContext.Users.Update(instructor);
 

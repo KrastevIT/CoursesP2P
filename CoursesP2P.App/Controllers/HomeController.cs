@@ -3,6 +3,7 @@ using CoursesP2P.App.Models;
 using CoursesP2P.App.Models.ViewModels.Course;
 using CoursesP2P.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,34 +29,13 @@ namespace CoursesP2P.App.Controllers
 
         public IActionResult Index()
         {
-            var courses = this.coursesP2PDbContext.Courses.ToList();
+            var courses = this.coursesP2PDbContext.Courses
+                .Include(x => x.Lectures)
+                .ToList();
 
             var models = new List<CourseViewModel>();
 
-            foreach (var course in courses)
-            {
-                if (course.Name.Length >= 43)
-                {
-                    course.Name = course.Name.Substring(0, 43);
-                }
-
-                var enrolled = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList().Count();
-                var lectures = this.coursesP2PDbContext.Lectures.Where(x => x.CourseId == course.Id).Count();
-
-                var model = new CourseViewModel
-                {
-                    Id = course.Id,
-                    Name = course.Name,
-                    InstructorFullName = course.InstructorFullName,
-                    Price = course.Price,
-                    Category = course.Category,
-                    Image = course.Image,
-                    Orders = enrolled,
-                    Lectures = lectures
-                };
-
-                models.Add(model);
-            }
+            courses.ForEach(course => models.Add(this.mapper.Map<CourseViewModel>(course)));
 
             return View(models);
         }

@@ -1,4 +1,5 @@
 ﻿using CoursesP2P.Models.Enum;
+using System.Collections.Generic;
 
 namespace CoursesP2P.App.Models.ViewModels.Course
 {
@@ -18,6 +19,6 @@ namespace CoursesP2P.App.Models.ViewModels.Course
 
         public int Orders { get; set; }
 
-        public int Lectures { get; set; }
+        public ICollection<CourseLecturesViewModel> Lectures { get; set; }
     }
 }

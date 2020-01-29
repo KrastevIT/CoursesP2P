@@ -9,7 +9,10 @@ namespace CoursesP2P.App.Mapping
     {
         public AutoMapperProfile()
         {
+            CreateMap<Course, CourseViewModel>();
+
             CreateMap<Course, CourseEnrolledViewModel>();
+
 
             CreateMap<Lecture, CourseLecturesViewModel>();
 

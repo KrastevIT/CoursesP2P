@@ -33,6 +33,8 @@ namespace CoursesP2P.Models
         [MaxLength(1000)]
         public string Skills { get; set; }
 
+        public int Orders { get; set; }
+
         [Required]
         public string InstructorFullName { get; set; }
 
