@@ -1,4 +1,5 @@
-﻿using CoursesP2P.App.Models.BindingModels;
+﻿using AutoMapper;
+using CoursesP2P.App.Models.BindingModels;
 using CoursesP2P.App.Models.ViewModels;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
@@ -18,11 +19,16 @@ namespace CoursesP2P.App.Controllers
     {
         private readonly CoursesP2PDbContext coursesP2PDbContext;
         private readonly UserManager<User> userManager;
+        private readonly IMapper mapper;
 
-        public CoursesController(CoursesP2PDbContext coursesP2PDbContext, UserManager<User> userManager)
+        public CoursesController(
+            CoursesP2PDbContext coursesP2PDbContext,
+            IMapper mapper,
+            UserManager<User> userManager)
         {
             this.coursesP2PDbContext = coursesP2PDbContext;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
 
         [Authorize]
@@ -50,6 +56,8 @@ namespace CoursesP2P.App.Controllers
                     InstructorFullName = course.InstructorFullName,
                     Lectures = lectures
                 };
+
+                var model2 = this.mapper.Map<CourseEnrolledViewModel>(course);
 
                 models.Add(model);
             }

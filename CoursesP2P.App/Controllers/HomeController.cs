@@ -1,4 +1,5 @@
-﻿using CoursesP2P.App.Models;
+﻿using AutoMapper;
+using CoursesP2P.App.Models;
 using CoursesP2P.App.Models.ViewModels;
 using CoursesP2P.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,16 @@ namespace CoursesP2P.App.Controllers
     {
         private readonly ILogger<HomeController> logger;
         private readonly CoursesP2PDbContext coursesP2PDbContext;
+        private readonly IMapper mapper;
 
         public HomeController(
             ILogger<HomeController> logger,
-            CoursesP2PDbContext coursesP2PDbContext)
+            CoursesP2PDbContext coursesP2PDbContext,
+            IMapper mapper)
         {
             this.logger = logger;
             this.coursesP2PDbContext = coursesP2PDbContext;
+            this.mapper = mapper;
         }
 
         public IActionResult Index()
@@ -30,10 +34,10 @@ namespace CoursesP2P.App.Controllers
 
             foreach (var course in courses)
             {
-                //if (course.Name.Length >= 43)
-                //{
-                //    course.Name = course.Name.Substring(0, 43);
-                //}
+                if (course.Name.Length >= 43)
+                {
+                    course.Name = course.Name.Substring(0, 43);
+                }
 
                 var enrolled = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList().Count();
                 var lectures = this.coursesP2PDbContext.Lectures.Where(x => x.CourseId == course.Id).Count();

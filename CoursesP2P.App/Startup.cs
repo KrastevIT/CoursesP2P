@@ -1,3 +1,4 @@
+using AutoMapper;
 using CoursesP2P.App.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
@@ -33,6 +34,8 @@ namespace CoursesP2P.App
             services.AddControllersWithViews();
 
             services.AddRazorPages();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddMvc();
         }
