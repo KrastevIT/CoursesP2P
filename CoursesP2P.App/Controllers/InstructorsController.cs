@@ -1,10 +1,12 @@
-﻿using CoursesP2P.App.Models.ViewModels.Course;
+﻿using AutoMapper;
+using CoursesP2P.App.Models.ViewModels.Course;
 using CoursesP2P.App.Models.ViewModels.Instructor;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +17,16 @@ namespace CoursesP2P.App.Controllers
     public class InstructorsController : Controller
     {
         private readonly CoursesP2PDbContext coursesP2PDbContext;
+        private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
 
-        public InstructorsController(CoursesP2PDbContext coursesP2PDbContext, UserManager<User> userManager)
+        public InstructorsController(
+            CoursesP2PDbContext coursesP2PDbContext,
+            IMapper mapper,
+            UserManager<User> userManager)
         {
             this.coursesP2PDbContext = coursesP2PDbContext;
+            this.mapper = mapper;
             this.userManager = userManager;
         }
 
@@ -28,46 +35,26 @@ namespace CoursesP2P.App.Controllers
         {
             var instructor = await this.userManager.GetUserAsync(this.User);
 
-            var courses = this.coursesP2PDbContext.Users
-                .Where(c => c.Id == instructor.Id)
-                .SelectMany(x => x.CreatedCourses).ToList();
+            var courses = this.coursesP2PDbContext.Courses
+                .Where(x => x.InstructorId == instructor.Id)
+                .Include(x => x.Lectures)
+                .Include(x => x.Students)
+                .ToList();
 
             var models = new List<CourseInstructorViewModel>();
 
-            foreach (var course in courses)
+            courses.ForEach(course => models.Add(this.mapper.Map<CourseInstructorViewModel>(course)));
+
+            var dashbordItems = new InstructorDashboardViewModel
             {
-                var orders = this.coursesP2PDbContext.StudentCourses.Where(x => x.CourseId == course.Id).ToList().Count();
-                var lectures = this.coursesP2PDbContext.Lectures.Where(x => x.CourseId == course.Id).Count();
-
-                var model = new CourseInstructorViewModel
-                {
-                    Id = course.Id,
-                    Name = course.Name,
-                    Price = course.Price,
-                    Category = course.Category,
-                    Image = course.Image,
-                    Orders = orders,
-                    Lectures = lectures
-                };
-
-                models.Add(model);
-            }
-
-            var soldCourses = courses
-                .SelectMany(x => x.Students)
-                .Select(x => x.Course)
-                .Count();
-
-            var instructorDashboardViewModel = new InstructorDashboardViewModel
-            {
-                CreatedCourses = courses.Count,
-                EnrolledCourses = soldCourses,
+                CreatedCourses = courses.Count(),
+                EnrolledCourses = courses.Select(x => x.Students).Sum(x => x.Count),
                 Profit = instructor.Profit
             };
 
-            var tuple = new Tuple<IEnumerable<CourseInstructorViewModel>, InstructorDashboardViewModel>(models, instructorDashboardViewModel);
+            this.ViewBag.dashbordItems = dashbordItems;
 
-            return View(tuple);
+            return View(models);
         }
 
         public IActionResult Edit(int id)

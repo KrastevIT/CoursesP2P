@@ -142,7 +142,7 @@ namespace CoursesP2P.App.Controllers
             };
 
             var instructor = this.userManager.Users.FirstOrDefault(x => x.Id == course.InstructorId);
-            instructor.Profit = instructor.Profit += course.Price;
+            instructor.Profit += course.Price;
 
             course.Orders++;
 
