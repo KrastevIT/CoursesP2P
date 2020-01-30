@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using CoursesP2P.App.Models.ViewModels.Course;
-using CoursesP2P.App.Models.ViewModels.Instructor;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

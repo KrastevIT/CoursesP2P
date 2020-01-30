@@ -37,17 +37,7 @@ namespace CoursesP2P.App.Controllers
 
             var models = new List<LectureViewModel>();
 
-            foreach (var lecture in lectures)
-            {
-                var model = new LectureViewModel
-                {
-                    Id = lecture.Id,
-                    Name = lecture.Name,
-                    Video = lecture.Video
-                };
-
-                models.Add(model);
-            }
+            lectures.ForEach(x => models.Add(this.mapper.Map<LectureViewModel>(x)));
 
             return View(models);
         }
