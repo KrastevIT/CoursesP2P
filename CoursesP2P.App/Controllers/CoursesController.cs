@@ -104,18 +104,23 @@ namespace CoursesP2P.App.Controllers
             var dbPath = "/Images/" + fileName;
 
             var user = await this.userManager.GetUserAsync(this.User);
+            model.InstructorFullName = user.FirstName + ' ' + user.LastName;
+            model.InstructorId = user.Id;
 
-            var course = new Course
-            {
-                Name = model.Name,
-                Description = model.Description,
-                Price = model.Price,
-                Category = model.Category,
-                Image = dbPath,
-                InstructorFullName = user.FirstName + ' ' + user.LastName,
-                InstructorId = user.Id,
-                Skills = model.Skills
-            };
+            //var course = new Course
+            //{
+            //    Name = model.Name,
+            //    Description = model.Description,
+            //    Price = model.Price,
+            //    Category = model.Category,
+            //    Image = dbPath,
+            //    InstructorFullName = user.FirstName + ' ' + user.LastName,
+            //    InstructorId = user.Id,
+            //    Skills = model.Skills
+            //};
+
+            var course = this.mapper.Map<Course>(model);
+            course.Image = dbPath;
 
             coursesP2PDbContext.Courses.Add(course);
             coursesP2PDbContext.SaveChanges();

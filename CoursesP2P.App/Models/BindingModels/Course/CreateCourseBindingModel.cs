@@ -31,5 +31,9 @@ namespace CoursesP2P.App.Models.BindingModels.Course
 
         [Required]
         public IFormFile Image { get; set; }
+
+        public string InstructorFullName { get; set; }
+
+        public string InstructorId { get; set; }
     }
 }
