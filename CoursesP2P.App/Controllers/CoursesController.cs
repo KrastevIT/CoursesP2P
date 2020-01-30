@@ -107,18 +107,6 @@ namespace CoursesP2P.App.Controllers
             model.InstructorFullName = user.FirstName + ' ' + user.LastName;
             model.InstructorId = user.Id;
 
-            //var course = new Course
-            //{
-            //    Name = model.Name,
-            //    Description = model.Description,
-            //    Price = model.Price,
-            //    Category = model.Category,
-            //    Image = dbPath,
-            //    InstructorFullName = user.FirstName + ' ' + user.LastName,
-            //    InstructorId = user.Id,
-            //    Skills = model.Skills
-            //};
-
             var course = this.mapper.Map<Course>(model);
             course.Image = dbPath;
 
@@ -169,26 +157,20 @@ namespace CoursesP2P.App.Controllers
 
         public IActionResult Details(int id)
         {
-            var course = this.coursesP2PDbContext.Courses.Find(id);
-            var lecturesName = this.coursesP2PDbContext.Lectures
-                .Where(x => x.CourseId == course.Id)
-                .Select(x => x.Name)
-                .ToList();
+            var course = this.coursesP2PDbContext.Courses
+                .Include(x => x.Lectures)
+                .FirstOrDefault(x => x.Id == id);
+
+            var lecturesName = course.Lectures.Select(x => x.Name).ToList();
 
             var splitSkills = course.Skills.Split('*')
                 .Select(x => x.Trim())
                 .Where(x => x != string.Empty)
                 .ToList();
 
-            var model = new CourseDetailsViewModel
-            {
-                Id = course.Id,
-                Name = course.Name,
-                Description = course.Description,
-                Price = course.Price,
-                LectureName = lecturesName,
-                Skills = splitSkills
-            };
+            var model = this.mapper.Map<CourseDetailsViewModel>(course);
+            model.LectureName = lecturesName;
+            model.Skills = splitSkills;
 
             return View(model);
         }

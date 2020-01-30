@@ -15,6 +15,8 @@ namespace CoursesP2P.App.Mapping
 
             CreateMap<Course, CourseEnrolledViewModel>();
 
+            CreateMap<Course, CourseDetailsViewModel>();
+
             CreateMap<CreateCourseBindingModel, Course>();
 
 
