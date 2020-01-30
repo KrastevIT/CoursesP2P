@@ -32,12 +32,12 @@
             </figure>
         </div>
 
-
+        @* TODO *@
         <div class="col-12 col-sm-6 col-md-8">
             <div class="list-group">
-                @foreach (var lecturesName in Model.LecturesName)
+                @foreach (var lecturesName in Model.Lectures)
                 {
-                    <a href="#" class="list-group-item list-group-item-action text-center">@lecturesName</a>
+                    <a href="#" class="list-group-item list-group-item-action text-center">@lecturesName.Name</a>
                 }
             </div>
         </div>

@@ -17,6 +17,6 @@ namespace CoursesP2P.App.Models.ViewModels.Course
 
         public string Image { get; set; }
 
-        public ICollection<string> LecturesName { get; set; } = new List<string>();
+        public ICollection<CourseLecturesViewModel> Lectures { get; set; }
     }
 }

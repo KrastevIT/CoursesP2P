@@ -45,7 +45,7 @@ namespace CoursesP2P.App.Controllers
 
             courses.ForEach(course => modelsCourse.Add(this.mapper.Map<CourseInstructorViewModel>(course)));
 
-            var model = new CourseAndDashbordViewModel 
+            var model = new CourseAndDashbordViewModel
             {
                 Courses = modelsCourse,
                 CreatedCourses = courses.Count(),
@@ -58,22 +58,11 @@ namespace CoursesP2P.App.Controllers
 
         public IActionResult Edit(int id)
         {
-            var course = this.coursesP2PDbContext.Courses.Find(id);
-            var lecturesName = this.coursesP2PDbContext.Lectures
-                .Where(x => x.CourseId == id)
-                .Select(x => x.Name)
-                .ToList();
+            var course = this.coursesP2PDbContext.Courses
+                .Include(x => x.Lectures)
+                .FirstOrDefault(x => x.Id == id);
 
-            var model = new CourseEditViewModel
-            {
-                Id = course.Id,
-                Name = course.Name,
-                Description = course.Description,
-                Price = course.Price,
-                Category = course.Category,
-                Image = course.Image,
-                LecturesName = lecturesName
-            };
+            var model = this.mapper.Map<CourseEditViewModel>(course);
 
             return View(model);
         }

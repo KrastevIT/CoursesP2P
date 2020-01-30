@@ -3,6 +3,7 @@ using CoursesP2P.App.Models.BindingModels.Course;
 using CoursesP2P.App.Models.BindingModels.Lecture;
 using CoursesP2P.App.Models.ViewModels.Course;
 using CoursesP2P.Models;
+using System.Linq;
 
 namespace CoursesP2P.App.Mapping
 {
@@ -21,12 +22,16 @@ namespace CoursesP2P.App.Mapping
 
             CreateMap<CreateCourseBindingModel, Course>();
 
-            
 
             //Lecture Map
             CreateMap<Lecture, CourseLecturesViewModel>();
 
+
             CreateMap<AddLecturesBindingModel, Lecture>();
+
+
+            //Instructor Map
+            CreateMap<Course, CourseEditViewModel>();
         }
     }
 }
