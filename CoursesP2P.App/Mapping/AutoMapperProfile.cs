@@ -21,6 +21,7 @@ namespace CoursesP2P.App.Mapping
 
             CreateMap<CreateCourseBindingModel, Course>();
 
+            
 
             //Lecture Map
             CreateMap<Lecture, CourseLecturesViewModel>();

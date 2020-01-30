@@ -41,20 +41,19 @@ namespace CoursesP2P.App.Controllers
                 .Include(x => x.Students)
                 .ToList();
 
-            var models = new List<CourseInstructorViewModel>();
+            var modelsCourse = new List<CourseInstructorViewModel>();
 
-            courses.ForEach(course => models.Add(this.mapper.Map<CourseInstructorViewModel>(course)));
+            courses.ForEach(course => modelsCourse.Add(this.mapper.Map<CourseInstructorViewModel>(course)));
 
-            var dashbordItems = new InstructorDashboardViewModel
+            var model = new CourseAndDashbordViewModel 
             {
+                Courses = modelsCourse,
                 CreatedCourses = courses.Count(),
                 EnrolledCourses = courses.Select(x => x.Students).Sum(x => x.Count),
                 Profit = instructor.Profit
             };
 
-            this.ViewBag.dashbordItems = dashbordItems;
-
-            return View(models);
+            return View(model);
         }
 
         public IActionResult Edit(int id)
