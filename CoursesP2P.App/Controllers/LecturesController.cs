@@ -44,9 +44,13 @@ namespace CoursesP2P.App.Controllers
 
         public IActionResult Add(int id)
         {
-            ViewBag.id = id;
+            // ViewBag.id = id;
+            var model = new AddLecturesBindingModel
+            {
+                CourseId = id
+            };
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]

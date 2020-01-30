@@ -5,12 +5,12 @@
 
 <h1>Add Lectures</h1>
 
-<form enctype="multipart/form-data" asp-controller="Lectures" asp-action="Add" asp-route-id="@ViewBag.id" method="post" class="form-horizontal">
+<form enctype="multipart/form-data" asp-controller="Lectures" asp-action="Add" asp-route-id="@Model.CourseId" method="post" class="form-horizontal">
     <div class="form-group">
-        <label class="control-label col-sm-2" asp-for="Name"></label>
+        <label class="control-label col-sm-2" asp-for="@Model.Name"></label>
         <div class="col-sm-10">
-            <input class="form-control" asp-for="Name" />
-            <span class="text-danger" asp-validation-for="Name"></span>
+            <input class="form-control" asp-for="@Model.Name" />
+            <span class="text-danger" asp-validation-for="@Model.Name"></span>
         </div>
     </div>
 
