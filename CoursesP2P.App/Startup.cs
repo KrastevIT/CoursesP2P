@@ -60,7 +60,7 @@ namespace CoursesP2P.App
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.SeedDatabase();
+           // app.SeedDatabase();
 
             app.UseEndpoints(endpoints =>
             {
