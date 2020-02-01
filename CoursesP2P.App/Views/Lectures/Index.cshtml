@@ -3,21 +3,31 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center">Course content</h1>
+<head>
+    <link href="~/css/lectures-index.css" rel="stylesheet" />
+</head>
 
-<div class="container">
-    <div class="row">
-        @foreach (var lecture in Model)
-        {
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <a asp-controller="Lectures" asp-action="Video" asp-route-id="@lecture.Id"
-                           class="list-group-item list-group-item-action text-center"><i class="fas fa-play"></i> @lecture.Name</a>
+<body>
+    <section class="services-area pt-100 pb-70" id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-8 mx-auto text-center">
+                    <div class="section-title">
+                        <h4>Lectures</h4>
                     </div>
                 </div>
             </div>
-        }
-    </div>
-</div>
-
+            <div class="row">
+                @foreach (var lecture in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-service">
+                            <a asp-controller="Lectures" asp-action="Video" asp-route-id="@lecture.Id"><i class="fa fa-video"></i></a>
+                            <h4>@lecture.Name</h4>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</body>
