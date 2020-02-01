@@ -69,43 +69,45 @@
                 </div>
             </div>
         </div>
+    </div>
 
-    </div>
-    <div class="text-center">
-        <br />
-        <a asp-controller="Courses" asp-action="Create" class="btn btn-success btn-lg">Create new course</a>
-        <br />
-        <br />
-    </div>
-    <div class="row">
-        @foreach (var course in Model.Courses)
-        {
-            <div class="col-md-4">
-                <figure class="card card-product">
-                    <div class="img-wrap">
-                        <a href="@Url.Action("Edit", "Instructors", new { id=course.Id})">
-                            <img src="@course.Image" style="width:348px;height:220px;">
-                        </a>
-                    </div>
-                    <figcaption class="info-wrap">
-                        <h4 class="title">@course.Name</h4>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">@course.Category</li>
-                            <li class="list-group-item">Lectures @course.Lectures.Count</li>
-                        </ul>
-                        <div class="rating-wrap">
-                            <div class="label-rating">0 reviews</div>
-                            <div class="label-rating">@course.Orders orders </div>
+    <div class="container">
+        <div class="text-center">
+            <br />
+            <a asp-controller="Courses" asp-action="Create" class="btn btn-success btn-lg">Create new course</a>
+            <br />
+            <br />
+        </div>
+        <div class="row">
+            @foreach (var course in Model.Courses)
+            {
+                <div class="col-md-4">
+                    <figure class="card card-product">
+                        <div class="img-wrap">
+                            <a href="@Url.Action("Edit", "Instructors", new { id=course.Id})">
+                                <img src="@course.Image" style="width:348px;height:220px;">
+                            </a>
                         </div>
-                    </figcaption>
-                    <div class="bottom-wrap">
-                        <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-sm btn-outline-success float-right">Add Lecture</a>
-                        <div class="price-wrap h5">
-                            <span class="price-new">$@course.Price</span>
+                        <figcaption class="info-wrap">
+                            <h4 class="title">@course.Name</h4>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">@course.Category</li>
+                                <li class="list-group-item">Lectures @course.Lectures.Count</li>
+                            </ul>
+                            <div class="rating-wrap">
+                                <div class="label-rating">0 reviews</div>
+                                <div class="label-rating">@course.Orders orders </div>
+                            </div>
+                        </figcaption>
+                        <div class="bottom-wrap">
+                            <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-sm btn-outline-success float-right">Add Lecture</a>
+                            <div class="price-wrap h5">
+                                <span class="price-new">$@course.Price</span>
+                            </div>
                         </div>
-                    </div>
-                </figure>
-            </div>
-        }
+                    </figure>
+                </div>
+            }
+        </div>
     </div>
 </div>
