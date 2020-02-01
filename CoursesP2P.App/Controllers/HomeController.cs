@@ -33,11 +33,14 @@ namespace CoursesP2P.App.Controllers
                 .Include(x => x.Lectures)
                 .ToList();
 
-            var models = new List<CourseViewModel>();
+           // var models = new List<CourseViewModel>();  
 
-            courses.ForEach(course => models.Add(this.mapper.Map<CourseViewModel>(course)));
+            //TODO Update Mapper IEnumerable 
+            var models2 = this.mapper.Map<IEnumerable<CourseViewModel>>(courses);
 
-            return View(models);
+           // courses.ForEach(course => models.Add(this.mapper.Map<CourseViewModel>(course)));
+
+            return View(models2);
         }
 
         public IActionResult Search(string searchTerm)
