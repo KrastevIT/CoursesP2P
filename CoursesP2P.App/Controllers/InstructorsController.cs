@@ -39,9 +39,7 @@ namespace CoursesP2P.App.Controllers
                 .Include(x => x.Students)
                 .ToList();
 
-            var modelsCourse = new List<CourseInstructorViewModel>();
-
-            courses.ForEach(course => modelsCourse.Add(this.mapper.Map<CourseInstructorViewModel>(course)));
+           var modelsCourse = this.mapper.Map<IEnumerable<CourseInstructorViewModel>>(courses);
 
             var model = new CourseAndDashbordViewModel
             {

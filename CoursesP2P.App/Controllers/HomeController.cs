@@ -33,12 +33,7 @@ namespace CoursesP2P.App.Controllers
                 .Include(x => x.Lectures)
                 .ToList();
 
-           // var models = new List<CourseViewModel>();  
-
-            //TODO Update Mapper IEnumerable 
             var models2 = this.mapper.Map<IEnumerable<CourseViewModel>>(courses);
-
-           // courses.ForEach(course => models.Add(this.mapper.Map<CourseViewModel>(course)));
 
             return View(models2);
         }
@@ -50,15 +45,13 @@ namespace CoursesP2P.App.Controllers
                 return RedirectToAction("Index");
             }
 
-            var searchResult = new List<CourseViewModel>();
-
             var foundCourses = this.coursesP2PDbContext.Courses
                .Include(x => x.Lectures)
                .Where(x => x.Name.ToLower()
                .Contains(searchTerm.ToLower()))
                .ToList();
 
-            foundCourses.ForEach(course => searchResult.Add(this.mapper.Map<CourseViewModel>(course)));
+            var searchResult = this.mapper.Map<IEnumerable<CourseViewModel>>(foundCourses);
 
             return View(searchResult);
         }

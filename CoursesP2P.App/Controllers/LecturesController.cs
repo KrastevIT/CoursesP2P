@@ -35,9 +35,7 @@ namespace CoursesP2P.App.Controllers
                 .Where(x => x.CourseId == id)
                 .ToList();
 
-            var models = new List<LectureViewModel>();
-
-            lectures.ForEach(x => models.Add(this.mapper.Map<LectureViewModel>(x)));
+            var models = this.mapper.Map<IEnumerable<LectureViewModel>>(lectures);
 
             return View(models);
         }

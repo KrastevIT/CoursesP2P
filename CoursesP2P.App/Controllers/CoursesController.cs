@@ -44,9 +44,7 @@ namespace CoursesP2P.App.Controllers
                 .Select(x => x.Course)
                 .ToList();
 
-            var models = new List<CourseEnrolledViewModel>();
-
-            courses.ForEach(course => models.Add(this.mapper.Map<CourseEnrolledViewModel>(course)));
+            var models = this.mapper.Map<IEnumerable<CourseEnrolledViewModel>>(courses);
 
             return View(models);
         }
@@ -64,10 +62,8 @@ namespace CoursesP2P.App.Controllers
                 .ToList()
                 .Where(x => x.Category == (Category)category)
                 .ToList();
-
-            var models = new List<CourseViewModel>();
-
-            coursesByCategory.ForEach(course => models.Add(this.mapper.Map<CourseViewModel>(course)));
+           
+            var models = this.mapper.Map<IEnumerable<CourseViewModel>>(coursesByCategory);
 
             return View(models);
         }
