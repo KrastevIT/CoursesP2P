@@ -6,6 +6,6 @@
 
         public string Name { get; set; }
 
-        public string VideoPath { get; set; }
+        public string Video { get; set; }
     }
 }

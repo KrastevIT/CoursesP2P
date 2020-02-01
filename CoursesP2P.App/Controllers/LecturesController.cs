@@ -92,28 +92,10 @@ namespace CoursesP2P.App.Controllers
                 .Where(x => x.CourseId == lecture.CourseId)
                 .ToList();
 
-            var modelVideos = new List<VideoLectureViewModel>();
+            var modelVideos = this.mapper.Map<IEnumerable<VideoLectureViewModel>>(lecturesOfCourse);
 
-            foreach (var video in lecturesOfCourse)
-            {
-
-                var modelVideoLecture = new VideoLectureViewModel
-                {
-                    Id = video.Id,
-                    Name = video.Name,
-                    VideoPath = video.Video
-                };
-
-                modelVideos.Add(modelVideoLecture);
-            }
-
-            var model = new VideoViewModel
-
-            {
-                Name = lecture.Name,
-                VideoPath = lecture.Video,
-                Lectures = modelVideos
-            };
+            var model = this.mapper.Map<VideoViewModel>(lecture);
+            model.Lectures = modelVideos;
 
             return View(model);
         }
