@@ -4,33 +4,52 @@ using CoursesP2P.App.Models.ViewModels;
 using CoursesP2P.App.Models.ViewModels.Lecture;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CoursesP2P.App.Controllers
 {
+    [Authorize]
     public class LecturesController : Controller
     {
         private readonly CoursesP2PDbContext coursesP2PDbContext;
         private readonly IMapper mapper;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly UserManager<User> userManager;
 
         public LecturesController(
             CoursesP2PDbContext coursesP2PDbContext,
             IMapper mapper,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            UserManager<User> userManager)
         {
             this.coursesP2PDbContext = coursesP2PDbContext;
             this.mapper = mapper;
             this.webHostEnvironment = webHostEnvironment;
+            this.userManager = userManager;
         }
 
-        public IActionResult Index(int id)
+        public async Task<IActionResult> Index(int id)
         {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+
+            var user = this.coursesP2PDbContext.Users
+                .Include(x => x.EnrolledCourses)
+                .FirstOrDefault(x => x.Id == currentUser.Id);
+
+            var isValidUser = user.EnrolledCourses.Any(x => x.CourseId == id);
+            if (!isValidUser)
+            {
+                return Unauthorized();
+            }
             var lectures = this.coursesP2PDbContext.Lectures
                 .Where(x => x.CourseId == id)
                 .ToList();
