@@ -72,10 +72,8 @@ namespace CoursesP2P.App.Controllers
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 1000000000)]
         [RequestSizeLimit(1000000000)]
-        public IActionResult Add(AddLecturesBindingModel model, int id)
+        public IActionResult Add(AddLecturesBindingModel model)
         {
-            model.CourseId = id;
-
             var guidName = Guid.NewGuid().ToString() + Path.GetExtension(model.Video.FileName);
 
             var filePath = $"{this.webHostEnvironment.WebRootPath}\\Videos\\{guidName}";

@@ -5,7 +5,8 @@
 
 <h1>Add Lectures</h1>
 
-<form enctype="multipart/form-data" asp-controller="Lectures" asp-action="Add" asp-route-id="@Model.CourseId" method="post" class="form-horizontal">
+<form enctype="multipart/form-data" asp-controller="Lectures" asp-action="Add" method="post" class="form-horizontal">
+    <input type="hidden" asp-for="@Model.CourseId" />
     <div class="form-group">
         <label class="control-label col-sm-2" asp-for="@Model.Name"></label>
         <div class="col-sm-10">

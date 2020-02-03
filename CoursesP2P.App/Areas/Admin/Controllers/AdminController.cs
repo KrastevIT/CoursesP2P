@@ -3,12 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoursesP2P.App.Areas.Admin.Controllers
 {
-   
-    public class HomeController : AdminController
+    [Area("Admin")]
+    [Authorize(Roles = "Administrator")]
+    public abstract class AdminController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
     }
 }

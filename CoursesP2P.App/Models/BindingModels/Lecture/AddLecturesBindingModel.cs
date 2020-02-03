@@ -10,6 +10,7 @@ namespace CoursesP2P.App.Models.BindingModels.Lecture
         [MaxLength(50)]
         public string Name { get; set; }
 
+        [Required]
         public int CourseId { get; set; }
 
         [Required]
