@@ -25,6 +25,12 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account.Manage
 
         public string FirstName { get; set; }
 
+        public string LastName { get; set; }
+
+        public int Age { get; set; }
+
+        public string City { get; set; }
+
         [TempData]
         public string StatusMessage { get; set; }
 
@@ -37,7 +43,24 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
+            [Required]
+            [MinLength(2)]
+            [MaxLength(50)]
             public string FirstName { get; set; }
+
+            [Required]
+            [MinLength(2)]
+            [MaxLength(50)]
+            public string LastName { get; set; }
+
+            [Required]
+            [Range(0, 120)]
+            public int Age { get; set; }
+
+            [Required]
+            [MinLength(2)]
+            [MaxLength(50)]
+            public string City { get; set; }
         }
 
         private async Task LoadAsync(User user)
@@ -47,11 +70,17 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
             FirstName = user.FirstName;
+            LastName = user.LastName;
+            Age = user.Age;
+            City = user.City;
 
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
-                FirstName = FirstName
+                FirstName = FirstName,
+                LastName = LastName,
+                Age = Age,
+                City = City
             };
         }
 
@@ -93,6 +122,9 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account.Manage
             }
 
             user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.Age = Input.Age;
+            user.City = Input.City;
 
             await userManager.UpdateAsync(user);
 

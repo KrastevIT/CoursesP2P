@@ -5,31 +5,112 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h4>@ViewData["Title"]</h4>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control" disabled />
+@*<div class="container card card-user">
+    <h4>@ViewData["Title"]</h4>
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-5 pr-1">
+                <form id="profile-form" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Username"></label>
+                        <input asp-for="Username" class="form-control" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.FirstName"></label>
+                        <input asp-for="Input.FirstName" class="form-control" />
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.LastName"></label>
+                        <input asp-for="Input.LastName" class="form-control" />
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Age"></label>
+                        <input asp-for="Input.Age" class="form-control" />
+                        <span asp-validation-for="Input.Age" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.City"></label>
+                        <input asp-for="Input.City" class="form-control" />
+                        <span asp-validation-for="Input.City" class="text-danger"></span>
+                    </div>
+                    <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.FirstName"></label>
-                <input asp-for="Input.FirstName" class="form-control" />
-                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+        </div>
+    </div>
+</div>*@
+
+
+<div class="container">
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Edit Profile</h4>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="profile-form" method="post">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="form-group row">
+                                    <label asp-for="Input.FirstName" class="col-4 col-form-label">First Name</label>
+                                    <div class="col-8">
+                                        <input asp-for="Input.FirstName" class="form-control here" type="text" />
+                                    </div>
+                                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group row">
+                                    <label asp-for="Input.LastName" class="col-4 col-form-label">Last Name</label>
+                                    <div class="col-8">
+                                        <input asp-for="Input.LastName" class="form-control here" type="text" />
+                                    </div>
+                                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group row">
+                                    <label asp-for="Input.Age" class="col-4 col-form-label">Age</label>
+                                    <div class="col-8">
+                                        <input asp-for="Input.Age" class="form-control here" type="text" />
+                                    </div>
+                                    <span asp-validation-for="Input.Age" class="text-danger"></span>
+                                </div>
+                                <div class="form-group row">
+                                    <label asp-for="Input.City" class="col-4 col-form-label">City</label>
+                                    <div class="col-8">
+                                        <input asp-for="Input.City" class="form-control here" type="text" />
+                                    </div>
+                                    <span asp-validation-for="Input.City" class="text-danger"></span>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="offset-4 col-8">
+                                        <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.PhoneNumber"></label>
-                <input asp-for="Input.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
-        </form>
+        </div>
     </div>
 </div>
+
+
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+
+
+
