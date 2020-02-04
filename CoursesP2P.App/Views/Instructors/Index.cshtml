@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-5 col-md-4">
                             <div class="icon-big text-center icon-warning">
-                                <i class="nc-icon nc-check-2 text-info"></i>
+                                <i class="tim-icons icon-check-2 text-info"></i>
                             </div>
                         </div>
                         <div class="col-7 col-md-8">
@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col-5 col-md-4">
                             <div class="icon-big text-center icon-warning">
-                                <i class="nc-icon nc-cart-simple text-danger"></i>
+                                <i class="tim-icons icon-cart text-danger"></i>
                             </div>
                         </div>
                         <div class="col-7 col-md-8">
@@ -55,7 +55,7 @@
                     <div class="row">
                         <div class="col-5 col-md-4">
                             <div class="icon-big text-center icon-warning">
-                                <i class="nc-icon nc-money-coins text-success"></i>
+                                <i class="tim-icons icon-money-coins text-success"></i>
                             </div>
                         </div>
                         <div class="col-7 col-md-8">
@@ -82,29 +82,31 @@
             @foreach (var course in Model.Courses)
             {
                 <div class="col-md-4">
-                    <figure class="card card-product">
+                    <figure class="card card-coin card-plain">
                         <div class="img-wrap">
-                            <a href="@Url.Action("Edit", "Instructors", new { id=course.Id})">
+                            <a href="@Url.Action("Index", "Lectures", new { id=course.Id})">
                                 <img src="@course.Image" style="width:348px;height:220px;">
                             </a>
                         </div>
-                        <figcaption class="info-wrap">
-                            <h4 class="title">@course.Name</h4>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">@course.Category</li>
-                                <li class="list-group-item">Lectures @course.Lectures.Count</li>
-                            </ul>
-                            <div class="rating-wrap">
-                                <div class="label-rating">0 reviews</div>
-                                <div class="label-rating">@course.Orders orders </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <h4 class="text-uppercase">@course.Name</h4>
+                                    <hr class="line-primary">
+                                </div>
                             </div>
-                        </figcaption>
-                        <div class="bottom-wrap">
-                            <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-sm btn-outline-success float-right">Add Lecture</a>
-                            <div class="price-wrap h5">
-                                <span class="price-new">$@course.Price</span>
+                            <div class="row">
+                                <ul class="list-group">
+                                    <li class="list-group-item">@course.Category</li>
+                                    <li class="list-group-item">Lectures @course.Lectures.Count</li>
+                                    <li class="list-group-item">@course.Orders orders </li>
+                                </ul>
                             </div>
                         </div>
+                        <div class="card-footer text-center">
+                            <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-primary btn-sm">Add Lecture</a>
+                        </div>
+
                     </figure>
                 </div>
             }

@@ -3,31 +3,35 @@
     ViewData["Title"] = "MyCourses";
 }
 
-<h1 class="text-center">My Enrolled Courses</h1>
-
-
-<br />
 
 <div class="container">
+    <h1 class="text-center">My Enrolled Courses</h1>
     <div class="row">
         @foreach (var course in Model)
         {
             <div class="col-md-4">
-                <figure class="card card-product">
+                <figure class="card card-coin card-plain">
                     <div class="img-wrap">
                         <a href="@Url.Action("Index", "Lectures", new { id=course.Id})">
                             <img src="@course.Image" style="width:348px;height:220px;">
                         </a>
                     </div>
-                    <figcaption class="info-wrap">
-                        <h4 class="title">@course.Name</h4>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">by @course.InstructorFullName</li>
-                            <li class="list-group-item">@course.Category</li>
-                            <li class="list-group-item">Lectures @course.Lectures.Count</li>
-                        </ul>
-                    </figcaption>
-                    <div class="text-center">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h4 class="text-uppercase">@course.Name</h4>
+                                <span>by @course.InstructorFullName</span>
+                                <hr class="line-primary">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <ul class="list-group">
+                                <li class="list-group-item">@course.Category</li>
+                                <li class="list-group-item">Lectures @course.Lectures.Count</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
                         <a asp-controller="Lectures" asp-action="Index" asp-route-id="@course.Id" class="btn btn-sm btn-outline-info">View Lectures</a>
                     </div>
                 </figure>

@@ -3,89 +3,226 @@
     ViewData["Title"] = "Home Page";
 }
 
-<head>
-    <link href="~/css/index.css" rel="stylesheet">
-</head>
 
-<header class="masthead text-white">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-9 mx-auto">
-                <h1 class="mb-5">Shape the future of learning with us</h1>
-            </div>
-        </div>
-    </div>
-</header>
-<section class="features-icons bg-light text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                    <div class="features-icons-icon d-flex">
-                        <i class="nc-icon nc-hat-3 m-auto text-info"></i>
-                    </div>
-                    <h3>Students</h3>
-                    <p class="lead mb-0">Get the latest skills in leading industries with on-demand, expert-led courses</p>
+<div class="wrapper">
+    <div class="section">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-lg-5 mb-5 mb-lg-0 ">
+                    <h1 class="text-white font-weight-light">Shape the future of learning with us</h1>
+                    <p class="text-white mt-4">Get the latest skills in leading industries with on-demand, expert-led courses</p>
+                    <a href="/Identity/Account/Login" class="btn btn-warning mt-4">Start Now</a>
                 </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                    <div class="features-icons-icon d-flex">
-                        <i class="nc-icon nc-single-02 m-auto text-info"></i>
-                    </div>
-                    <h3>Instructors</h3>
-                    <p class="lead mb-0">Insights, ideas, and stories</p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-                    <div class="features-icons-icon d-flex">
-                        <i class="nc-icon nc-bulb-63 m-auto text-info"></i>
-                    </div>
-                    <h3>Start now</h3>
-                    <p class="lead mb-0">Your Knowledge and Improve the Skills You’ve Learned With CoursesP2P!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<br />
-
-<div class="container">
-    <hr />
-    <div class="row">
-        @foreach (var course in Model)
-        {
-            <div class="col-md-4">
-                <figure class="card card-product">
-                    <div class="img-wrap">
-                        <a href="@Url.Action("Details", "Courses", new { id=course.Id})">
-                            <img src="@course.Image" style="width:348px;height:220px;">
+                <div class="col-lg-6">
+                    <div id="carouselExampleControls" class="carousel slide">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="~/background/YouAreYourOnlyLimit.jpg" style="width:540px;height:360px;" alt="First slide">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                            <i class="tim-icons icon-minimal-left"></i>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                            <i class="tim-icons icon-minimal-right"></i>
+                            <span class="sr-only">Next</span>
                         </a>
                     </div>
-                    <figcaption class="info-wrap">
-                        <h4 class="title">@course.Name</h4>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">by @course.InstructorFullName</li>
-                            <li class="list-group-item">@course.Category</li>
-                            <li class="list-group-item">Lectures @course.Lectures.Count</li>
-                        </ul>
-                        <div class="rating-wrap">
-                            <div class="label-rating">0 reviews</div>
-                            <div class="label-rating">@course.Orders orders </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="section section-lg">
+    <section class="section">
+        <img src="../assets/img/path4.png" class="path">
+        <div class="container">
+            <div class="row row-grid justify-content-between">
+                <div class="col-md-5 mt-lg-5">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12 px-2 py-2">
+                            <div class="card card-stats ">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-5 col-md-4">
+                                            <div class="icon-big text-center icon-warning">
+                                                <i class="tim-icons icon-trophy text-warning"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-md-8">
+                                            <div class="numbers">
+                                                <p class="card-title">3,237
+                                                <p>
+                                                <p class="card-category">Awards</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </figcaption>
-                    <div class="bottom-wrap">
-                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-sm btn-outline-info float-right">Details</a>
-                        <a asp-controller="Courses" asp-action="Add" asp-route-id="@course.Id" class="btn btn-sm btn-outline-danger float-right">Order Now</a>
-                        <div class="price-wrap h5">
-                            <span class="price-new">$@course.Price</span>
+                        <div class="col-lg-6 col-sm-12 px-2 py-2">
+                            <div class="card card-stats upper bg-default">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-5 col-md-4">
+                                            <div class="icon-big text-center icon-warning">
+                                                <i class="tim-icons icon-coins text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-md-8">
+                                            <div class="numbers">
+                                                <p class="card-title">3,653
+                                                <p>
+                                                <p class="card-category">Commits</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </figure>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12 px-2 py-2">
+                            <div class="card card-stats ">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-5 col-md-4">
+                                            <div class="icon-big text-center icon-warning">
+                                                <i class="tim-icons icon-gift-2 text-info"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-md-8">
+                                            <div class="numbers">
+                                                <p class="card-title">593
+                                                <p>
+                                                <p class="card-category">Presents</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12 px-2 py-2">
+                            <div class="card card-stats ">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-5 col-md-4">
+                                            <div class="icon-big text-center icon-warning">
+                                                <i class="tim-icons icon-credit-card text-success"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-md-8">
+                                            <div class="numbers">
+                                                <p class="card-title">10,783
+                                                <p>
+                                                <p class="card-category">Forks</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="pl-md-5">
+                        <h1>
+                            Large
+                            <br />Achivements
+                        </h1>
+                        <p>I should be capable of drawing a single stroke at the present moment; and yet I feel that I never was a greater artist than now. </p>
+                        <br />
+                        <p>When, while the lovely valley teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable foliage of my trees, and but a few stray.</p>
+                        <br />
+                        <a href="#" class="font-weight-bold text-info mt-5">Show all <i class="tim-icons icon-minimal-right text-info"></i></a>
+                    </div>
+                </div>
             </div>
-        }
+        </div>
+    </section>
+</section>
+<div class="section section-lg">
+    <img src="../assets/img/path4.png" class="path">
+    <img src="../assets/img/path5.png" class="path2">
+    <img src="../assets/img/path2.png" class="path3">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="row row-grid justify-content-center">
+                    <div class="col-lg-3">
+                        <div class="info">
+                            <div class="icon icon-primary">
+                                <i class="tim-icons icon-money-coins"></i>
+                            </div>
+                            <h4 class="info-title">Low Commission</h4>
+                            <hr class="line-primary">
+                            <p>Divide details about your work into parts. Write a few lines about each one. A paragraph describing a feature will.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="info">
+                            <div class="icon icon-warning">
+                                <i class="tim-icons icon-chart-pie-36"></i>
+                            </div>
+                            <h4 class="info-title">High Incomes</h4>
+                            <hr class="line-warning">
+                            <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing feature will be a feature. </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="info">
+                            <div class="icon icon-success">
+                                <i class="tim-icons icon-single-02"></i>
+                            </div>
+                            <h4 class="info-title">Verified People</h4>
+                            <hr class="line-success">
+                            <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing be enough.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <img src="../assets/img/path3.png" class="path">
+    <div class="container">
+        <div class="row">
+            @foreach (var course in Model)
+            {
+                <div class="col-md-4">
+                    <figure class="card card-coin card-plain">
+                        <div class="img-wrap">
+                            <a href="@Url.Action("Details", "Courses", new { id=course.Id})">
+                                <img src="@course.Image" style="width:348px;height:220px;">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <h4 class="text-uppercase">@course.Name</h4>
+                                    <span>by @course.InstructorFullName</span>
+                                    <hr class="line-primary">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ul class="list-group">
+                                    <li class="list-group-item">@course.Category</li>
+                                    <li class="list-group-item">Lectures @course.Lectures.Count</li>
+                                    <li class="list-group-item">@course.Orders orders</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-success btn-sm btn-simple float-right">Details</a>
+                            <a asp-controller="Courses" asp-action="Add" asp-route-id="@course.Id" class="btn btn-warning btn-sm btn-simple float-right">Order Now</a>
+                            <h3>$@course.Price</h3>
+                        </div>
+                    </figure>
+                </div>
+            }
+        </div>
     </div>
 </div>
