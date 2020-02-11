@@ -25,14 +25,14 @@
                         <div class="row">
                             <ul class="list-group">
                                 <li class="list-group-item">@course.Category</li>
-                                <li class="list-group-item">Lectures @course.Lectures.Count</li>
+                                <li class="list-group-item">@course.Lectures.Count Lectures</li>
                                 <li class="list-group-item">@course.Orders orders</li>
                             </ul>
                         </div>
                     </div>
                     <div class="card-footer text-center">
                         <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-success btn-sm btn-simple float-right">Details</a>
-                        <a asp-controller="Courses" asp-action="Add" asp-route-id="@course.Id" class="btn btn-warning btn-sm btn-simple float-right">Order Now</a>
+                        <a asp-controller="Courses" asp-action="Add" asp-route-id="@course.Id" class="btn btn-warning btn-sm btn-simple float-right">Buy</a>
                         <h3>$@course.Price</h3>
                     </div>
                 </figure>
