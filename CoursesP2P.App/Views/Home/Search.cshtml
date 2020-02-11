@@ -8,30 +8,32 @@
         @foreach (var course in Model)
         {
             <div class="col-md-4">
-                <figure class="card card-product">
+                <figure class="card card-coin card-plain">
                     <div class="img-wrap">
                         <a href="@Url.Action("Details", "Courses", new { id=course.Id})">
                             <img src="@course.Image" style="width:348px;height:220px;">
                         </a>
                     </div>
-                    <figcaption class="info-wrap">
-                        <h4 class="title">@course.Name</h4>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">by @course.InstructorFullName</li>
-                            <li class="list-group-item">@course.Category</li>
-                            <li class="list-group-item">Lectures @course.Lectures.Count</li>
-                        </ul>
-                        <div class="rating-wrap">
-                            <div class="label-rating">0 reviews</div>
-                            <div class="label-rating">@course.Orders orders </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h4 class="text-uppercase">@course.Name</h4>
+                                <span>by @course.InstructorFullName</span>
+                                <hr class="line-primary">
+                            </div>
                         </div>
-                    </figcaption>
-                    <div class="bottom-wrap">
-                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-sm btn-outline-info float-right">Details</a>
-                        <a asp-controller="Courses" asp-action="Add" asp-route-id="@course.Id" class="btn btn-sm btn-outline-danger float-right">Order Now</a>
-                        <div class="price-wrap h5">
-                            <span class="price-new">$@course.Price</span>
+                        <div class="row">
+                            <ul class="list-group">
+                                <li class="list-group-item">@course.Category</li>
+                                <li class="list-group-item">Lectures @course.Lectures.Count</li>
+                                <li class="list-group-item">@course.Orders orders</li>
+                            </ul>
                         </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-success btn-sm btn-simple float-right">Details</a>
+                        <a asp-controller="Courses" asp-action="Add" asp-route-id="@course.Id" class="btn btn-warning btn-sm btn-simple float-right">Order Now</a>
+                        <h3>$@course.Price</h3>
                     </div>
                 </figure>
             </div>

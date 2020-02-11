@@ -3,42 +3,45 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="container">
-    <h1 class="my-4">
-        @Model.Name
-        <small>
-            <span class="badge badge-warning">$@Model.Price</span>
-        </small>
-    </h1>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
+    <div class="container">
+        <h1 class="my-4">
+            @Model.Name
+            <small>
+                <span class="text-warning">$@Model.Price</span>
+            </small>
+        </h1>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3 class="my-3">Description</h3>
+                <p>@Model.Description</p>
+                <h3 class="my-3">Lectures</h3>
+                <ul>
+                    @foreach (var lectureName in Model.LectureName)
+                    {
+                        <li>@lectureName</li>
+                    }
+                </ul>
+                <div class="text-lg-center">
+                    <a asp-controller="Courses" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-warning">Buy</a>
+                </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <h3 class="my-3">Description</h3>
-            <p>@Model.Description</p>
-            <h3 class="my-3">Lectures</h3>
-            <ul>
-                @foreach (var lectureName in Model.LectureName)
+        <br />
+       
+        <div class="card card-nav-tabs text-center">
+            <div class="card-body">
+                <h1 class="display-4 text-center">What you'll learn</h1>
+                @foreach (var skills in Model.Skills)
                 {
-                    <li>@lectureName</li>
+                    <p><i class="fas fa-check"></i> @skills</p>
                 }
-            </ul>
-            <div class="text-lg-center">
-                <a asp-controller="Courses" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-lg">Buy</a>
             </div>
         </div>
     </div>
-    <br />
-    <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-4 text-center">What you'll learn</h1>
-            @foreach (var skills in Model.Skills)
-            {
-                <p class="lead text-center"><i class="fas fa-check"></i> @skills</p>
-            }
-        </div>
-    </div>
-</div>
+
+
