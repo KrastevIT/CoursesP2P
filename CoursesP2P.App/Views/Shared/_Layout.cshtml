@@ -68,6 +68,12 @@
                     <li class="nav-item p-0">
                         <a class="nav-link text-white" asp-area="" asp-controller="Instructors" asp-action="Index"><i class="fas fa-briefcase"></i> Instructor</a>
                     </li>
+                    <li class="nav-item">
+                        <form class="form-inline my-2 my-lg-0" method="get" asp-controller="Home" asp-action="Search">
+                            <input class="form-control mr-sm-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-light my-2 my-sm-0" type="submit"> <span class="fa fa-search"></span></button>
+                        </form>
+                    </li>
                 </ul>
                 <div class="justify-content-end" id="navigation">
                     <ul class="navbar-nav">
@@ -198,9 +204,9 @@
         });
     </script>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>*@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
