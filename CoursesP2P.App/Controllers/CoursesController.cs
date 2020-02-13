@@ -38,7 +38,7 @@ namespace CoursesP2P.App.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Create");
+                return RedirectToAction(nameof(Create));
             }
 
             await this.coursesService.Create(model, this.User);

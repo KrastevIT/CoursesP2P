@@ -2,6 +2,7 @@ using AutoMapper;
 using CoursesP2P.App.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
+using CoursesP2P.Services.Admin;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.Services.Instructors;
 using CoursesP2P.Services.Lectures;
@@ -84,6 +85,7 @@ namespace CoursesP2P.App
 
         private void RegisterServiceLayer(IServiceCollection services)
         {
+            services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<ICoursesService, CoursesService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IInstructorService, InstructorService>();

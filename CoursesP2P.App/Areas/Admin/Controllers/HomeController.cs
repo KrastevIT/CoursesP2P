@@ -1,14 +1,24 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CoursesP2P.Services.Admin;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoursesP2P.App.Areas.Admin.Controllers
 {
-   
+
     public class HomeController : AdminController
     {
+        private readonly IAdminService adminService;
+
+        public HomeController(IAdminService adminService)
+        {
+            this.adminService = adminService;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var users = this.adminService.GetUsers();
+
+            return View(users);
         }
     }
 }

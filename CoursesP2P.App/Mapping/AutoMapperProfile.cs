@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CoursesP2P.Models;
+using CoursesP2P.ViewModels.Admin;
 using CoursesP2P.ViewModels.Courses.BindingModels;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using CoursesP2P.ViewModels.Lectures.BindingModels;
@@ -28,8 +29,12 @@ namespace CoursesP2P.App.Mapping
             CreateMap<AddLecturesBindingModel, Lecture>();
 
 
-            ////Instructor Map
+            //Instructor Map
             CreateMap<Course, CourseEditViewModel>();
+
+            //Admin Map
+            CreateMap<User, AdminUserViewModel>();
+            CreateMap<StudentCourse, AdminEnrollmentViewModel>();
         }
     }
 }

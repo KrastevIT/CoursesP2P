@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoursesP2P.App.Areas.Admin.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : AdminController
     {
         public IActionResult Index()
         {
