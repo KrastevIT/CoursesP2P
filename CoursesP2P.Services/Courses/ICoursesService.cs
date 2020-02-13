@@ -1,7 +1,7 @@
-﻿using CoursesP2P.Models;
-using CoursesP2P.ViewModels.Courses.BindingModels;
+﻿using CoursesP2P.ViewModels.Courses.BindingModels;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Courses
@@ -14,7 +14,7 @@ namespace CoursesP2P.Services.Courses
 
         IEnumerable<CourseViewModel> GetCoursesByCategory(string id);
 
-        Task Create(CreateCourseBindingModel model, User user);
+        Task Create(CreateCourseBindingModel model, ClaimsPrincipal user);
 
         CourseDetailsViewModel Details(int id);
 

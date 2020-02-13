@@ -2,9 +2,12 @@
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.ViewModels.Courses.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Instructors
 {
@@ -12,15 +15,22 @@ namespace CoursesP2P.Services.Instructors
     {
         private readonly CoursesP2PDbContext db;
         private readonly IMapper mapper;
+        private readonly UserManager<User> userManager;
 
-        public InstructorService(CoursesP2PDbContext db, IMapper mapper)
+        public InstructorService(
+            CoursesP2PDbContext db,
+            IMapper mapper,
+            UserManager<User> userManager)
         {
             this.db = db;
             this.mapper = mapper;
+            this.userManager = userManager;
         }
 
-        public CourseAndDashbordViewModel GetCreatedCourses(User instructor)
+        public async Task<CourseAndDashbordViewModel> GetCreatedCourses(ClaimsPrincipal user)
         {
+            var instructor = await this.userManager.GetUserAsync(user);
+
             var courses = this.db.Courses
                  .Where(x => x.InstructorId == instructor.Id)
                  .Include(x => x.Lectures)
@@ -45,7 +55,7 @@ namespace CoursesP2P.Services.Instructors
             var course = this.db.Courses.FirstOrDefault(x => x.Id == model.Id);
             if (course == null)
             {
-                return; 
+                return;
             }
             model.Image = course.Image;
 

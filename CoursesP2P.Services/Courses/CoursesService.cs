@@ -4,11 +4,13 @@ using CoursesP2P.Models;
 using CoursesP2P.Models.Enum;
 using CoursesP2P.ViewModels.Courses.BindingModels;
 using CoursesP2P.ViewModels.Courses.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Courses
@@ -17,11 +19,16 @@ namespace CoursesP2P.Services.Courses
     {
         private readonly CoursesP2PDbContext db;
         private readonly IMapper mapper;
+        private readonly UserManager<User> userManager;
 
-        public CoursesService(CoursesP2PDbContext db, IMapper mapper)
+        public CoursesService(
+            CoursesP2PDbContext db,
+            IMapper mapper,
+            UserManager<User> userManager)
         {
             this.db = db;
             this.mapper = mapper;
+            this.userManager = userManager;
         }
 
         public IEnumerable<CourseViewModel> GetAllCourses()
@@ -65,8 +72,10 @@ namespace CoursesP2P.Services.Courses
             return models;
         }
 
-        public async Task Create(CreateCourseBindingModel model, User user)
+        public async Task Create(CreateCourseBindingModel model, ClaimsPrincipal student)
         {
+            var user = await this.userManager.GetUserAsync(student);
+
             var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/Images", fileName);
