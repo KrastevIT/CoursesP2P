@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using CoursesP2P.App.Models.BindingModels.Course;
-using CoursesP2P.App.Models.BindingModels.Lecture;
-using CoursesP2P.App.Models.ViewModels;
-using CoursesP2P.App.Models.ViewModels.Course;
-using CoursesP2P.App.Models.ViewModels.Lecture;
 using CoursesP2P.Models;
+using CoursesP2P.ViewModels.Courses.BindingModels;
+using CoursesP2P.ViewModels.Courses.ViewModels;
+using CoursesP2P.ViewModels.Lectures.BindingModels;
+using CoursesP2P.ViewModels.Lectures.ViewModels;
 
 namespace CoursesP2P.App.Mapping
 {
@@ -12,6 +11,7 @@ namespace CoursesP2P.App.Mapping
     {
         public AutoMapperProfile()
         {
+
             //Course Map
             CreateMap<Course, CourseViewModel>();
             CreateMap<Course, CourseEnrolledViewModel>();
@@ -28,7 +28,7 @@ namespace CoursesP2P.App.Mapping
             CreateMap<AddLecturesBindingModel, Lecture>();
 
 
-            //Instructor Map
+            ////Instructor Map
             CreateMap<Course, CourseEditViewModel>();
         }
     }

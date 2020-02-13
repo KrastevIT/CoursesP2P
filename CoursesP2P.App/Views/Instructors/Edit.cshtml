@@ -18,7 +18,7 @@
                         <h5>Description</h5>
                         <input class="form-control" asp-for="@Model.Description" />
                         <h5>Category</h5>
-                        <select asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()" class="form-control"></select>
+                        <select asp-for="Category" asp-items="Html.GetEnumSelectList<CategoryViewModel>()" class="form-control"></select>
                         <h5>Price</h5>
                         <input class="form-control" asp-for="@Model.Price" />
                     </figcaption>

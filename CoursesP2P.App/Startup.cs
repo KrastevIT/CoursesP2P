@@ -2,6 +2,10 @@ using AutoMapper;
 using CoursesP2P.App.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
+using CoursesP2P.Services.Courses;
+using CoursesP2P.Services.Instructors;
+using CoursesP2P.Services.Lectures;
+using CoursesP2P.Services.Students;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace CoursesP2P.App
 {
@@ -36,6 +41,8 @@ namespace CoursesP2P.App
             services.AddRazorPages();
 
             services.AddAutoMapper(typeof(Startup));
+
+            RegisterServiceLayer(services);
 
             services.AddMvc();
         }
@@ -73,6 +80,14 @@ namespace CoursesP2P.App
                    pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+        }
+
+        private void RegisterServiceLayer(IServiceCollection services)
+        {
+            services.AddScoped<ICoursesService, CoursesService>();
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IInstructorService, InstructorService>();
+            services.AddScoped<ILectureService, LectureService>();
         }
     }
 }

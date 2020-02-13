@@ -1,82 +1,52 @@
-﻿using AutoMapper;
-using CoursesP2P.App.Models.ViewModels.Course;
-using CoursesP2P.Data;
-using CoursesP2P.Models;
+﻿using CoursesP2P.Models;
+using CoursesP2P.Services.Courses;
+using CoursesP2P.Services.Instructors;
+using CoursesP2P.ViewModels.Courses.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.App.Controllers
 {
+    [Authorize]
     public class InstructorsController : Controller
     {
-        private readonly CoursesP2PDbContext coursesP2PDbContext;
-        private readonly IMapper mapper;
+        private readonly IInstructorService instructorService;
+        private readonly ICoursesService coursesService;
         private readonly UserManager<User> userManager;
 
         public InstructorsController(
-            CoursesP2PDbContext coursesP2PDbContext,
-            IMapper mapper,
+            IInstructorService instructorService,
+            ICoursesService coursesService,
             UserManager<User> userManager)
         {
-            this.coursesP2PDbContext = coursesP2PDbContext;
-            this.mapper = mapper;
+            this.instructorService = instructorService;
+            this.coursesService = coursesService;
             this.userManager = userManager;
         }
 
-        [Authorize]
+
         public async Task<IActionResult> Index()
         {
             var instructor = await this.userManager.GetUserAsync(this.User);
 
-            var courses = this.coursesP2PDbContext.Courses
-                .Where(x => x.InstructorId == instructor.Id)
-                .Include(x => x.Lectures)
-                .Include(x => x.Students)
-                .ToList();
+            var courses = this.instructorService.GetCreatedCourses(instructor);
 
-           var modelsCourse = this.mapper.Map<IEnumerable<CourseInstructorViewModel>>(courses);
-
-            var model = new CourseAndDashbordViewModel
-            {
-                Courses = modelsCourse,
-                CreatedCourses = courses.Count(),
-                EnrolledCourses = courses.Select(x => x.Students).Sum(x => x.Count),
-                Profit = instructor.Profit
-            };
-
-            return View(model);
+            return View(courses);
         }
 
         public IActionResult Edit(int id)
         {
-            var course = this.coursesP2PDbContext.Courses
-                .Include(x => x.Lectures)
-                .FirstOrDefault(x => x.Id == id);
+            var course = this.coursesService.GetCourseById(id);
 
-            var model = this.mapper.Map<CourseEditViewModel>(course);
-
-            return View(model);
+            return View(course);
         }
 
         [HttpPost]
         public IActionResult Edit(CourseEditViewModel model)
         {
-            var course = this.coursesP2PDbContext.Courses.FirstOrDefault(x => x.Id == model.Id);
-            if (course == null)
-            {
-                return NotFound();
-            }
-            model.Image = course.Image;
-
-            this.coursesP2PDbContext.Entry(course)
-                 .CurrentValues.SetValues(model);
-
-            this.coursesP2PDbContext.SaveChanges();
+            this.instructorService.EditCourse(model);
 
             return RedirectToAction("Index", "Instructors");
         }

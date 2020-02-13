@@ -1,41 +1,24 @@
-﻿using AutoMapper;
-using CoursesP2P.App.Models;
-using CoursesP2P.App.Models.ViewModels.Course;
-using CoursesP2P.Data;
+﻿using CoursesP2P.Services.Courses;
+using CoursesP2P.ViewModels.Errors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace CoursesP2P.App.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> logger;
-        private readonly CoursesP2PDbContext coursesP2PDbContext;
-        private readonly IMapper mapper;
+        private readonly ICoursesService coursesService;
 
-        public HomeController(
-            ILogger<HomeController> logger,
-            CoursesP2PDbContext coursesP2PDbContext,
-            IMapper mapper)
+        public HomeController(ICoursesService coursesService)
         {
-            this.logger = logger;
-            this.coursesP2PDbContext = coursesP2PDbContext;
-            this.mapper = mapper;
+            this.coursesService = coursesService;
         }
 
         public IActionResult Index()
         {
-            var courses = this.coursesP2PDbContext.Courses
-                .Include(x => x.Lectures)
-                .ToList();
+            var courses = this.coursesService.GetAllCourses();
 
-            var models2 = this.mapper.Map<IEnumerable<CourseViewModel>>(courses);
-
-            return View(models2);
+            return View(courses);
         }
 
         public IActionResult Search(string searchTerm)
@@ -45,15 +28,9 @@ namespace CoursesP2P.App.Controllers
                 return RedirectToAction("Index");
             }
 
-            var foundCourses = this.coursesP2PDbContext.Courses
-               .Include(x => x.Lectures)
-               .Where(x => x.Name.ToLower()
-               .Contains(searchTerm.ToLower()))
-               .ToList();
+            var foundCourses = this.coursesService.Search(searchTerm);
 
-            var searchResult = this.mapper.Map<IEnumerable<CourseViewModel>>(foundCourses);
-
-            return View(searchResult);
+            return View(foundCourses);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
