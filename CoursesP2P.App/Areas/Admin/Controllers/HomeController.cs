@@ -1,5 +1,4 @@
 ﻿using CoursesP2P.Services.Admin;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoursesP2P.App.Areas.Admin.Controllers
