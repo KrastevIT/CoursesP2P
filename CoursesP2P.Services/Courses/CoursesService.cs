@@ -74,7 +74,7 @@ namespace CoursesP2P.Services.Courses
             return models;
         }
 
-        public async Task Create(CreateCourseBindingModel model, ClaimsPrincipal student)
+        public async Task CreateAsync(CreateCourseBindingModel model, ClaimsPrincipal student)
         {
             var user = await this.userManager.GetUserAsync(student);
 

@@ -27,7 +27,7 @@ namespace CoursesP2P.Services.Students
             this.userManager = userManager;
         }
 
-        public async Task<IEnumerable<CourseEnrolledViewModel>> GetMyCourses(ClaimsPrincipal user)
+        public async Task<IEnumerable<CourseEnrolledViewModel>> GetMyCoursesAsync(ClaimsPrincipal user)
         {
             var student = await this.userManager.GetUserAsync(user);
 

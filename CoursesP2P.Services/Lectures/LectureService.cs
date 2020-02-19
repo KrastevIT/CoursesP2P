@@ -35,7 +35,7 @@ namespace CoursesP2P.Services.Lectures
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<IEnumerable<LectureViewModel>> GetLecturesByCourseId(int id, ClaimsPrincipal instructor)
+        public async Task<IEnumerable<LectureViewModel>> GetLecturesByCourseIdAsync(int id, ClaimsPrincipal instructor)
         {
             var currentInstructor = await this.userManager.GetUserAsync(instructor);
 

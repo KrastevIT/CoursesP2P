@@ -14,7 +14,7 @@ namespace CoursesP2P.Services.Courses
 
         IEnumerable<CourseViewModel> GetCoursesByCategory(string id);
 
-        Task Create(CreateCourseBindingModel model, ClaimsPrincipal user);
+        Task CreateAsync(CreateCourseBindingModel model, ClaimsPrincipal user);
 
         CourseDetailsViewModel Details(int id);
 

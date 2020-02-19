@@ -41,7 +41,7 @@ namespace CoursesP2P.App.Controllers
                 return RedirectToAction(nameof(Create));
             }
 
-            await this.coursesService.Create(model, this.User);
+            await this.coursesService.CreateAsync(model, this.User);
 
             return RedirectToAction("Index", "Instructors");
         }
