@@ -37,6 +37,8 @@ namespace CoursesP2P.Services.Courses
                 .Include(x => x.Lectures)
                 .ToList();
 
+            var test = courses.Select(x => x.Lectures.Count).Sum();
+
             var models = this.mapper.Map<IEnumerable<CourseViewModel>>(courses);
 
             return models;
