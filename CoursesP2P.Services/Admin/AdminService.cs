@@ -24,7 +24,7 @@ namespace CoursesP2P.Services.Admin
             var users = this.db.Users
                 .Include(x => x.CreatedCourses)
                 .Include(x => x.EnrolledCourses)
-                ;
+                .ToList();
 
             var models = this.mapper.Map<IEnumerable<AdminUserViewModel>>(users);
 
