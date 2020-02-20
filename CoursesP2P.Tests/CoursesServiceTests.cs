@@ -150,12 +150,6 @@ namespace CoursesP2P.Tests
             {
                 coursesService.GetCourseById(id);
             });
-
-            //await Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            //{
-            //    await userShoppingListService
-            //        .DeleteByUserIdAndShoppingListIdAsync(nonExistentUserId, nonExistentShoppingListId);
-            //});
         }
 
         [Theory]
@@ -197,6 +191,45 @@ namespace CoursesP2P.Tests
             var getCourses = coursesService.GetCoursesByCategory(categoryName);
 
             Assert.Equal(expected, getCourses.Count());
+        }
+
+        [Theory]
+        [InlineData("InvalidCategory")]
+        public void GetCoursesByCategoryWithNonExistentCategoryReturnException(string categoryName)
+        {
+            var db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            var mapper = MapperMock.AutoMapperMock();
+            var userManager = UserManagerMock.UserManagerMockTest();
+
+            var coursesService = new CoursesService(db, mapper, userManager);
+
+            var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Development");
+            var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Marketing");
+
+            var courses = new List<Course>
+            {
+                new Course
+                {
+                    Id = 1,
+                    Category = categoryDevelopment
+                },
+                new Course
+                {
+                    Id = 2,
+                    Category = categoryDevelopment
+                },
+                new Course
+                {
+                    Id = 3,
+                    Category = categoryMarkiting
+                },
+            };
+
+            db.Courses.AddRange(courses);
+            db.SaveChanges();
+
+
+            Assert.Throws<InvalidCastException>(() => coursesService.GetCoursesByCategory(categoryName));
         }
     }
 }

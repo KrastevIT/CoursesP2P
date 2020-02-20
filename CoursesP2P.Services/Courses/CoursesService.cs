@@ -66,7 +66,8 @@ namespace CoursesP2P.Services.Courses
             var isValidEnum = Enum.TryParse(typeof(Category), categoryName, true, out object category);
             if (!isValidEnum)
             {
-                return null;
+                throw new InvalidCastException(
+                    string.Format(ErrorMessages.InvalidCastCategory, categoryName));
             }
 
             var coursesByCategory = this.db.Courses
