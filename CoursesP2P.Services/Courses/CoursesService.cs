@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Courses.P2P.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Models.Enum;
@@ -47,8 +48,13 @@ namespace CoursesP2P.Services.Courses
         public CourseEditViewModel GetCourseById(int id)
         {
             var course = this.db.Courses
-                .Include(x => x.Lectures)
-                .FirstOrDefault(x => x.Id == id);
+            .Include(x => x.Lectures)
+            .FirstOrDefault(x => x.Id == id);
+            if (course == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(ErrorMessages.NotFoundCourseById, id));
+            }
 
             var model = this.mapper.Map<CourseEditViewModel>(course);
 

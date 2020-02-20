@@ -1,17 +1,11 @@
-﻿using AutoMapper;
-using CoursesP2P.App.Mapping;
-using CoursesP2P.Data;
+﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Courses;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Moq;
+using CoursesP2P.Tests.Configuration;
+using CoursesP2P.ViewModels.Courses.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace CoursesP2P.Tests
@@ -21,26 +15,9 @@ namespace CoursesP2P.Tests
         [Fact]
         public void GetAllCoursesReturnAllCourses()
         {
-            var optionBuilder = new DbContextOptionsBuilder<CoursesP2PDbContext>()
-                   .UseInMemoryDatabase(Guid.NewGuid().ToString());
-            var db = new CoursesP2PDbContext(optionBuilder.Options);
-
-            var mockMapper = new MapperConfiguration(x =>
-            {
-                x.AddProfile(new AutoMapperProfile());
-            });
-            var mapper = mockMapper.CreateMapper();
-
-            var userManager = new Mock<UserManager<User>>(
-                    new Mock<IUserStore<User>>().Object,
-                    new Mock<IOptions<IdentityOptions>>().Object,
-                    new Mock<IPasswordHasher<User>>().Object,
-                    new IUserValidator<User>[0],
-                    new IPasswordValidator<User>[0],
-                    new Mock<ILookupNormalizer>().Object,
-                    new Mock<IdentityErrorDescriber>().Object,
-                    new Mock<IServiceProvider>().Object,
-                    new Mock<ILogger<UserManager<User>>>().Object).Object;
+            var db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            var mapper = MapperMock.AutoMapperMock();
+            var userManager = UserManagerMock.UserManagerMockTest();
 
             var coursesService = new CoursesService(db, mapper, userManager);
 
@@ -67,26 +44,9 @@ namespace CoursesP2P.Tests
         [Fact]
         public void GetAllCoursesReturnAllCoursesWithAllLectures()
         {
-            var optionBuilder = new DbContextOptionsBuilder<CoursesP2PDbContext>()
-                   .UseInMemoryDatabase(Guid.NewGuid().ToString());
-            var db = new CoursesP2PDbContext(optionBuilder.Options);
-
-            var mockMapper = new MapperConfiguration(x =>
-            {
-                x.AddProfile(new AutoMapperProfile());
-            });
-            var mapper = mockMapper.CreateMapper();
-
-            var userManager = new Mock<UserManager<User>>(
-                    new Mock<IUserStore<User>>().Object,
-                    new Mock<IOptions<IdentityOptions>>().Object,
-                    new Mock<IPasswordHasher<User>>().Object,
-                    new IUserValidator<User>[0],
-                    new IPasswordValidator<User>[0],
-                    new Mock<ILookupNormalizer>().Object,
-                    new Mock<IdentityErrorDescriber>().Object,
-                    new Mock<IServiceProvider>().Object,
-                    new Mock<ILogger<UserManager<User>>>().Object).Object;
+            var db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            var mapper = MapperMock.AutoMapperMock();
+            var userManager = UserManagerMock.UserManagerMockTest();
 
             var coursesService = new CoursesService(db, mapper, userManager);
 
@@ -126,6 +86,76 @@ namespace CoursesP2P.Tests
                 .Select(x => x.Lectures.Count).Sum();
 
             Assert.Equal(3, getCourses);
+        }
+
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(2, 2)]
+        public void GetCourseByIdRetunrCourseById(int id, int expected)
+        {
+            var db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            var mapper = MapperMock.AutoMapperMock();
+            var userManager = UserManagerMock.UserManagerMockTest();
+
+            var coursesService = new CoursesService(db, mapper, userManager);
+
+            var courses = new List<Course>
+            {
+                new Course
+                {
+                    Id = 1
+                },
+
+                new Course
+                {
+                    Id = 2
+                }
+            };
+
+            db.Courses.AddRange(courses);
+            db.SaveChanges();
+
+            var getCourse = coursesService.GetCourseById(id);
+
+            Assert.Equal(expected, getCourse.Id);
+        }
+
+        [Theory]
+        [InlineData(3)]
+        public void GetCourseByIdWithNonExistentCourseIdReturnException(int id)
+        {
+            var db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            var mapper = MapperMock.AutoMapperMock();
+            var userManager = UserManagerMock.UserManagerMockTest();
+
+            var coursesService = new CoursesService(db, mapper, userManager);
+
+            var courses = new List<Course>
+            {
+                new Course
+                {
+                    Id = 1
+                },
+
+                new Course
+                {
+                    Id = 2
+                }
+            };
+
+            db.Courses.AddRange(courses);
+            db.SaveChanges();
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                coursesService.GetCourseById(id);
+            });
+
+            //await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            //{
+            //    await userShoppingListService
+            //        .DeleteByUserIdAndShoppingListIdAsync(nonExistentUserId, nonExistentShoppingListId);
+            //});
         }
     }
 }

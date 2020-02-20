@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using CoursesP2P.App.Mapping;
-using CoursesP2P.Data;
+﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Admin;
-using Microsoft.EntityFrameworkCore;
-using System;
+using CoursesP2P.Tests.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -16,9 +13,8 @@ namespace CoursesP2P.Tests
         [Fact]
         public void GetUsersShouldReturnAllUsers()
         {
-            var optionBuilder = new DbContextOptionsBuilder<CoursesP2PDbContext>()
-                    .UseInMemoryDatabase(Guid.NewGuid().ToString());
-            var db = new CoursesP2PDbContext(optionBuilder.Options);
+            var db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            var mapper = MapperMock.AutoMapperMock();
 
             var users = new List<User>
             {
@@ -35,13 +31,6 @@ namespace CoursesP2P.Tests
             db.Users.AddRange(users);
             db.SaveChanges();
 
-            var mockMapper = new MapperConfiguration(x =>
-            {
-                x.AddProfile(new AutoMapperProfile());
-            });
-
-            var mapper = mockMapper.CreateMapper();
-
             var adminService = new AdminService(db, mapper);
 
             var testUsers = adminService.GetUsers().ToList();
@@ -52,9 +41,8 @@ namespace CoursesP2P.Tests
         [Fact]
         public void GetUsersShouldReturnCreatedCourses()
         {
-            var optionBuilder = new DbContextOptionsBuilder<CoursesP2PDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString());
-            var db = new CoursesP2PDbContext(optionBuilder.Options);
+            var db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            var mapper = MapperMock.AutoMapperMock();
 
             var course = new List<Course>
             {
@@ -77,13 +65,6 @@ namespace CoursesP2P.Tests
             db.Users.Add(users);
             db.SaveChanges();
 
-            var mapperMoc = new MapperConfiguration(x =>
-            {
-                x.AddProfile(new AutoMapperProfile());
-            });
-
-            var mapper = mapperMoc.CreateMapper();
-
             var adminService = new AdminService(db, mapper);
 
             var testUsers = adminService.GetUsers();
@@ -96,9 +77,8 @@ namespace CoursesP2P.Tests
         [Fact]
         public void GetUsersShouldReturnEnrolledCourses()
         {
-            var optionBuilder = new DbContextOptionsBuilder<CoursesP2PDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString());
-            var db = new CoursesP2PDbContext(optionBuilder.Options);
+            var db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            var mapper = MapperMock.AutoMapperMock();
 
             var studentCourse = new List<StudentCourse>
             {
@@ -123,13 +103,6 @@ namespace CoursesP2P.Tests
             db.Users.Add(users);
             db.SaveChanges();
 
-            var mapperMoc = new MapperConfiguration(x =>
-            {
-                x.AddProfile(new AutoMapperProfile());
-            });
-
-            var mapper = mapperMoc.CreateMapper();
-
             var adminService = new AdminService(db, mapper);
 
             var testUsers = adminService.GetUsers();
@@ -143,9 +116,8 @@ namespace CoursesP2P.Tests
         [InlineData("1")]
         public void GetCreatedCoursesByUserIdReturnCreatedCourses(string id)
         {
-            var optionBuilder = new DbContextOptionsBuilder<CoursesP2PDbContext>()
-              .UseInMemoryDatabase(Guid.NewGuid().ToString());
-            var db = new CoursesP2PDbContext(optionBuilder.Options);
+            var db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            var mapper = MapperMock.AutoMapperMock();
 
             var course = new List<Course>
             {
@@ -168,13 +140,6 @@ namespace CoursesP2P.Tests
             db.Users.Add(users);
             db.SaveChanges();
 
-            var mapperMoc = new MapperConfiguration(x =>
-            {
-                x.AddProfile(new AutoMapperProfile());
-            });
-
-            var mapper = mapperMoc.CreateMapper();
-
             var adminService = new AdminService(db, mapper);
 
             var testUsers = adminService.GetCreatedCoursesByUserId(id);
@@ -188,9 +153,8 @@ namespace CoursesP2P.Tests
         [InlineData("1")]
         public void GetEnrolledCoursesByUserIdReturnEnrolledCourses(string id)
         {
-            var optionBuilder = new DbContextOptionsBuilder<CoursesP2PDbContext>()
-             .UseInMemoryDatabase(Guid.NewGuid().ToString());
-            var db = new CoursesP2PDbContext(optionBuilder.Options);
+            var db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            var mapper = MapperMock.AutoMapperMock();
 
             var course = new Course
             {
@@ -216,13 +180,6 @@ namespace CoursesP2P.Tests
 
             db.StudentCourses.Add(studentCourse);
             db.SaveChanges();
-
-            var mapperMoc = new MapperConfiguration(x =>
-            {
-                x.AddProfile(new AutoMapperProfile());
-            });
-
-            var mapper = mapperMoc.CreateMapper();
 
             var adminService = new AdminService(db, mapper);
 
