@@ -1,8 +1,8 @@
 ﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
+using CoursesP2P.Models.Enum;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.Tests.Configuration;
-using CoursesP2P.ViewModels.Courses.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -156,6 +156,47 @@ namespace CoursesP2P.Tests
             //    await userShoppingListService
             //        .DeleteByUserIdAndShoppingListIdAsync(nonExistentUserId, nonExistentShoppingListId);
             //});
+        }
+
+        [Theory]
+        [InlineData("Development", 2)]
+        [InlineData("Marketing", 1)]
+        public void GetCoursesByCategoryReturnCourseByCategory(string categoryName, int expected)
+        {
+            var db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            var mapper = MapperMock.AutoMapperMock();
+            var userManager = UserManagerMock.UserManagerMockTest();
+
+            var coursesService = new CoursesService(db, mapper, userManager);
+
+            var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Development");
+            var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Marketing");
+
+            var courses = new List<Course>
+            {
+                new Course
+                {
+                    Id = 1,
+                    Category = categoryDevelopment
+                },
+                new Course
+                {
+                    Id = 2,
+                    Category = categoryDevelopment
+                },
+                new Course
+                {
+                    Id = 3,
+                    Category = categoryMarkiting
+                },
+            };
+
+            db.Courses.AddRange(courses);
+            db.SaveChanges();
+
+            var getCourses = coursesService.GetCoursesByCategory(categoryName);
+
+            Assert.Equal(expected, getCourses.Count());
         }
     }
 }

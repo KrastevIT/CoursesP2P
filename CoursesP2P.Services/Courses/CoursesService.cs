@@ -61,9 +61,9 @@ namespace CoursesP2P.Services.Courses
             return model;
         }
 
-        public IEnumerable<CourseViewModel> GetCoursesByCategory(string id)
+        public IEnumerable<CourseViewModel> GetCoursesByCategory(string categoryName)
         {
-            var isValidEnum = Enum.TryParse(typeof(Category), id, true, out object category);
+            var isValidEnum = Enum.TryParse(typeof(Category), categoryName, true, out object category);
             if (!isValidEnum)
             {
                 return null;
