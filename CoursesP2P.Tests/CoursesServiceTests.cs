@@ -231,5 +231,60 @@ namespace CoursesP2P.Tests
 
             Assert.Throws<InvalidCastException>(() => coursesService.GetCoursesByCategory(categoryName));
         }
+
+        [Theory]
+        [InlineData("Development", 2)]
+        public void GetCoursesByCategoryReturnCoursesWithLectures(string categoryName, int expected)
+        {
+            var db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            var mapper = MapperMock.AutoMapperMock();
+            var userManager = UserManagerMock.UserManagerMockTest();
+
+            var coursesService = new CoursesService(db, mapper, userManager);
+
+            var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Development");
+            var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Marketing");
+
+            var lectures = new List<Lecture>
+            {
+                new Lecture
+                {
+                    Id = 1,
+                },
+                 new Lecture
+                {
+                    Id = 2,
+                }
+            };
+
+            var courses = new List<Course>
+            {
+                new Course
+                {
+                    Id = 1,
+                    Category = categoryDevelopment,
+                    Lectures = lectures
+                },
+                new Course
+                {
+                    Id = 2,
+                    Category = categoryDevelopment
+                },
+                new Course
+                {
+                    Id = 3,
+                    Category = categoryMarkiting
+                },
+            };
+
+            db.Courses.AddRange(courses);
+            db.SaveChanges();
+
+            var getLecture = coursesService.GetCoursesByCategory(categoryName)
+                .Select(x => x.Lectures.Count)
+                .Sum();
+
+            Assert.Equal(expected, getLecture);
+        }
     }
 }
