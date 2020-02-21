@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Courses.P2P.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -47,7 +49,8 @@ namespace CoursesP2P.Services.Instructors
             var course = this.db.Courses.FirstOrDefault(x => x.Id == model.Id);
             if (course == null)
             {
-                return;
+                throw new ArgumentNullException(
+                    string.Format(ErrorMessages.InvalidCourseId, model.Id));
             }
             model.Image = course.Image;
 
