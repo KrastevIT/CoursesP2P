@@ -49,10 +49,7 @@ namespace CoursesP2P.Tests.Services.Instructors
             this.db.SaveChanges();
 
 
-            var actual = this.db.Users
-                .Include(x => x.CreatedCourses)
-                .Select(x => x.CreatedCourses.Count)
-                .Sum();
+            var actual = this.instructorsService.GetCreatedCourses(user).Courses.Count();
 
             Assert.Equal(2, actual);
         }
