@@ -1,4 +1,5 @@
-﻿using CoursesP2P.ViewModels.Courses.BindingModels;
+﻿using CoursesP2P.Models;
+using CoursesP2P.ViewModels.Courses.BindingModels;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -14,7 +15,7 @@ namespace CoursesP2P.Services.Courses
 
         IEnumerable<CourseViewModel> GetCoursesByCategory(string id);
 
-        Task CreateAsync(CreateCourseBindingModel model, ClaimsPrincipal user);
+        Task CreateAsync(CreateCourseBindingModel model, User user);
 
         CourseDetailsViewModel Details(int id);
 

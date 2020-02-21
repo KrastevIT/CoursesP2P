@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Courses
@@ -20,7 +19,6 @@ namespace CoursesP2P.Services.Courses
     {
         private readonly CoursesP2PDbContext db;
         private readonly IMapper mapper;
-        private readonly UserManager<User> userManager;
 
         public CoursesService(
             CoursesP2PDbContext db,
@@ -29,7 +27,6 @@ namespace CoursesP2P.Services.Courses
         {
             this.db = db;
             this.mapper = mapper;
-            this.userManager = userManager;
         }
 
         public IEnumerable<CourseViewModel> GetAllCourses()
@@ -81,9 +78,15 @@ namespace CoursesP2P.Services.Courses
             return models;
         }
 
-        public async Task CreateAsync(CreateCourseBindingModel model, ClaimsPrincipal student)
+        public async Task CreateAsync(CreateCourseBindingModel model, User user)
         {
-            var user = await this.userManager.GetUserAsync(student);
+            if (string.IsNullOrEmpty(model.Name)
+                || string.IsNullOrEmpty(model.Description)
+                || string.IsNullOrEmpty(model.Skills))
+            {
+                //DOTO
+                throw new InvalidOperationException();
+            }
 
             var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
 
@@ -118,6 +121,11 @@ namespace CoursesP2P.Services.Courses
             var course = this.db.Courses
                 .Include(x => x.Lectures)
                 .FirstOrDefault(x => x.Id == id);
+            if (course == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(ErrorMessages.NotFoundCourseById, id));
+            }
 
             var lecturesName = course.Lectures.Select(x => x.Name).ToList();
 

@@ -1,6 +1,8 @@
-﻿using CoursesP2P.Services.Courses;
+﻿using CoursesP2P.Models;
+using CoursesP2P.Services.Courses;
 using CoursesP2P.ViewModels.Courses.BindingModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -9,10 +11,12 @@ namespace CoursesP2P.App.Controllers
     public class CoursesController : Controller
     {
         private readonly ICoursesService coursesService;
+        private readonly UserManager<User> userManager;
 
-        public CoursesController(ICoursesService coursesService)
+        public CoursesController(ICoursesService coursesService, UserManager<User> userManager)
         {
             this.coursesService = coursesService;
+            this.userManager = userManager;
         }
 
         public IActionResult Category(string id)
@@ -40,8 +44,8 @@ namespace CoursesP2P.App.Controllers
             {
                 return RedirectToAction(nameof(Create));
             }
-
-            await this.coursesService.CreateAsync(model, this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
+            await this.coursesService.CreateAsync(model, user);
 
             return RedirectToAction("Index", "Instructors");
         }
