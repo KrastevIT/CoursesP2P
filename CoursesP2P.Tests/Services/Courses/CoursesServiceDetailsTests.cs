@@ -6,7 +6,6 @@ using CoursesP2P.Tests.Configuration;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Courses
@@ -75,6 +74,66 @@ namespace CoursesP2P.Tests.Services.Courses
             this.db.SaveChanges();
 
             Assert.Throws<ArgumentNullException>(() => this.coursesService.Details(id));
+        }
+
+        [Theory]
+        [InlineData(1, 2)]
+        public void DetailsReturnCourseWithLectures(int id, int expected)
+        {
+            var lectures = new List<Lecture>
+            {
+                new Lecture
+                {
+                    Id = 1
+                },
+                new Lecture
+                {
+                    Id = 2
+                }
+            };
+
+            var courses = new List<Course>
+            {
+               new Course
+               {
+                   Id = 1,
+                   Skills = "skillOne",
+                   Lectures = lectures
+               },
+               new Course
+               {
+                   Id = 2,
+                   Skills = "skillTwo"
+               }
+            };
+
+            this.db.Courses.AddRange(courses);
+            this.db.SaveChanges();
+
+            var actual = this.coursesService.Details(id).LectureName.Count;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(1, 1)]
+        public void DetailsReturnCourseWithSkills(int id, int expected)
+        {
+            var courses = new List<Course>
+            {
+               new Course
+               {
+                   Id = 1,
+                   Skills = "skillOne"
+               },
+            };
+
+            this.db.Courses.AddRange(courses);
+            this.db.SaveChanges();
+
+            var actual = this.coursesService.Details(id);
+
+            Assert.Equal(expected, actual.Id);
         }
 
     }
