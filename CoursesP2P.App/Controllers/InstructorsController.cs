@@ -1,7 +1,9 @@
-﻿using CoursesP2P.Services.Courses;
+﻿using CoursesP2P.Models;
+using CoursesP2P.Services.Courses;
 using CoursesP2P.Services.Instructors;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,20 +12,24 @@ namespace CoursesP2P.App.Controllers
     [Authorize]
     public class InstructorsController : Controller
     {
-        private readonly IInstructorService instructorService;
+        private readonly IInstructorsService instructorService;
         private readonly ICoursesService coursesService;
+        private readonly UserManager<User> userManager;
 
         public InstructorsController(
-            IInstructorService instructorService,
-            ICoursesService coursesService)
+            IInstructorsService instructorService,
+            ICoursesService coursesService,
+            UserManager<User> userManager)
         {
             this.instructorService = instructorService;
             this.coursesService = coursesService;
+            this.userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
         {
-            var courses = await this.instructorService.GetCreatedCourses(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
+            var courses = this.instructorService.GetCreatedCourses(user);
 
             return View(courses);
         }

@@ -5,9 +5,7 @@ using CoursesP2P.Services.Instructors;
 using CoursesP2P.Tests.Configuration;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Instructors

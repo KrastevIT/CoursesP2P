@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Courses.P2P.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.ViewModels.Lectures.BindingModels;
@@ -11,19 +12,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Lectures
 {
-    public class LectureService : ILectureService
+    public class LecturesService : ILecturesService
     {
         private readonly CoursesP2PDbContext db;
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public LectureService(
+        public LecturesService(
             CoursesP2PDbContext db,
             IMapper mapper,
             UserManager<User> userManager,
@@ -35,18 +34,17 @@ namespace CoursesP2P.Services.Lectures
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<IEnumerable<LectureViewModel>> GetLecturesByCourseIdAsync(int id, ClaimsPrincipal instructor)
+        public IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int id, User instructor)
         {
-            var currentInstructor = await this.userManager.GetUserAsync(instructor);
-
             var user = this.db.Users
                 .Include(x => x.EnrolledCourses)
-                .FirstOrDefault(x => x.Id == currentInstructor.Id);
+                .FirstOrDefault(x => x.Id == instructor.Id);
 
             var isValidUser = user.EnrolledCourses.Any(x => x.CourseId == id);
             if (!isValidUser)
             {
-                //TODO Exception
+                throw new InvalidOperationException(
+                    string.Format(ErrorMessages.UnauthorizedUser, instructor.UserName));
             }
             var lectures = this.db.Lectures
                 .Where(x => x.CourseId == id)
