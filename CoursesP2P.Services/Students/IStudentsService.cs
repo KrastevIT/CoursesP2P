@@ -1,13 +1,12 @@
-﻿using CoursesP2P.ViewModels.Courses.ViewModels;
+﻿using CoursesP2P.Models;
+using CoursesP2P.ViewModels.Courses.ViewModels;
 using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Students
 {
     public interface IStudentsService
     {
-        Task<IEnumerable<CourseEnrolledViewModel>> GetMyCoursesAsync(ClaimsPrincipal user);
+        IEnumerable<CourseEnrolledViewModel> GetMyCoursesAsync(User user);
 
         bool Add(int courseId, string studentId);
     }

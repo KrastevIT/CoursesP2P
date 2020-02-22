@@ -26,8 +26,8 @@ namespace CoursesP2P.Tests.Services.Lectures
         }
 
         [Theory]
-        [InlineData(1, 1)]
-        public void GetVideoByLectureIdReturnCorrectly(int id, int expected)
+        [InlineData(2)]
+        public void GetVideoByLectureIdReturnCorrectly(int id)
         {
             var lectures = new List<Lecture>
             {
@@ -50,11 +50,9 @@ namespace CoursesP2P.Tests.Services.Lectures
             this.db.Courses.Add(course);
             this.db.SaveChanges();
 
-            this.lecturesService.GetVideoByLectureId(id);
+           var model = this.lecturesService.GetVideoByLectureId(id);
 
-            var actualLectire = this.db.Lectures.Count(x => x.Id == id);
-
-            Assert.Equal(expected, actualLectire);
+            Assert.NotNull(model);
         }
 
         [Theory]

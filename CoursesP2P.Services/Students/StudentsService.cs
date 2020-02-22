@@ -27,10 +27,8 @@ namespace CoursesP2P.Services.Students
             this.userManager = userManager;
         }
 
-        public async Task<IEnumerable<CourseEnrolledViewModel>> GetMyCoursesAsync(ClaimsPrincipal user)
+        public IEnumerable<CourseEnrolledViewModel> GetMyCoursesAsync(User student)
         {
-            var student = await this.userManager.GetUserAsync(user);
-
             var courses = this.db.StudentCourses
                 .Where(x => x.StudentId == student.Id)
                 .Include(x => x.Course)
