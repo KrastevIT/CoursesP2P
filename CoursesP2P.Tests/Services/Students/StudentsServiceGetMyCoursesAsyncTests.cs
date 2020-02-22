@@ -3,7 +3,6 @@ using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Students;
 using CoursesP2P.Tests.Configuration;
-using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using Xunit;
 
@@ -13,15 +12,13 @@ namespace CoursesP2P.Tests.Services.Students
     {
         private CoursesP2PDbContext db;
         private readonly IMapper mapper;
-        private UserManager<User> userManager;
         private StudentsService studentsService;
 
         public StudentsServiceGetMyCoursesAsyncTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             this.mapper = MapperMock.AutoMapperMock();
-            this.userManager = UserManagerMock.UserManagerMockTest();
-            this.studentsService = new StudentsService(this.db, this.mapper, this.userManager);
+            this.studentsService = new StudentsService(this.db, this.mapper);
         }
 
         [Fact]

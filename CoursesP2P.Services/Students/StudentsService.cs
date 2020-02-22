@@ -2,12 +2,9 @@
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.ViewModels.Courses.ViewModels;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Students
 {
@@ -15,16 +12,13 @@ namespace CoursesP2P.Services.Students
     {
         private readonly CoursesP2PDbContext db;
         private readonly IMapper mapper;
-        private readonly UserManager<User> userManager;
 
         public StudentsService(
             CoursesP2PDbContext db,
-            IMapper mapper,
-            UserManager<User> userManager)
+            IMapper mapper)
         {
             this.db = db;
             this.mapper = mapper;
-            this.userManager = userManager;
         }
 
         public IEnumerable<CourseEnrolledViewModel> GetMyCoursesAsync(User student)
