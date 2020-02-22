@@ -21,8 +21,4 @@
     <ProjectReference Include="..\CoursesP2P.Services\CoursesP2P.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
