@@ -6,17 +6,18 @@ using CoursesP2P.Tests.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Lectures
 {
-    public class LecturesServiceGetLecturesByCourseIdAsyncTests
+    public class LecturesServiceGetVideoByLectureIdTests
     {
         private CoursesP2PDbContext db;
         private readonly IMapper mapper;
         private LecturesService lecturesService;
 
-        public LecturesServiceGetLecturesByCourseIdAsyncTests()
+        public LecturesServiceGetVideoByLectureIdTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             this.mapper = MapperMock.AutoMapperMock();
@@ -25,8 +26,8 @@ namespace CoursesP2P.Tests.Services.Lectures
         }
 
         [Theory]
-        [InlineData(1, 2)]
-        public void GetLecturesByCourseIdAsyncReturnCorrectly(int courseId, int expected)
+        [InlineData(1, 1)]
+        public void GetVideoByLectureIdReturnCorrectly(int id, int expected)
         {
             var lectures = new List<Lecture>
             {
@@ -42,37 +43,23 @@ namespace CoursesP2P.Tests.Services.Lectures
 
             var course = new Course
             {
-                Id = 1,
+                Id = 10,
                 Lectures = lectures
             };
 
-            var user = new User
-            {
-                Id = "1",
-            };
-
-            this.db.Users.Add(user);
             this.db.Courses.Add(course);
             this.db.SaveChanges();
 
-            var studentCourse = new StudentCourse
-            {
-                CourseId = course.Id,
-                StudentId = user.Id
-            };
+            this.lecturesService.GetVideoByLectureId(id);
 
-            this.db.StudentCourses.Add(studentCourse);
-            this.db.SaveChanges();
+            var actualLectire = this.db.Lectures.Count(x => x.Id == id);
 
-
-            var actual = this.lecturesService.GetLecturesByCourseIdAsync(courseId, user).Count();
-
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, actualLectire);
         }
 
         [Theory]
-        [InlineData(2)]
-        public void GetLecturesByCourseIdAsyncWithInvalidIdReturnExceptions(int courseId)
+        [InlineData(3)]
+        public void GetVideoByLectureIdWithInvalidIdReturnException(int id)
         {
             var lectures = new List<Lecture>
             {
@@ -88,30 +75,14 @@ namespace CoursesP2P.Tests.Services.Lectures
 
             var course = new Course
             {
-                Id = 1,
+                Id = 10,
                 Lectures = lectures
             };
 
-            var user = new User
-            {
-                Id = "1",
-            };
-
-            this.db.Users.Add(user);
             this.db.Courses.Add(course);
             this.db.SaveChanges();
 
-            var studentCourse = new StudentCourse
-            {
-                CourseId = course.Id,
-                StudentId = user.Id
-            };
-
-            this.db.StudentCourses.Add(studentCourse);
-            this.db.SaveChanges();
-
-
-            Assert.Throws<InvalidOperationException>(() => this.lecturesService.GetLecturesByCourseIdAsync(courseId, user));
+            Assert.Throws<ArgumentNullException>(() => this.lecturesService.GetVideoByLectureId(id));
         }
     }
 }

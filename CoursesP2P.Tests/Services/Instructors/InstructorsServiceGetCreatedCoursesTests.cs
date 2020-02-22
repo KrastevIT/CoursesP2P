@@ -3,8 +3,6 @@ using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Instructors;
 using CoursesP2P.Tests.Configuration;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -21,7 +19,7 @@ namespace CoursesP2P.Tests.Services.Instructors
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             this.mapper = MapperMock.AutoMapperMock();
-            this.instructorsService = new InstructorsService(db,mapper);
+            this.instructorsService = new InstructorsService(db, mapper);
         }
 
         [Fact]

@@ -87,7 +87,7 @@ namespace CoursesP2P.App
         {
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<ICoursesService, CoursesService>();
-            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IStudentsService, StudentsService>();
             services.AddScoped<IInstructorsService, InstructorsService>();
             services.AddScoped<ILecturesService, LecturesService>();
         }

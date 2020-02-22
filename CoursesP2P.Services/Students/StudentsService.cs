@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Students
 {
-    public class StudentService : IStudentService
+    public class StudentsService : IStudentsService
     {
         private readonly CoursesP2PDbContext db;
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
 
-        public StudentService(
+        public StudentsService(
             CoursesP2PDbContext db,
             IMapper mapper,
             UserManager<User> userManager)

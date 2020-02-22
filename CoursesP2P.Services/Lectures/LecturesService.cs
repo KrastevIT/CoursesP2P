@@ -4,8 +4,6 @@ using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.ViewModels.Lectures.BindingModels;
 using CoursesP2P.ViewModels.Lectures.ViewModels;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,21 +15,18 @@ namespace CoursesP2P.Services.Lectures
 {
     public class LecturesService : ILecturesService
     {
+        //TODO
+        private const string PathLecturesVideos = "wwwroot/Videos";
+
         private readonly CoursesP2PDbContext db;
         private readonly IMapper mapper;
-        private readonly UserManager<User> userManager;
-        private readonly IWebHostEnvironment webHostEnvironment;
 
         public LecturesService(
             CoursesP2PDbContext db,
-            IMapper mapper,
-            UserManager<User> userManager,
-            IWebHostEnvironment webHostEnvironment)
+            IMapper mapper)
         {
             this.db = db;
             this.mapper = mapper;
-            this.userManager = userManager;
-            this.webHostEnvironment = webHostEnvironment;
         }
 
         public IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int id, User instructor)
@@ -59,9 +54,8 @@ namespace CoursesP2P.Services.Lectures
         [RequestSizeLimit(1000000000)]
         public void Add(AddLecturesBindingModel model)
         {
-            var guidName = Guid.NewGuid().ToString() + Path.GetExtension(model.Video.FileName);
-
-            var filePath = $"{this.webHostEnvironment.WebRootPath}\\Videos\\{guidName}";
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Video.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/Videos", fileName);
 
             bool exists = System.IO.Directory.Exists("wwwroot/Videos");
             if (!exists)
@@ -75,7 +69,7 @@ namespace CoursesP2P.Services.Lectures
                 fileStream.Flush();
             }
 
-            var dbPath = "/Videos/" + guidName;
+            var dbPath = "/Videos/" + fileName;
 
             var lecture = this.mapper.Map<Lecture>(model);
             lecture.Video = dbPath;
@@ -87,7 +81,11 @@ namespace CoursesP2P.Services.Lectures
         public VideoViewModel GetVideoByLectureId(int id)
         {
             var lecture = this.db.Lectures.FirstOrDefault(x => x.Id == id);
-
+            if (lecture == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(ErrorMessages.InvalidLectureId, id));
+            }
             var lecturesOfCourse = this.db.Lectures
                 .Where(x => x.CourseId == lecture.CourseId)
                 .ToList();

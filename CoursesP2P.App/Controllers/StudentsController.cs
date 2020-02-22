@@ -10,10 +10,10 @@ namespace CoursesP2P.App.Controllers
     [Authorize]
     public class StudentsController : Controller
     {
-        private readonly IStudentService studentService;
+        private readonly IStudentsService studentService;
         private readonly UserManager<User> userManager;
 
-        public StudentsController(IStudentService studentService, UserManager<User> userManager)
+        public StudentsController(IStudentsService studentService, UserManager<User> userManager)
         {
             this.studentService = studentService;
             this.userManager = userManager;

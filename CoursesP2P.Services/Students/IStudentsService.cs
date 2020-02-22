@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Students
 {
-    public interface IStudentService
+    public interface IStudentsService
     {
         Task<IEnumerable<CourseEnrolledViewModel>> GetMyCoursesAsync(ClaimsPrincipal user);
 
