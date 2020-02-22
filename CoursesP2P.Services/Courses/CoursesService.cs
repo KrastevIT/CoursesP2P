@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Courses.P2P.Common;
+using CoursesP2P.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Models.Enum;
@@ -84,7 +85,7 @@ namespace CoursesP2P.Services.Courses
                 || string.IsNullOrEmpty(model.Description)
                 || string.IsNullOrEmpty(model.Skills))
             {
-                //DOTO
+                //TODO
                 throw new InvalidOperationException();
             }
 
@@ -111,6 +112,7 @@ namespace CoursesP2P.Services.Courses
 
             var course = this.mapper.Map<Course>(model);
             course.Image = dbPath;
+            course.CreatedOn = DateTime.UtcNow.AddHours(GlobalConstants.BULGARIAN_HOURS_FROM_UTC_TIME);
 
             this.db.Courses.Add(course);
             this.db.SaveChanges();

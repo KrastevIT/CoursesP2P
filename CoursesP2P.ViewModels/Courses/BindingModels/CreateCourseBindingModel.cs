@@ -32,6 +32,8 @@ namespace CoursesP2P.ViewModels.Courses.BindingModels
         [Required]
         public IFormFile Image { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         public string InstructorFullName { get; set; }
 
         public string InstructorId { get; set; }

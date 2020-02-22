@@ -22,6 +22,14 @@
     <Compile Remove="Migrations\20200121091916_EditLectureId.Designer.cs" />
     <Compile Remove="Migrations\20200121092149_RemovedLecture.cs" />
     <Compile Remove="Migrations\20200121092149_RemovedLecture.Designer.cs" />
+    <Compile Remove="Migrations\20200222121050_RemoveRequiredPriceFromCourse.cs" />
+    <Compile Remove="Migrations\20200222121050_RemoveRequiredPriceFromCourse.Designer.cs" />
+    <Compile Remove="Migrations\20200222121524_AddValidationOnDecimal.cs" />
+    <Compile Remove="Migrations\20200222121524_AddValidationOnDecimal.Designer.cs" />
+    <Compile Remove="Migrations\20200222122015_UpdatePrice.cs" />
+    <Compile Remove="Migrations\20200222122015_UpdatePrice.Designer.cs" />
+    <Compile Remove="Migrations\20200222122329_AddValidationPrice.cs" />
+    <Compile Remove="Migrations\20200222122329_AddValidationPrice.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,8 @@
 ﻿using CoursesP2P.Models.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoursesP2P.Models
 {
@@ -18,8 +20,6 @@ namespace CoursesP2P.Models
         [MaxLength(500)]
         public string Description { get; set; }
 
-        [Required]
-        [Range(0, 5000.00, ErrorMessage = "Invalid Target Price; Max 5000.00")]
         public decimal Price { get; set; }
 
         [Required]
@@ -34,6 +34,8 @@ namespace CoursesP2P.Models
         public string Skills { get; set; }
 
         public int Orders { get; set; }
+
+        public DateTime CreatedOn { get; set; }
 
         [Required]
         public string InstructorFullName { get; set; }
