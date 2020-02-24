@@ -1,4 +1,5 @@
 using AutoMapper;
+using CoursesP2P.App.Areas.Identity.Services;
 using CoursesP2P.App.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
@@ -10,6 +11,7 @@ using CoursesP2P.Services.Students;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +46,8 @@ namespace CoursesP2P.App
             services.AddAutoMapper(typeof(Startup));
 
             RegisterServiceLayer(services);
+
+            services.Configure<SendGridOptions>(this.Configuration.GetSection("EmailSettings"));
 
             services.AddMvc();
         }
@@ -85,6 +89,8 @@ namespace CoursesP2P.App
 
         private void RegisterServiceLayer(IServiceCollection services)
         {
+            services.AddSingleton<IEmailSender, SendGridEmailSender>();
+
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<ICoursesService, CoursesService>();
             services.AddScoped<IStudentsService, StudentsService>();
