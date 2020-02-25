@@ -25,11 +25,11 @@ namespace CoursesP2P.Services.Instructors
 
         public CourseAndDashbordViewModel GetCreatedCourses(User instructor)
         {
-            var courses = this.db.Courses
-                 .Where(x => x.InstructorId == instructor.Id)
-                 .Include(x => x.Lectures)
-                 .Include(x => x.Students)
-                 .ToList();
+            var courses = this.db.Users
+                .Where(x => x.Id == instructor.Id)
+                .SelectMany(x => x.CreatedCourses)
+                .Include(x => x.Lectures)
+                .ToList();
 
             var modelsCourse = this.mapper.Map<IEnumerable<CourseInstructorViewModel>>(courses);
 
@@ -37,7 +37,7 @@ namespace CoursesP2P.Services.Instructors
             {
                 Courses = modelsCourse,
                 CreatedCourses = courses.Count(),
-                EnrolledCourses = courses.Select(x => x.Students).Sum(x => x.Count),
+                EnrolledCourses = courses.Select(x => x.Orders).Sum(),
                 Profit = instructor.Profit
             };
 

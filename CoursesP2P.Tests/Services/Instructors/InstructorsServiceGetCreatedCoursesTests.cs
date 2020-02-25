@@ -51,5 +51,47 @@ namespace CoursesP2P.Tests.Services.Instructors
 
             Assert.Equal(2, actual);
         }
+
+        [Fact]
+        public void GetCreatedCoursesWithLecturesReturnCorrectly()
+        {
+            var lectures = new List<Lecture>
+            {
+                new Lecture
+                {
+                    Id = 1
+                },
+                new Lecture
+                {
+                    Id = 2
+                }
+            };
+
+            var courses = new List<Course>
+            {
+                new Course
+                {
+                    Id = 1,
+                    Lectures = lectures
+                },
+            };
+
+            var user = new User
+            {
+                Id = "1",
+                CreatedCourses = courses
+            };
+
+            this.db.Users.Add(user);
+            this.db.SaveChanges();
+
+
+            var actual = this.instructorsService.GetCreatedCourses(user)
+                .Courses
+                .Select(x => x.Lectures.Count).Sum();
+                
+
+            Assert.Equal(2, actual);
+        }
     }
 }
