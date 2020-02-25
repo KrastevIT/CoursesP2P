@@ -62,21 +62,22 @@ namespace CoursesP2P.Services.Courses
         public IEnumerable<CourseViewModel> GetCoursesByCategory(string categoryName)
         {
             var isValidEnum = Enum.TryParse(typeof(Category), categoryName, true, out object category);
-            if (!isValidEnum)
+            if (isValidEnum)
             {
-                throw new InvalidCastException(
-                    string.Format(ErrorMessages.InvalidCastCategory, categoryName));
-            }
-
-            var coursesByCategory = this.db.Courses
+                var coursesByCategory = this.db.Courses
                 .Include(x => x.Lectures)
                 .ToList()
                 .Where(x => x.Category == (Category)category)
                 .ToList();
 
-            var models = this.mapper.Map<IEnumerable<CourseViewModel>>(coursesByCategory);
+                var models = this.mapper.Map<IEnumerable<CourseViewModel>>(coursesByCategory);
 
-            return models;
+                return models;
+            }
+
+            throw new InvalidCastException(
+                   string.Format(ErrorMessages.InvalidCastCategory, categoryName));
+
         }
 
         public async Task CreateAsync(CreateCourseBindingModel model, User user)

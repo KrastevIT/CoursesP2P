@@ -1,4 +1,5 @@
 ﻿using CoursesP2P.Services.Courses;
+using CoursesP2P.Services.Home;
 using CoursesP2P.ViewModels.Errors;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,17 +9,19 @@ namespace CoursesP2P.App.Controllers
     public class HomeController : Controller
     {
         private readonly ICoursesService coursesService;
+        private readonly IHomeService homeService;
 
-        public HomeController(ICoursesService coursesService)
+        public HomeController(ICoursesService coursesService, IHomeService homeService)
         {
             this.coursesService = coursesService;
+            this.homeService = homeService;
         }
 
         public IActionResult Index()
         {
-            var courses = this.coursesService.GetAllCourses();
+            var coursesAndInfo = this.homeService.GetAllInfoWithCourses();
 
-            return View(courses);
+            return View(coursesAndInfo);
         }
 
         public IActionResult Search(string searchTerm)
