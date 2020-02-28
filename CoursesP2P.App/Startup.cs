@@ -5,7 +5,6 @@ using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Admin;
 using CoursesP2P.Services.Courses;
-using CoursesP2P.Services.Home;
 using CoursesP2P.Services.Instructors;
 using CoursesP2P.Services.Lectures;
 using CoursesP2P.Services.Students;
@@ -97,7 +96,6 @@ namespace CoursesP2P.App
             services.AddScoped<IStudentsService, StudentsService>();
             services.AddScoped<IInstructorsService, InstructorsService>();
             services.AddScoped<ILecturesService, LecturesService>();
-            services.AddScoped<IHomeService, HomeService>();
         }
     }
 }
