@@ -42,14 +42,14 @@ namespace CoursesP2P.App.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Create));
+                return View(model);
             }
+
             var user = await this.userManager.GetUserAsync(this.User);
             await this.coursesService.CreateAsync(model, user);
 
             return RedirectToAction("Index", "Instructors");
         }
-
 
         public IActionResult Details(int id)
         {

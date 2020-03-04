@@ -43,6 +43,11 @@ namespace CoursesP2P.App.Controllers
         [HttpPost]
         public IActionResult Add(AddLecturesBindingModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             this.lectureService.Add(model);
 
             return RedirectToAction("Index", "Instructors");
