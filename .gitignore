@@ -349,3 +349,5 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /CoursesP2P.App/wwwroot/Videos
+/CoursesP2P.App/appsettings.Development.json
+/CoursesP2P.App/appsettings.json

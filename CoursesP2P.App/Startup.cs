@@ -4,6 +4,7 @@ using CoursesP2P.App.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Admin;
+using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.Services.Instructors;
 using CoursesP2P.Services.Lectures;
@@ -95,6 +96,7 @@ namespace CoursesP2P.App
             services.AddScoped<IStudentsService, StudentsService>();
             services.AddScoped<IInstructorsService, InstructorsService>();
             services.AddScoped<ILecturesService, LecturesService>();
+            services.AddScoped<ICloudinaryService, CloudinaryService>();
         }
     }
 }
