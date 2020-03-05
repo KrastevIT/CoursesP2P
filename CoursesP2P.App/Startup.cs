@@ -1,4 +1,5 @@
 using AutoMapper;
+using CloudinaryDotNet;
 using CoursesP2P.App.Areas.Identity.Services;
 using CoursesP2P.App.Common;
 using CoursesP2P.Data;
@@ -48,6 +49,14 @@ namespace CoursesP2P.App
             RegisterServiceLayer(services);
 
             services.Configure<SendGridOptions>(this.Configuration.GetSection("EmailSettings"));
+
+            Account account = new Account(
+                         this.Configuration["Cloudinary:AppName"],
+                         this.Configuration["Cloudinary:AppKey"],
+                         this.Configuration["Cloudinary:AppSecret"]);
+            Cloudinary cloudinary = new Cloudinary(account);
+
+            services.AddSingleton(cloudinary);
 
             services.AddMvc();
         }

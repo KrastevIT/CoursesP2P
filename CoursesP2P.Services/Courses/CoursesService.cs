@@ -4,6 +4,7 @@ using CoursesP2P.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Models.Enum;
+using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.ViewModels.Courses.BindingModels;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -20,14 +21,17 @@ namespace CoursesP2P.Services.Courses
     {
         private readonly CoursesP2PDbContext db;
         private readonly IMapper mapper;
+        private readonly ICloudinaryService cloudinaryService;
 
         public CoursesService(
             CoursesP2PDbContext db,
             IMapper mapper,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            ICloudinaryService cloudinaryService)
         {
             this.db = db;
             this.mapper = mapper;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public IEnumerable<CourseViewModel> GetAllCourses()
@@ -90,29 +94,29 @@ namespace CoursesP2P.Services.Courses
                 throw new InvalidOperationException();
             }
 
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
+            //var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/Images", fileName);
+            //var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/Images", fileName);
 
-            bool exists = System.IO.Directory.Exists("wwwroot/Images");
-            if (!exists)
-            {
-                Directory.CreateDirectory("wwwroot/Images");
-            }
+            //bool exists = System.IO.Directory.Exists("wwwroot/Images");
+            //if (!exists)
+            //{
+            //    Directory.CreateDirectory("wwwroot/Images");
+            //}
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await model.Image.CopyToAsync(stream);
-            }
+            //using (var stream = new FileStream(filePath, FileMode.Create))
+            //{
+            //    await model.Image.CopyToAsync(stream);
+            //}
 
-            var dbPath = "/Images/" + fileName;
+            //var dbPath = "/Images/" + fileName;
 
 
             model.InstructorFullName = user.FirstName + ' ' + user.LastName;
             model.InstructorId = user.Id;
 
             var course = this.mapper.Map<Course>(model);
-            course.Image = dbPath;
+            course.Image = await this.cloudinaryService.UploadImageAsync(model.Image);
             course.CreatedOn = DateTime.UtcNow.AddHours(GlobalConstants.BULGARIAN_HOURS_FROM_UTC_TIME);
 
             this.db.Courses.Add(course);

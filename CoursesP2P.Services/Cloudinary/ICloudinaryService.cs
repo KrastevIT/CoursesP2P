@@ -1,7 +1,10 @@
-﻿namespace CoursesP2P.Services.Cloudinary
+﻿using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+
+namespace CoursesP2P.Services.Cloudinary
 {
     public interface ICloudinaryService
     {
-        void UploadImageAsync();
+        Task<string> UploadImageAsync(IFormFile image);
     }
 }
