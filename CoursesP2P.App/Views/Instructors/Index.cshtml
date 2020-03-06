@@ -4,52 +4,52 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="container">
-    <div class="text-center">
-        <h1 class="text-center">My Created Courses</h1>
-        <br />
-    </div>
-    <vc:instructor-dashbord></vc:instructor-dashbord>
     <div class="container">
         <div class="text-center">
-            <br />
-            <a asp-controller="Courses" asp-action="Create" class="btn btn-success btn-lg">Create new course</a>
-            <br />
+            <h1 class="text-center">My Created Courses</h1>
             <br />
         </div>
-        <div class="row">
-            @foreach (var course in Model)
-            {
-                <div class="col-md-4">
-                    <figure class="card card-coin card-plain">
-                        <div class="img-wrap">
-                            <a href="@Url.Action("Edit", "Instructors", new { id=course.Id})">
-                                <img src="@course.Image" style="width:348px;height:220px;">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <h4 class="text-uppercase">@course.Name</h4>
-                                    <hr class="line-primary">
+        <vc:instructor-dashbord></vc:instructor-dashbord>
+        <div class="container">
+            <div class="text-center">
+                <br />
+                <a asp-controller="Courses" asp-action="Create" class="btn btn-success btn-lg">Create new course</a>
+                <br />
+                <br />
+            </div>
+            <div class="row">
+                @foreach (var course in Model)
+                {
+                    <div class="col-md-4">
+                        <figure class="card card-coin card-plain">
+                            <div class="img-wrap">
+                                <a href="@Url.Action("Edit", "Instructors", new { id=course.Id})">
+                                    <img src="@course.Image" style="width:348px;height:220px;">
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <h4 class="text-uppercase">@course.Name</h4>
+                                        <hr class="line-primary">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">@course.Category</li>
+                                        <li class="list-group-item">Lectures @course.Lectures.Count</li>
+                                        <li class="list-group-item">@course.Orders orders </li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="row">
-                                <ul class="list-group">
-                                    <li class="list-group-item">@course.Category</li>
-                                    <li class="list-group-item">Lectures @course.Lectures.Count</li>
-                                    <li class="list-group-item">@course.Orders orders </li>
-                                </ul>
+                            <div class="card-footer text-center">
+                                <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-primary btn-sm">Add Lecture</a>
+                                <a asp-controller="Instructors" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-warning btn-sm">Edit</a>
                             </div>
-                        </div>
-                        <div class="card-footer text-center">
-                            <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-primary btn-sm">Add Lecture</a>
-                            <a asp-controller="Instructors" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-warning btn-sm">Edit</a>
-                        </div>
 
-                    </figure>
-                </div>
-            }
+                        </figure>
+                    </div>
+                }
+            </div>
         </div>
     </div>
-</div>

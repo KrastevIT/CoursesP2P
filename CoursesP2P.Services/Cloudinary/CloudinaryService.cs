@@ -1,23 +1,16 @@
 ﻿using CloudinaryDotNet.Actions;
-using CoursesP2P.Data;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.WebUtilities;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Cloudinary
 {
     public class CloudinaryService : ICloudinaryService
     {
-        private readonly CoursesP2PDbContext db;
         private readonly CloudinaryDotNet.Cloudinary cloudinary;
 
-        public CloudinaryService(CoursesP2PDbContext db, CloudinaryDotNet.Cloudinary cloudinary)
+        public CloudinaryService(CloudinaryDotNet.Cloudinary cloudinary)
         {
-            this.db = db;
             this.cloudinary = cloudinary;
         }
 
