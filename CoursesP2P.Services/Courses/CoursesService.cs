@@ -21,6 +21,7 @@ namespace CoursesP2P.Services.Courses
     {
         private readonly CoursesP2PDbContext db;
         private readonly IMapper mapper;
+        private readonly UserManager<User> userManager;
         private readonly ICloudinaryService cloudinaryService;
 
         public CoursesService(
@@ -31,6 +32,7 @@ namespace CoursesP2P.Services.Courses
         {
             this.db = db;
             this.mapper = mapper;
+            this.userManager = userManager;
             this.cloudinaryService = cloudinaryService;
         }
 
@@ -93,24 +95,6 @@ namespace CoursesP2P.Services.Courses
                 //TODO
                 throw new InvalidOperationException();
             }
-
-            //var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
-
-            //var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/Images", fileName);
-
-            //bool exists = System.IO.Directory.Exists("wwwroot/Images");
-            //if (!exists)
-            //{
-            //    Directory.CreateDirectory("wwwroot/Images");
-            //}
-
-            //using (var stream = new FileStream(filePath, FileMode.Create))
-            //{
-            //    await model.Image.CopyToAsync(stream);
-            //}
-
-            //var dbPath = "/Images/" + fileName;
-
 
             model.InstructorFullName = user.FirstName + ' ' + user.LastName;
             model.InstructorId = user.Id;

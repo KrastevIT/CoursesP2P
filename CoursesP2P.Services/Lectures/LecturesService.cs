@@ -2,31 +2,31 @@
 using Courses.P2P.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
+using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.ViewModels.Lectures.BindingModels;
 using CoursesP2P.ViewModels.Lectures.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace CoursesP2P.Services.Lectures
 {
     public class LecturesService : ILecturesService
     {
-        //TODO
-        private const string PathLecturesVideos = "wwwroot/Videos";
-
         private readonly CoursesP2PDbContext db;
         private readonly IMapper mapper;
+        private readonly ICloudinaryService cloudinaryService;
 
         public LecturesService(
             CoursesP2PDbContext db,
-            IMapper mapper)
+            IMapper mapper,
+            ICloudinaryService cloudinaryService)
         {
             this.db = db;
             this.mapper = mapper;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int id, User instructor)
@@ -50,29 +50,12 @@ namespace CoursesP2P.Services.Lectures
             return models;
         }
 
-        [RequestFormLimits(MultipartBodyLengthLimit = 1000000000)]
-        [RequestSizeLimit(1000000000)]
+        [RequestFormLimits(MultipartBodyLengthLimit = 1073741824)]
+        [RequestSizeLimit(1073741824)]
         public void Add(AddLecturesBindingModel model)
         {
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Video.FileName);
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/Videos", fileName);
-
-            bool exists = System.IO.Directory.Exists("wwwroot/Videos");
-            if (!exists)
-            {
-                Directory.CreateDirectory("wwwroot/Videos");
-            }
-
-            using (FileStream fileStream = System.IO.File.Create(filePath))
-            {
-                model.Video.CopyTo(fileStream);
-                fileStream.Flush();
-            }
-
-            var dbPath = "/Videos/" + fileName;
-
             var lecture = this.mapper.Map<Lecture>(model);
-            lecture.Video = dbPath;
+            lecture.Video = this.cloudinaryService.UploadVideo(model.Video);
 
             this.db.Lectures.Add(lecture);
             this.db.SaveChanges();

@@ -9,8 +9,15 @@
     </h1>
     <div class="row">
         <div class="col-md-8">
+
             <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="@Model.Video" allowfullscreen></iframe>
+                <iframe src="https://player.cloudinary.com/embed/?cloud_name=y5d1fyvw0pp1c0p4rntc&public_id=@Model.Video&fluid=true&controls=true&source_types%5B0%5D=mp4"
+                        width="640"
+                        height="480"
+                        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                        allowfullscreen
+                        frameborder="0">
+                </iframe>
             </div>
         </div>
         <div class="col-md-4 text-center">

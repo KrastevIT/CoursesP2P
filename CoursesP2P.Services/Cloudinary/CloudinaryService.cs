@@ -1,7 +1,11 @@
 ﻿using CloudinaryDotNet.Actions;
 using CoursesP2P.Data;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.WebUtilities;
 using System.IO;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Cloudinary
@@ -35,6 +39,29 @@ namespace CoursesP2P.Services.Cloudinary
                 };
                 var uploadResult = await cloudinary.UploadAsync(uploadParams);
                 path = uploadResult.Uri.AbsoluteUri;
+            }
+
+            return path;
+        }
+
+        public string UploadVideo(IFormFile video)
+        {
+            string path = string.Empty;
+            using (var stream = video.OpenReadStream())
+            {
+                var uploadParams = new VideoUploadParams()
+                {
+                    File = new FileDescription(video.Name, stream),
+                    EagerAsync = true
+                };
+
+                Task<VideoUploadResult> task = Task<VideoUploadResult>.Run(() =>
+                {
+                    var uploadResult = cloudinary.UploadAsync(uploadParams);
+                    return uploadResult;
+                });
+                var result = task.Result;
+                path = result.Uri.AbsoluteUri;
             }
 
             return path;

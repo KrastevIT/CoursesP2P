@@ -2,6 +2,7 @@
 using CoursesP2P.ViewModels.Lectures.BindingModels;
 using CoursesP2P.ViewModels.Lectures.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Lectures
 {

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
+using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Lectures;
 using CoursesP2P.Tests.Configuration;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +23,9 @@ namespace CoursesP2P.Tests.Services.Lectures
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             this.mapper = MapperMock.AutoMapperMock();
+            var cloudinary = new Mock<ICloudinaryService>().Object;
 
-            this.lecturesService = new LecturesService(this.db, this.mapper);
+            this.lecturesService = new LecturesService(this.db, this.mapper, cloudinary);
         }
 
         [Theory]
@@ -50,7 +53,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             this.db.Courses.Add(course);
             this.db.SaveChanges();
 
-           var model = this.lecturesService.GetVideoByLectureId(id);
+            var model = this.lecturesService.GetVideoByLectureId(id);
 
             Assert.NotNull(model);
         }

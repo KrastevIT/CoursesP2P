@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
+using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.Tests.Configuration;
 using Microsoft.AspNetCore.Identity;
+using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -22,7 +24,9 @@ namespace CoursesP2P.Tests.Services.Courses
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             this.mapper = MapperMock.AutoMapperMock();
             this.userManager = UserManagerMock.UserManagerMockTest();
-            this.coursesService = new CoursesService(this.db, this.mapper, this.userManager);
+            var cloudinary = new Mock<ICloudinaryService>().Object;
+
+            this.coursesService = new CoursesService(this.db, this.mapper, this.userManager,cloudinary);
         }
 
         [Fact]

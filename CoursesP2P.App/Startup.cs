@@ -12,6 +12,7 @@ using CoursesP2P.Services.Lectures;
 using CoursesP2P.Services.Students;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +59,15 @@ namespace CoursesP2P.App
 
             services.AddSingleton(cloudinary);
 
+            services.Configure<FormOptions>(options =>
+            {
+                options.ValueLengthLimit = int.MaxValue;
+
+                options.MultipartBodyLengthLimit = int.MaxValue;
+
+                options.MultipartHeadersLengthLimit = int.MaxValue;
+            });
+
             services.AddMvc();
         }
 
@@ -82,6 +92,14 @@ namespace CoursesP2P.App
             app.UseAuthorization();
 
             app.SeedDatabase();
+
+            app.Use(async (context, next) =>
+            {
+                context.Features.Get<IHttpMaxRequestBodySizeFeature>()
+                    .MaxRequestBodySize = null;
+
+                await next.Invoke();
+            });
 
             app.UseEndpoints(endpoints =>
             {
