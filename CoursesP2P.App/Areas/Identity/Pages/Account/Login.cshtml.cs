@@ -1,4 +1,5 @@
 ﻿using CoursesP2P.Models;
+using CoursesP2P.Services.ReCaptcha;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -16,14 +17,17 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly UserManager<User> userManager;
+        private readonly IReCAPTCHAService reCAPTCHAService;
         private readonly SignInManager<User> signInManager;
         private readonly ILogger<LoginModel> logger;
 
         public LoginModel(SignInManager<User> signInManager,
             ILogger<LoginModel> logger,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            IReCAPTCHAService reCAPTCHAService)
         {
             this.userManager = userManager;
+            this.reCAPTCHAService = reCAPTCHAService;
             this.signInManager = signInManager;
             this.logger = logger;
         }
@@ -47,6 +51,9 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
+
+            [Required]
+            public string Token { get; set; }
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
@@ -72,6 +79,13 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
+
+            var ReCaptcha = this.reCAPTCHAService.Verify(Input.Token);
+            if (!ReCaptcha.Result.Success && ReCaptcha.Result.Score <= 0.5)
+            {
+                ModelState.AddModelError(string.Empty, "Your are Not Humman!");
+                return Page();
+            }
 
             if (ModelState.IsValid)
             {

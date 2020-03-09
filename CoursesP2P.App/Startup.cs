@@ -9,7 +9,9 @@ using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.Services.Instructors;
 using CoursesP2P.Services.Lectures;
+using CoursesP2P.Services.ReCaptcha;
 using CoursesP2P.Services.Students;
+using CoursesP2P.ViewModels.ReCaptcha;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
@@ -68,6 +70,8 @@ namespace CoursesP2P.App
                 options.MultipartHeadersLengthLimit = int.MaxValue;
             });
 
+            services.Configure<ReCAPTCHASettings>(Configuration.GetSection("GooglereCAPTCHA"));
+
             services.AddMvc();
         }
 
@@ -124,6 +128,7 @@ namespace CoursesP2P.App
             services.AddScoped<IInstructorsService, InstructorsService>();
             services.AddScoped<ILecturesService, LecturesService>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
+            services.AddTransient<IReCAPTCHAService, ReCAPTCHAService>();
         }
     }
 }
