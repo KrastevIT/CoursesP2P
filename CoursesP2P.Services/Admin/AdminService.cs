@@ -41,6 +41,7 @@ namespace CoursesP2P.Services.Admin
             var courses = this.db.Users
                 .Where(x => x.Id == id)
                 .SelectMany(x => x.CreatedCourses)
+                .Include(x => x.Lectures)
                 .ToList();
 
             var models = this.mapper.Map<IEnumerable<CourseViewModel>>(courses);
