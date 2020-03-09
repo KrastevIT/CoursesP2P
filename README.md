@@ -2,8 +2,10 @@ My defense project for ASP.NET Core
 
 # 🛠 Built with:
 * ASP.NET Core 3.1
-* EF Core
-* Services
+* Entity Framework Core
 * AutoMapper
 * CloudinaryDotNet
-* Moq
+* Sendgrid
+* xUnit
+* Services
+* View Components
