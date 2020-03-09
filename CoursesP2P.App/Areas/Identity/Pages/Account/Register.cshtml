@@ -1,10 +1,10 @@
 ﻿@page
 @model RegisterModel
+@using Microsoft.Extensions.Options
+@inject IOptions<ReCAPTCHASettings> GooglereCAPTCHA
 @{
     ViewData["Title"] = "Register";
 }
-
-
 
 <div class="register-page">
     <div class="container-fluid">
@@ -87,6 +87,7 @@
                                             <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="ConfirmPassword">
                                             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                                         </div>
+                                        <input type="hidden" asp-for="Input.Token" />
                                         <div class="form-check text-left">
                                             <label class="form-check-label">
                                                 <input class="form-check-input" type="checkbox">
@@ -200,3 +201,13 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+
+<script src="https://www.google.com/recaptcha/api.js?render=@GooglereCAPTCHA.Value.ReCAPTCHA_Site_Key"></script>
+<script>
+    grecaptcha.ready(function () {
+        grecaptcha.execute('@GooglereCAPTCHA.Value.ReCAPTCHA_Site_Key', { action: 'homepage' }).then(function (token) {
+            $('#Input_Token').val(token);
+        });
+    });
+</script>

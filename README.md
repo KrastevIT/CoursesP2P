@@ -6,6 +6,7 @@ My defense project for ASP.NET Core
 * AutoMapper
 * CloudinaryDotNet
 * Sendgrid
+* reCAPTCHA
 * xUnit
 * Services
 * View Components
