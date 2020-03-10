@@ -168,17 +168,16 @@ namespace CoursesP2P.Services.Payments
 
             var createPayout = payout.Create(apiContext);
             var batchId = createPayout.batch_header.payout_batch_id;
-            var getPayout = Payout.Get(apiContext, batchId);
-            while (getPayout.batch_header.batch_status != "SUCCESS")
-            {
-                if (getPayout.batch_header.batch_status == "SUCCESS")
-                {
-                    var currentPayout = this.db.PaymentsToInstructors.ToList();
-                    this.db.RemoveRange(currentPayout);
-                }
-            }
-           
+            var price = decimal.Parse(createPayout.batch_header.amount.value);
 
+            var payoutPayPal = new PayoutPayPal
+            {
+                BatchId = batchId,
+                Amount = price
+            };
+
+            this.db.PayoutPayPals.Add(payoutPayPal);
+            this.db.SaveChanges();
         }
     }
 }

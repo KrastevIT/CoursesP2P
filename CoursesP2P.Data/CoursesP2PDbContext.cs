@@ -21,6 +21,8 @@ namespace CoursesP2P.Data
 
         public DbSet<PaymentToInstructor> PaymentsToInstructors { get; set; }
 
+        public DbSet<PayoutPayPal> PayoutPayPals { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<StudentCourse>(studentCourse =>
