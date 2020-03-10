@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CoursesP2P.Models;
+﻿using CoursesP2P.Models;
 using CoursesP2P.Services.Payments;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CoursesP2P.App.Controllers
 {
@@ -26,7 +23,7 @@ namespace CoursesP2P.App.Controllers
             string paypalLink = this.paymentsService.GetPayLink(id, student);
             if (paypalLink == null)
             {
-                return BadRequest();
+                return RedirectToAction("Index","Home");
             }
 
             return Redirect(paypalLink);
@@ -35,9 +32,8 @@ namespace CoursesP2P.App.Controllers
 
         public IActionResult Process(string paymentId, string payerId, string token)
         {
-            this.paymentsService.ProcessPayment(paymentId, payerId, token);
-
-            return RedirectToAction("Index", "Students");
+            var courseId = this.paymentsService.ProcessPayment(paymentId, payerId, token);
+            return RedirectToAction("Add", "Students", new { id = courseId });
         }
 
         public IActionResult Cancel()

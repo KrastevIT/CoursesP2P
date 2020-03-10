@@ -13,6 +13,9 @@ namespace CoursesP2P.Models
         [Required]
         public string PaymentId { get; set; }
 
+        [Required]
+        public int CourseId { get; set; }
+
         public decimal Amount { get; set; }
 
         [Required]

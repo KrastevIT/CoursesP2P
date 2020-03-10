@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AdminPayoutsViewModel>
+@{
+    ViewData["Title"] = "Index";
+
+    int count = 0;
+}
+
+<div class="content">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th>Email</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                {
+                    count++;
+                }
+
+                <tr>
+                    <td class="text-center">@count</td>
+                    <td>@user.Email</td>
+                    <td>&euro; @user.Amount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <h1>Total: &euro;@Model.Sum(x => x.Amount)</h1>
+        <br />
+        <a asp-area="Admin" asp-controller="Payouts" asp-action="Payout" class="btn btn-danger btn-lg">Pay</a>
+        <br />
+        <br />
+    </div>
+</div>
+

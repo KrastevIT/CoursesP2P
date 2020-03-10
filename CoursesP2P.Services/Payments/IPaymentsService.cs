@@ -1,4 +1,6 @@
 ﻿using CoursesP2P.Models;
+using CoursesP2P.ViewModels.Admin;
+using System.Collections.Generic;
 
 namespace CoursesP2P.Services.Payments
 {
@@ -6,6 +8,10 @@ namespace CoursesP2P.Services.Payments
     {
         string GetPayLink(int courseId, User student);
 
-        void ProcessPayment(string paymentId, string payerId, string token);
+        int ProcessPayment(string paymentId, string payerId, string token);
+
+        IEnumerable<AdminPayoutsViewModel> GetPayouts();
+
+        void Payouts(IEnumerable<AdminPayoutsViewModel> models);
     }
 }
