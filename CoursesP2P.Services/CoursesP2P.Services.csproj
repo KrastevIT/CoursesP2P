@@ -8,6 +8,7 @@
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Cloudinary.Core" Version="1.31.0" />
     <PackageReference Include="PayPal" Version="1.9.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,5 +16,6 @@
     <ProjectReference Include="..\CoursesP2P.Data\CoursesP2P.Data.csproj" />
     <ProjectReference Include="..\CoursesP2P.ViewModels\CoursesP2P.ViewModels.csproj" />
   </ItemGroup>
+
 
 </Project>

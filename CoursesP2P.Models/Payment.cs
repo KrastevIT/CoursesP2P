@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CoursesP2P.Models.Enum;
+using System.ComponentModel.DataAnnotations;
 
 namespace CoursesP2P.Models
 {
@@ -17,7 +18,8 @@ namespace CoursesP2P.Models
         [Required]
         public string StudentId { get; set; }
 
-        [Required]
         public User Student { get; set; }
+
+        public PaymentStatus Status { get; set; }
     }
 }
