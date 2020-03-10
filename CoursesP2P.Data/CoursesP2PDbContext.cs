@@ -17,6 +17,10 @@ namespace CoursesP2P.Data
 
         public DbSet<StudentCourse> StudentCourses { get; set; }
 
+        public DbSet<Payment> Payments { get; set; }
+
+        public DbSet<PaymentToInstructor> PaymentsToInstructors { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<StudentCourse>(studentCourse =>
@@ -41,6 +45,22 @@ namespace CoursesP2P.Data
                 .HasOne(c => c.Instructor)
                 .WithMany(i => i.CreatedCourses)
                 .HasForeignKey(c => c.InstructorId);
+            });
+
+            builder.Entity<Payment>(payment =>
+            {
+                payment
+                .HasOne(p => p.Student)
+                .WithMany(s => s.Payments)
+                .HasForeignKey(p => p.StudentId);
+            });
+
+            builder.Entity<PaymentToInstructor>(paymentsToInstructor =>
+            {
+                paymentsToInstructor
+                .HasOne(pi => pi.Instructor)
+                .WithMany(i => i.PaymentsToInstructor)
+                .HasForeignKey(pi => pi.InstructorId);
             });
 
             base.OnModelCreating(builder);

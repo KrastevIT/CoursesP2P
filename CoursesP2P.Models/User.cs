@@ -30,5 +30,9 @@ namespace CoursesP2P.Models
         public ICollection<Course> CreatedCourses { get; set; } = new HashSet<Course>();
 
         public ICollection<StudentCourse> EnrolledCourses { get; set; } = new HashSet<StudentCourse>();
+
+        public ICollection<Payment> Payments { get; set; } = new HashSet<Payment>();
+
+        public ICollection<PaymentToInstructor> PaymentsToInstructor { get; set; } = new HashSet<PaymentToInstructor>();
     }
 }

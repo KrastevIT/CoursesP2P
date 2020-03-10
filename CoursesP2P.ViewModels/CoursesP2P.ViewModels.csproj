@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Folder Include="Instructors\BindingModels\" />
+    <Folder Include="PayPal\BindingModels\" />
+    <Folder Include="PayPal\ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>
