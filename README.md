@@ -7,6 +7,7 @@ My defense project for ASP.NET Core
 * CloudinaryDotNet
 * Sendgrid
 * reCAPTCHA
+* PayPal
 * xUnit
 * Services
 * View Components

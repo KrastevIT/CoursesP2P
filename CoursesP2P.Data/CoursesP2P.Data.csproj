@@ -30,6 +30,8 @@
     <Compile Remove="Migrations\20200222122015_UpdatePrice.Designer.cs" />
     <Compile Remove="Migrations\20200222122329_AddValidationPrice.cs" />
     <Compile Remove="Migrations\20200222122329_AddValidationPrice.Designer.cs" />
+    <Compile Remove="Migrations\20200310221402_time.cs" />
+    <Compile Remove="Migrations\20200310221402_time.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

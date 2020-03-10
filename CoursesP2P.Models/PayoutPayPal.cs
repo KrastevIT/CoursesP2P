@@ -1,4 +1,7 @@
-﻿namespace CoursesP2P.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace CoursesP2P.Models
 {
     public class PayoutPayPal
     {
@@ -7,5 +10,7 @@
         public string BatchId { get; set; }
 
         public decimal Amount { get; set; }
+
+        public DateTime CreatedOn { get; set; }
     }
 }

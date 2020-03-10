@@ -1,4 +1,5 @@
-﻿using CoursesP2P.Data;
+﻿using CoursesP2P.Common;
+using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Models.Enum;
 using CoursesP2P.ViewModels.Admin;
@@ -167,13 +168,17 @@ namespace CoursesP2P.Services.Payments
             };
 
             var createPayout = payout.Create(apiContext);
+
             var batchId = createPayout.batch_header.payout_batch_id;
-            var price = decimal.Parse(createPayout.batch_header.amount.value);
+            var get = Payout.Get(apiContext, batchId);
+
+            var price = decimal.Parse(get.batch_header.amount.value);
 
             var payoutPayPal = new PayoutPayPal
             {
                 BatchId = batchId,
-                Amount = price
+                Amount = price,
+                CreatedOn = DateTime.UtcNow.AddHours(GlobalConstants.BULGARIAN_HOURS_FROM_UTC_TIME)
             };
 
             this.db.PayoutPayPals.Add(payoutPayPal);
