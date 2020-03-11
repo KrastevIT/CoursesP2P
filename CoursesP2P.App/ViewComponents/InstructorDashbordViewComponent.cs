@@ -29,11 +29,16 @@ namespace CoursesP2P.App.ViewComponents
                  .Include(x => x.CreatedCourses)
                  .FirstOrDefault();
 
+            var profit = this.db.PaymentsToInstructors
+                .Where(x => x.InstructorEmail == user.Email)
+                .Select(x => x.Amount)
+                .FirstOrDefault();
+
             var model = new InstructorDashbordViewModel
             {
                 CreatedCourses = user.CreatedCourses.Count(),
                 EnrolledCourses = user.CreatedCourses.Select(x => x.Orders).Sum(),
-                Profit = user.Profit
+                Profit = profit
             };
 
             return View(model);

@@ -25,8 +25,6 @@ namespace CoursesP2P.Models
         [MaxLength(50)]
         public string City { get; set; }
 
-        public decimal Profit { get; set; }
-
         public ICollection<Course> CreatedCourses { get; set; } = new HashSet<Course>();
 
         public ICollection<StudentCourse> EnrolledCourses { get; set; } = new HashSet<StudentCourse>();

@@ -50,12 +50,9 @@ namespace CoursesP2P.Services.Students
             };
 
             var instructor = this.db.Users.FirstOrDefault(x => x.Id == course.InstructorId);
-            instructor.Profit += course.Price * THIRTY_PERCENT;
-            AddPaymentToInstructor(instructor);
+            AddPaymentToInstructor(instructor, course.Price);
 
             course.Orders++;
-
-            this.db.Users.Update(instructor);
 
             this.db.StudentCourses.Add(studentCourse);
 
@@ -64,25 +61,24 @@ namespace CoursesP2P.Services.Students
             return true;
         }
 
-        private void AddPaymentToInstructor(User instructor)
+        private void AddPaymentToInstructor(User instructor, decimal price)
         {
             var payment = this.db.PaymentsToInstructors.FirstOrDefault(x => x.InstructorId == instructor.Id);
             if (payment == null)
             {
-                var paymentsToInstructors = new PaymentToInstructor
+                payment = new PaymentToInstructor
                 {
                     InstructorEmail = instructor.Email,
                     InstructorId = instructor.Id,
-                    Amount = instructor.Profit
+                    Amount = price * THIRTY_PERCENT
                 };
-                this.db.PaymentsToInstructors.Add(paymentsToInstructors);
+                this.db.PaymentsToInstructors.Add(payment);
             }
             else
             {
-                payment.Amount = instructor.Profit;
+                payment.Amount += price * THIRTY_PERCENT;
                 this.db.PaymentsToInstructors.Update(payment);
             }
-
             this.db.SaveChanges();
         }
     }

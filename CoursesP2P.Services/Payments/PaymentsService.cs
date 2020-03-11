@@ -4,6 +4,7 @@ using CoursesP2P.Models;
 using CoursesP2P.Models.Enum;
 using CoursesP2P.ViewModels.Admin;
 using CoursesP2P.ViewModels.PayPal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using PayPal.Api;
 using System;
@@ -180,6 +181,9 @@ namespace CoursesP2P.Services.Payments
                 Amount = price,
                 CreatedOn = DateTime.UtcNow.AddHours(GlobalConstants.BULGARIAN_HOURS_FROM_UTC_TIME)
             };
+
+            var forDelete = this.db.PaymentsToInstructors.ToList();
+            this.db.PaymentsToInstructors.RemoveRange(forDelete);
 
             this.db.PayoutPayPals.Add(payoutPayPal);
             this.db.SaveChanges();
