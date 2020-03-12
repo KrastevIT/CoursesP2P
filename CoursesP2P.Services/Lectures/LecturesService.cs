@@ -80,5 +80,20 @@ namespace CoursesP2P.Services.Lectures
 
             return model;
         }
+
+        public AddLecturesBindingModel GetLectureBindingModelWithCourseId(int courseId, User user)
+        {
+            var isValid = this.db.Courses.Where(x => x.Id == courseId).FirstOrDefault()?.InstructorId == user.Id;
+            if (!isValid)
+            {
+                return null;
+            }
+            var model = new AddLecturesBindingModel
+            {
+                CourseId = courseId
+            };
+
+            return model;
+        }
     }
 }

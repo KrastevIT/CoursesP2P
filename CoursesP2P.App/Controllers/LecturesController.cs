@@ -30,13 +30,15 @@ namespace CoursesP2P.App.Controllers
             return View(lectures);
         }
 
-        public IActionResult Add(int id)
+        public async Task<IActionResult> Add(int id)
         {
-            var model = new AddLecturesBindingModel
-            {
-                CourseId = id
-            };
+            var instructor = await this.userManager.GetUserAsync(this.User);
 
+            var model = this.lectureService.GetLectureBindingModelWithCourseId(id, instructor);
+            if (model == null)
+            {
+                return NotFound();
+            }
             return View(model);
         }
 
