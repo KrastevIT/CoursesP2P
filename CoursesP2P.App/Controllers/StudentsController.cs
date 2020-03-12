@@ -23,6 +23,7 @@ namespace CoursesP2P.App.Controllers
         {
             var user = await this.userManager.GetUserAsync(this.User);
             var courses = this.studentService.GetMyCoursesAsync(user);
+
             return View(courses);
         }
 

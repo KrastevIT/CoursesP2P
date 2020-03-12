@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Details";
 }
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <div class="container">
     <h1 class="my-4">
@@ -12,7 +13,7 @@
     </h1>
     <div class="row">
         <div class="col-md-8 table-responsive-xl">
-            <iframe src="https://player.cloudinary.com/embed/?cloud_name=demo&public_id=sea_turtle&fluid=true&controls=true&muted=false&autoplay=true&autoplay_on_scroll=false&source_types%5B0%5D=mp4"
+            <iframe src="https://player.cloudinary.com/embed/?cloud_name=demo&public_id=sea_turtle&fluid=true&controls=true&muted=false&autoplay=false&autoplay_on_scroll=false&source_types%5B0%5D=mp4"
                     width="640"
                     height="480"
                     allowfullscreen
@@ -30,7 +31,7 @@
                 }
             </ul>
             <div class="text-lg-center">
-                <a asp-controller="Payments" asp-action="Index" asp-route-id="@Model.Id" class="btn btn-warning">Buy</a>
+                <a asp-controller="Payments" asp-action="Index" asp-route-id="@Model.Id" id="loading" class="btn btn-warning">Buy</a>
             </div>
         </div>
     </div>
@@ -46,3 +47,32 @@
         </div>
     </div>
 </div>
+
+<div id="overlay" style="display: none;">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+</div>
+
+@*Spinner Loading*@
+<script>
+    jQuery(function ($) {
+        $(document).ajaxSend(function () {
+            $("#overlay").fadeIn(300);
+        });
+
+        $('#loading').click(function () {
+            $.ajax({
+                type: 'GET',
+                success: function (data) {
+                    console.log(data);
+                }
+            }).
+                done(function () {
+                    setTimeout(function () {
+                        $("#overlay").fadeOut(300000);
+                    }, 500000);
+                });
+        });
+    });
+</script>

@@ -54,7 +54,6 @@ namespace CoursesP2P.App.Controllers
         public IActionResult Details(int id)
         {
             var course = this.coursesService.Details(id);
-
             return View(course);
         }
     }

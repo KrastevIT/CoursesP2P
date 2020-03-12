@@ -60,9 +60,9 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @*@foreach (var category in Enum.GetNames(typeof(Category)))
-                                {
-                                    <a class="dropdown-item" asp-area="" asp-controller="Courses" asp-action="Category" asp-route-id="@category"><i class="fas fa-laptop-code"></i> @category</a>
-                                }*@
+                                    {
+                                        <a class="dropdown-item" asp-area="" asp-controller="Courses" asp-action="Category" asp-route-id="@category"><i class="fas fa-laptop-code"></i> @category</a>
+                                    }*@
 
                                 <a class="dropdown-item" asp-area="" asp-controller="Courses" asp-action="Category" asp-route-id="Development"><i class="fas fa-laptop-code"></i> Development</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Courses" asp-action="Category" asp-route-id="Marketing"><i class="fas fa-bullhorn"></i> Marketing</a>
