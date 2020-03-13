@@ -3,17 +3,42 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="d-flex justify-content-center">
+    <ul class="nav nav-pills nav-pills-primary nav-pills-icons nav-pills-lg" role="tablist">
+        <li class="nav-item m-auto">
+            <a class="nav-link active" data-toggle="tab" href="#coursesId" role="tablist">
+                <i class="fas fa-plus"></i> Courses
+            </a>
+        </li>
+        <li class="nav-item m-auto">
+            <a class="nav-link" data-toggle="tab" href="#profitId" role="tablist">
+                <i class="tim-icons icon-bag-16"></i> Profit
+            </a>
+        </li>
+        <li class="nav-item m-auto">
+            <a class="nav-link" data-toggle="tab" href="#project3" role="tablist">
+                <i class="tim-icons icon-light-3"></i> Project 3
+            </a>
+        </li>
+        <li class="nav-item m-auto">
+            <a class="nav-link" data-toggle="tab" href="#project4" role="tablist">
+                <i class="tim-icons icon-molecule-40"></i> Project 4
+            </a>
+        </li>
+        <li class="nav-item mx-auto">
+            <a class="nav-link" data-toggle="tab" href="#project5" role="tablist">
+                <i class="tim-icons icon-planet"></i> Project 5
+            </a>
+        </li>
+    </ul>
+</div>
 
-    <div class="container">
-        <div class="text-center">
-            <h1 class="text-center">My Created Courses</h1>
-            <br />
-        </div>
-        <vc:instructor-dashbord></vc:instructor-dashbord>
-        <div class="container">
+
+<div class="container">
+    <div class="tab-content tab-space">
+        <div class="tab-pane active" id="coursesId">
             <div class="text-center">
-                <br />
-                <a asp-controller="Courses" asp-action="Create" class="btn btn-success btn-lg">Create new course</a>
+                <a asp-controller="Courses" asp-action="Create" class="btn btn-info btn-lg">Create new course</a>
                 <br />
                 <br />
             </div>
@@ -52,4 +77,30 @@
                 }
             </div>
         </div>
+
+        <div class="tab-pane" id="profitId">
+            <vc:instructor-dashbord></vc:instructor-dashbord>
+        </div>
+        <div class="tab-pane" id="project3">
+            <div class="space-100"></div>
+            <div class="col-md-8 ml-auto mr-auto text-center mt-4">
+                <p class="description mb-5">Add your information here for Project3.</p>
+            </div>
+            <div class="space-100"></div>
+        </div>
+        <div class="tab-pane" id="project4">
+            <div class="space-100"></div>
+            <div class="col-md-8 ml-auto mr-auto text-center mt-4">
+                <p class="description mb-5">Add your information here for Project4.</p>
+            </div>
+            <div class="space-100"></div>
+        </div>
+        <div class="tab-pane" id="project5">
+            <div class="space-100"></div>
+            <div class="col-md-8 ml-auto mr-auto text-center mt-4">
+                <p class="description mb-5">Add your information here for Project5.</p>
+            </div>
+            <div class="space-100"></div>
+        </div>
     </div>
+</div>
