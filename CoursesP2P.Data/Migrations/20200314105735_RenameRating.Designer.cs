@@ -4,14 +4,16 @@ using CoursesP2P.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoursesP2P.Data.Migrations
 {
     [DbContext(typeof(CoursesP2PDbContext))]
-    partial class CoursesP2PDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200314105735_RenameRating")]
+    partial class RenameRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,9 +192,6 @@ namespace CoursesP2P.Data.Migrations
 
                     b.Property<string>("StudentId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Vote")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

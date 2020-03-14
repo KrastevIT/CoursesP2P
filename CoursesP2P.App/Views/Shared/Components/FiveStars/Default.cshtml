@@ -1,0 +1,6 @@
+﻿@model IEnumerable<FiveStarsViewModel>
+
+@foreach (var item in Model)
+{
+    <span class="@item.StarIcon" style="@item.Color"></span>
+}
