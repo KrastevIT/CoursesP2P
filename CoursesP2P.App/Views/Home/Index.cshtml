@@ -39,7 +39,14 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <h4 class="text-uppercase">@course.Name</h4>
+                                    @if (course.Name.Length > 29)
+                                    {
+                                        <h4 class="text-uppercase" rel="tooltip" title="@course.Name">@course.ShortName</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 class="text-uppercase">@course.Name</h4>
+                                    }
                                     <h5>by @course.InstructorFullName</h5>
                                     <hr class="line-primary">
                                 </div>
