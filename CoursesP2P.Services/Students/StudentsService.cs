@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using CoursesP2P.Data;
-using CoursesP2P.Data.Migrations;
 using CoursesP2P.Models;
 using CoursesP2P.ViewModels.Courses.ViewModels;
+using CoursesP2P.ViewModels.FiveStars;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace CoursesP2P.Services.Students
@@ -80,6 +81,44 @@ namespace CoursesP2P.Services.Students
                 this.db.PaymentsToInstructors.Update(payment);
             }
             this.db.SaveChanges();
+        }
+
+        public void AddRating(RatingViewModel model)
+        {
+            var rating = this.db.Ratings.FirstOrDefault(x => x.StudentId == model.StudentId);
+            if (rating == null)
+            {
+                rating = new Rating
+                {
+                    StudentId = model.StudentId,
+                    CourseId = model.CourseId,
+                    Vote = model.Rating
+                };
+                this.db.Ratings.Add(rating);
+            }
+            else
+            {
+                rating.Vote = model.Rating;
+                this.db.Ratings.Update(rating);
+            }
+            this.db.SaveChanges();
+        }
+
+        public RatingViewModel GetRating(string studentId)
+        {
+            var model = new RatingViewModel
+            {
+                StudentId = studentId
+            };
+            var rating = this.db.Ratings.FirstOrDefault(x => x.StudentId == studentId);
+            if (rating == null)
+            {
+                model.Rating = 0;
+                return model;
+            }
+            model.Rating = rating.Vote;
+
+            return model;
         }
     }
 }

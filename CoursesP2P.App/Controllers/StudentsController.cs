@@ -1,8 +1,10 @@
 ﻿using CoursesP2P.Models;
 using CoursesP2P.Services.Students;
+using CoursesP2P.ViewModels.FiveStars;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.App.Controllers
@@ -37,6 +39,16 @@ namespace CoursesP2P.App.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Rating(RatingViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", model);
+            }
+            this.studentService.AddRating(model);
+            return RedirectToAction("Index",model);
         }
     }
 }
