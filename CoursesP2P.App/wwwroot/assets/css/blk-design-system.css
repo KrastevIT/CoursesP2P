@@ -27,7 +27,7 @@ input[type="checkbox"].input-validation-error {
 .rating {
     unicode-bidi: bidi-override;
     direction: rtl;
-    font-size: 30px;
+    font-size: 25px;
 }
 
     .rating span.star, .rating span.star {
@@ -49,11 +49,11 @@ input[type="checkbox"].input-validation-error {
 
         .rating span.star:hover:before, .rating span.star:hover:before, .rating span.star:hover ~ span.star:before, .rating span.star:hover ~ span.star:before {
             content: "★";
-            color: #41CAC0;
+            color: #FFA500;
         }
 
         .rating span.star.active::before, .rating span.star.active::before, .rating span.star.active ~ span.star::before, .rating span.star.active ~ span.star::before {
-            color: #41cac0;
+            color: #FFA500;
             content: "★";
         }
 
