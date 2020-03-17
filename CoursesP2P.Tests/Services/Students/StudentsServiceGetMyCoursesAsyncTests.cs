@@ -47,7 +47,7 @@ namespace CoursesP2P.Tests.Services.Students
             this.db.StudentCourses.Add(studentCourse);
             this.db.SaveChanges();
 
-            var actual = this.studentsService.GetMyCoursesAsync(user).ToList().Count;
+            var actual = this.studentsService.GetMyCourses(user).ToList().Count;
 
             Assert.Equal(1, actual);
         }

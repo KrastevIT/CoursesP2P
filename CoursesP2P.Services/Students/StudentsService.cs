@@ -25,7 +25,7 @@ namespace CoursesP2P.Services.Students
             this.mapper = mapper;
         }
 
-        public IEnumerable<CourseEnrolledViewModel> GetMyCoursesAsync(User student)
+        public IEnumerable<CourseEnrolledViewModel> GetMyCourses(User student)
         {
             var courses = this.db.StudentCourses
                 .Where(x => x.StudentId == student.Id)

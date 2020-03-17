@@ -22,7 +22,7 @@ namespace CoursesP2P.App.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            var courses = this.studentService.GetMyCoursesAsync(user);
+            var courses = this.studentService.GetMyCourses(user);
 
             return View(courses);
         }
