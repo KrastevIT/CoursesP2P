@@ -21,9 +21,9 @@
             </iframe>
         </div>
         <div class="col-md-4">
-            <h3 class="my-3">Description</h3>
+            <h3 class="my-3">Описание</h3>
             <p>@Model.Description</p>
-            <h3 class="my-3">Lectures</h3>
+            <h3 class="my-3">Лекции</h3>
             <ul>
                 @foreach (var lectureName in Model.LectureName)
                 {
@@ -31,7 +31,7 @@
                 }
             </ul>
             <div class="text-lg-center">
-                <a asp-controller="Payments" asp-action="Index" asp-route-id="@Model.Id" id="loading" class="btn btn-warning">Buy</a>
+                <a asp-controller="Payments" asp-action="Index" asp-route-id="@Model.Id" id="loading" class="btn btn-warning">Купи</a>
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@
 
     <div class="card card-nav-tabs text-center">
         <div class="card-body">
-            <h1 class="display-4 text-center">What you'll learn</h1>
+            <h1 class="display-4 text-center">Какво ще научиш</h1>
             @foreach (var skills in Model.Skills)
             {
                 <p><i class="fas fa-check"></i> @skills</p>
