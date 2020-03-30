@@ -3,10 +3,11 @@
     ViewData["Title"] = "Create";
 }
 
-<div class="container">
-    <h1>Create new course</h1>
+<div class="d-flex justify-content-center">
+
 
     <form enctype="multipart/form-data" asp-controller="Courses" asp-action="Create" method="post" class="form-horizontal">
+        <h1 class="text-center">Създай нов курс</h1>
         <div class="form-group">
             <label class="control-label col-sm-2" asp-for="Name"></label>
             <div class="col-sm-10">
@@ -22,31 +23,31 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="control-label col-sm-2" asp-for="@Model.Skills"></label>
-            <div class="col-sm-10">
-                <input type="text" id="skill" class="form-control">
-                <div id="skills">
-
-                </div>
-            </div>
-            <div class="col-sm-10">
-                <button id="skillButton" type="button" class="btn btn-info btn-sm">Add skill</button>
-            </div>
-        </div>
-
         @*<div class="form-group">
                 <label class="control-label col-sm-2" asp-for="@Model.Skills"></label>
-                <p class="control-label col-sm-2"><small class="text-primary">Each skill is divided with *</small></p>
                 <div class="col-sm-10">
-                    <input class="form-control" asp-for="@Model.Skills" placeholder="Examples: *Work with text *Use arrays and lists *Work with date and time" />
-                    <span class="text-danger" asp-validation-for="@Model.Skills"></span>
+                    <input type="text" id="skill" class="form-control">
+                    <div id="skills">
+
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <button id="skillButton" type="button" class="btn btn-info btn-sm">Add skill</button>
                 </div>
             </div>*@
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" asp-for="@Model.Skills"></label>
+            <span class="control-label col-sm-2"><small class="text-primary">Всяко ново умение трябва да започва със *</small></span>
+            <div class="col-sm-10">
+                <input class="form-control" asp-for="@Model.Skills" placeholder="Пример: *Работа с текст *Използване на масиви и листове" />
+                <span class="text-danger" asp-validation-for="@Model.Skills"></span>
+            </div>
+        </div>
         <div class="form-group">
             <label class="control-label col-sm-2" asp-for="Price"></label>
             <div class="col-sm-10">
-                <input class="form-control" asp-for="Price" />
+                <input type="number" class="form-control" asp-for="Price" />
                 <span class="text-danger" asp-validation-for="Price"></span>
             </div>
         </div>
@@ -57,49 +58,71 @@
                 <span asp-validation-for="Category"></span>
             </div>
         </div>
-        <div class="fileinput fileinput-new" data-provides="fileinput">
-            <label asp-for="@Model.Image" class="col-sm-2"></label>
-            <div class="col-sm-10">
-                <div class="custom-file">
-                    <input asp-for="@Model.Image" />
-                    <span asp-validation-for="@Model.Image"></span>
-                </div>
-            </div>
+        <div class="uploadOuter">
+            <label for="uploadFile" class="btn btn-primary">Качи снимка до 1 MБ</label>
+            <strong>ИЛИ</strong>
+            <span class="dragBox">
+                Darg and Drop image here
+                <input type="file" asp-for="@Model.Image" onChange="dragNdrop(event)" ondragover="drag()" ondrop="drop()" id="uploadFile" />
+            </span>
         </div>
+        <div id="preview"></div>
+
         <hr />
         <div class="form-group">
             <div class="col-sm-10 col-sm-push-2">
-                <input type="submit" value="Create" class="btn btn-info" />
-                <a asp-controller="Instructors" asp-action="Index" class="btn btn-danger">Cancel</a>
+                <input type="submit" value="Добави" class="btn btn-info" />
+                <a asp-controller="Instructors" asp-action="Index" class="btn btn-danger">Назад</a>
             </div>
         </div>
     </form>
 </div>
 
 
+
+
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
 
-<script>
-    let skillButton = document.getElementById("skillButton");
-    skillButton.addEventListener("click", AddSkill);
+@*<script>
+        let skillButton = document.getElementById("skillButton");
+        skillButton.addEventListener("click", AddSkill);
 
-    function AddSkill() {
-        let getSkill = document.getElementById("skill");
+        function AddSkill() {
+            let getSkill = document.getElementById("skill");
 
-        if (getSkill.value == "") {
-            return;
+            if (getSkill.value == "") {
+                return;
+            }
+
+            let div = document.getElementById("skills");
+            let span = document.createElement("span");
+            span.setAttribute("class", "badge badge-primary");
+            span.textContent = getSkill.value;
+
+            div.appendChild(span);
+
+            console.log(span);
+            getSkill.value = "";
         }
+    </script>*@
 
-        let div = document.getElementById("skills");
-        let span = document.createElement("span");
-        span.setAttribute("class", "badge badge-primary");
-        span.textContent = getSkill.value;
-
-        div.appendChild(span);
-
-        console.log(span);
-        getSkill.value = "";
+<script>
+    function dragNdrop(event) {
+        var fileName = URL.createObjectURL(event.target.files[0]);
+        var preview = document.getElementById("preview");
+        var previewImg = document.createElement("img");
+        previewImg.setAttribute("src", fileName);
+        previewImg.setAttribute("style", "width: 348px; height: 220px;");
+        preview.innerHTML = "";
+        preview.appendChild(previewImg);
+    }
+    function drag() {
+        document.getElementById('uploadFile').parentNode.className = 'draging dragBox';
+    }
+    function drop() {
+        document.getElementById('uploadFile').parentNode.className = 'dragBox';
     }
 </script>

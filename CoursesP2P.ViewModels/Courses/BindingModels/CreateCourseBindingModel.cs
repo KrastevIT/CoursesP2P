@@ -7,26 +7,31 @@ namespace CoursesP2P.ViewModels.Courses.BindingModels
 {
     public class CreateCourseBindingModel
     {
-        [Required]
+        [Required(ErrorMessage = "Моля, въведете име")]
         [MinLength(1)]
         [MaxLength(200)]
+        [Display(Name = "Име")]
         public string Name { get; set; }
 
-        [Required]
-        [MinLength(22)]
+        [Required(ErrorMessage = "Моля, въведете описание")]
+        [MinLength(22, ErrorMessage = "Трябва да е минимум 22 символа")]
         [MaxLength(500)]
+        [Display(Name = "Описание")]
         public string Description { get; set; }
 
-        [Required]
-        [Range(0, 5000.00, ErrorMessage = "Invalid Target Price; Max 5000.00")]
+        [Required(ErrorMessage = "Моля, въведете цена")]
+        [Range(0, 5000.00, ErrorMessage = "Максимална цена 5000.00")]
+        [Display(Name = "Цена")]
         public decimal Price { get; set; }
 
-        [Required]
-        [MinLength(3)]
+        [Required(ErrorMessage = "Моля, въведете умения")]
+        [MinLength(3, ErrorMessage = "Трябва да е минимум 3 символа")]
         [MaxLength(1000)]
+        [Display(Name = "Умения")]
         public string Skills { get; set; }
 
         [Required]
+        [Display(Name = "Категория")]
         public CategoryViewModel Category { get; set; }
 
         [Required]
