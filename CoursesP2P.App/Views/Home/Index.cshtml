@@ -8,11 +8,11 @@
     <div class="section">
         <div class="row justify-content-center">
             <div class="text-center">
-                <h1 class="text-white font-weight-light">Shape the future of learning with us</h1>
-                <p class="text-white mt-4">Get the latest skills in leading industries with on-demand, expert-led courses</p>
+                <h1 class="text-white font-weight-light">Оформете бъдещето на обучението си при нас</h1>
+                <p class="text-white mt-4">Вземете най-новите умения във водещите индустрии с курсове, ръководени от експерти</p>
                 @if (!this.User.Identity.IsAuthenticated)
                 {
-                    <a href="/Identity/Account/Register" class="btn btn-warning mt-4">Start Now</a>
+                    <a href="/Identity/Account/Register" class="btn btn-warning mt-4">Започни сега</a>
                 }
             </div>
         </div>
@@ -44,15 +44,15 @@
                                     {
                                         <h4 class="text-uppercase">@course.Name</h4>
                                     }
-                                    <h5>by @course.InstructorFullName</h5>
+                                    <h5>от @course.InstructorFullName</h5>
                                     <hr class="line-primary">
                                 </div>
                             </div>
                             <div class="row">
                                 <ul class="list-group">
                                     <li class="list-group-item">@course.Category</li>
-                                    <li class="list-group-item">@course.Lectures.Count Lectures</li>
-                                    <li class="list-group-item">@course.Orders Orders</li>
+                                    <li class="list-group-item">@course.Lectures.Count Лекции</li>
+                                    <li class="list-group-item">@course.Orders Записани</li>
                                     <li class="list-group-item text-danger">&euro; @course.Price</li>
                                 </ul>
                             </div>
