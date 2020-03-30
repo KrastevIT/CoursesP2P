@@ -7,12 +7,12 @@
     <ul class="nav nav-pills nav-pills-primary nav-pills-icons nav-pills-lg" role="tablist">
         <li class="nav-item m-auto">
             <a class="nav-link active" data-toggle="tab" href="#coursesId" role="tablist">
-                <i class="fas fa-plus"></i> Courses
+                <i class="fas fa-plus"></i> Курсове
             </a>
         </li>
         <li class="nav-item m-auto">
             <a class="nav-link" data-toggle="tab" href="#profitId" role="tablist">
-                <i class="tim-icons icon-bag-16"></i> Profit
+                <i class="tim-icons icon-bag-16"></i> Приход
             </a>
         </li>
         <li class="nav-item m-auto">
@@ -38,7 +38,7 @@
     <div class="tab-content tab-space">
         <div class="tab-pane active" id="coursesId">
             <div class="text-center">
-                <a asp-controller="Courses" asp-action="Create" class="btn btn-info btn-lg">Create new course</a>
+                <a asp-controller="Courses" asp-action="Create" class="btn btn-info btn-lg">Добави нов курс</a>
                 <br />
                 <br />
             </div>
@@ -62,14 +62,14 @@
                                 <div class="row">
                                     <ul class="list-group">
                                         <li class="list-group-item">@course.Category</li>
-                                        <li class="list-group-item">Lectures @course.Lectures.Count</li>
-                                        <li class="list-group-item">@course.Orders orders </li>
+                                        <li class="list-group-item">@course.Lectures.Count Лекции</li>
+                                        <li class="list-group-item">@course.Orders Записани </li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="card-footer text-center">
-                                <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-primary btn-sm">Add Lecture</a>
-                                <a asp-controller="Instructors" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-warning btn-sm">Edit</a>
+                                <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-info btn-sm">Добави лекция</a>
+                                <a asp-controller="Instructors" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-warning btn-sm">Редактирай</a>
                             </div>
 
                         </figure>
