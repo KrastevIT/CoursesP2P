@@ -25,22 +25,23 @@
                                 {
                                     <h4 class="text-uppercase">@course.Name</h4>
                                 }
-                                <span>by @course.InstructorFullName</span>
+                                <span>от @course.InstructorFullName</span>
                                 <hr class="line-primary">
                             </div>
                         </div>
+
                         <div class="row">
                             <ul class="list-group">
                                 <li class="list-group-item">@course.Category</li>
-                                <li class="list-group-item">@course.Lectures.Count Lectures</li>
-                                <li class="list-group-item">@course.Orders orders</li>
+                                <li class="list-group-item">@course.Lectures.Count Лекции</li>
+                                <li class="list-group-item">@course.Orders Записани</li>
+                                <li class="list-group-item text-danger">&euro; @course.Price</li>
                             </ul>
                         </div>
                     </div>
-                    <div class="card-footer text-center">
-                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-success btn-sm btn-simple float-right">Details</a>
-                        <a asp-controller="Payments" asp-action="Index" asp-route-id="@course.Id" class="btn btn-warning btn-sm btn-simple float-right">Buy</a>
-                        <h3>$@course.Price</h3>
+                    <div class="card-footer text-left">
+                        <vc:five-stars course-id="@course.Id"></vc:five-stars>
+                        @*<a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-success btn-sm btn-simple">Details</a>*@
                     </div>
                 </figure>
             </div>
