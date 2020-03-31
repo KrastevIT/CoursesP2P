@@ -25,7 +25,8 @@ namespace CoursesP2P.App.Controllers
         public async Task<IActionResult> Index(int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            var lectures = this.lectureService.GetLecturesByCourseIdAsync(id, user);
+            var isAdmin = await this.userManager.IsInRoleAsync(user, "Administrator");
+            var lectures = this.lectureService.GetLecturesByCourseIdAsync(id, user, isAdmin);
 
             return View(lectures);
         }
@@ -55,9 +56,10 @@ namespace CoursesP2P.App.Controllers
             return RedirectToAction("Index", "Instructors");
         }
 
-        public IActionResult Video(int id)
+        public async Task<IActionResult> Video(int id)
         {
-            var videoOfLecture = this.lectureService.GetVideoByLectureId(id);
+            var user = await this.userManager.GetUserAsync(this.User);
+            var videoOfLecture = this.lectureService.GetVideoByLectureId(id, user);
 
             return View(videoOfLecture);
         }

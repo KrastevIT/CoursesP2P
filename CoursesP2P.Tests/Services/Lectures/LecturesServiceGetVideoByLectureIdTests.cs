@@ -50,10 +50,15 @@ namespace CoursesP2P.Tests.Services.Lectures
                 Lectures = lectures
             };
 
+            var user = new User
+            {
+                Id = "1"
+            };
+
             this.db.Courses.Add(course);
             this.db.SaveChanges();
 
-            var model = this.lecturesService.GetVideoByLectureId(id);
+            var model = this.lecturesService.GetVideoByLectureId(id, user);
 
             Assert.NotNull(model);
         }
@@ -80,10 +85,15 @@ namespace CoursesP2P.Tests.Services.Lectures
                 Lectures = lectures
             };
 
+            var user = new User
+            {
+                Id = "1"
+            };
+
             this.db.Courses.Add(course);
             this.db.SaveChanges();
 
-            Assert.Throws<ArgumentNullException>(() => this.lecturesService.GetVideoByLectureId(id));
+            Assert.Throws<ArgumentNullException>(() => this.lecturesService.GetVideoByLectureId(id, user));
         }
     }
 }

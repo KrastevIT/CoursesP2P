@@ -2,17 +2,16 @@
 using CoursesP2P.ViewModels.Lectures.BindingModels;
 using CoursesP2P.ViewModels.Lectures.ViewModels;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Lectures
 {
     public interface ILecturesService
     {
-        IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int id, User user);
+        IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int id, User user, bool isAdmin);
 
         void Add(AddLecturesBindingModel model);
 
-        VideoViewModel GetVideoByLectureId(int id);
+        VideoViewModel GetVideoByLectureId(int id, User user);
 
         AddLecturesBindingModel GetLectureBindingModelWithCourseId(int courseId, User user);
     }

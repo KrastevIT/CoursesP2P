@@ -29,14 +29,14 @@ namespace CoursesP2P.Services.Lectures
             this.cloudinaryService = cloudinaryService;
         }
 
-        public IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int id, User instructor)
+        public IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int id, User instructor, bool isAdmin)
         {
             var user = this.db.Users
                 .Include(x => x.EnrolledCourses)
                 .FirstOrDefault(x => x.Id == instructor.Id);
 
             var isValidUser = user.EnrolledCourses.Any(x => x.CourseId == id);
-            if (!isValidUser)
+            if (!isValidUser && !isAdmin)
             {
                 throw new InvalidOperationException(
                     string.Format(ErrorMessages.UnauthorizedUser, instructor.UserName));
@@ -61,13 +61,23 @@ namespace CoursesP2P.Services.Lectures
             this.db.SaveChanges();
         }
 
-        public VideoViewModel GetVideoByLectureId(int id)
+        public VideoViewModel GetVideoByLectureId(int id, User user)
         {
             var lecture = this.db.Lectures.FirstOrDefault(x => x.Id == id);
+            var isValidUser = this.db.Courses
+                .Where(x => x.Id == lecture.CourseId)
+                .SelectMany(x => x.Students).Select(x => x.StudentId == user.Id)
+                .FirstOrDefault();
+
             if (lecture == null)
             {
                 throw new ArgumentNullException(
                     string.Format(ErrorMessages.InvalidLectureId, id));
+            }
+            else if (!isValidUser)
+            {
+                throw new InvalidOperationException(
+                    string.Format(ErrorMessages.UnauthorizedUser, user.Id));
             }
             var lecturesOfCourse = this.db.Lectures
                 .Where(x => x.CourseId == lecture.CourseId)

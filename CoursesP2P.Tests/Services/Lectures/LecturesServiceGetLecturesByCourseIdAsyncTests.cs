@@ -68,7 +68,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             this.db.SaveChanges();
 
 
-            var actual = this.lecturesService.GetLecturesByCourseIdAsync(courseId, user).Count();
+            var actual = this.lecturesService.GetLecturesByCourseIdAsync(courseId, user, false).Count();
 
             Assert.Equal(expected, actual);
         }
@@ -114,7 +114,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             this.db.SaveChanges();
 
 
-            Assert.Throws<InvalidOperationException>(() => this.lecturesService.GetLecturesByCourseIdAsync(courseId, user));
+            Assert.Throws<InvalidOperationException>(() => this.lecturesService.GetLecturesByCourseIdAsync(courseId, user, false));
         }
     }
 }
