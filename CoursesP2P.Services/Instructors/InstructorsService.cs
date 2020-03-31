@@ -51,5 +51,28 @@ namespace CoursesP2P.Services.Instructors
 
             this.db.SaveChanges();
         }
+
+        public CourseEditViewModel GetCourseById(int id, string userId)
+        {
+            var course = this.db.Courses
+            .Include(x => x.Lectures)
+            .FirstOrDefault(x => x.Id == id);
+            if (course == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(ErrorMessages.NotFoundCourseById, id));
+            }
+            else if (course.InstructorId != userId)
+            {
+                throw new InvalidOperationException(
+                    string.Format(ErrorMessages.UnauthorizedUser, userId));
+            }
+            else
+            {
+                var model = this.mapper.Map<CourseEditViewModel>(course);
+
+                return model;
+            }
+        }
     }
 }

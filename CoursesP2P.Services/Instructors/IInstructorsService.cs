@@ -8,6 +8,8 @@ namespace CoursesP2P.Services.Instructors
     {
         IEnumerable<CourseInstructorViewModel> GetCreatedCourses(User user);
 
+        CourseEditViewModel GetCourseById(int id, string userId);
+
         void EditCourse(CourseEditViewModel model);
     }
 }

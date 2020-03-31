@@ -36,8 +36,9 @@ namespace CoursesP2P.App.Controllers
 
         public IActionResult Edit(int id)
         {
-            var course = this.coursesService.GetCourseById(id);
-
+            var userId = this.userManager.GetUserId(this.User);
+            var course = this.instructorService.GetCourseById(id, userId);
+            
             return View(course);
         }
 

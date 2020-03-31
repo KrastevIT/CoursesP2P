@@ -49,22 +49,6 @@ namespace CoursesP2P.Services.Courses
             return models;
         }
 
-        public CourseEditViewModel GetCourseById(int id)
-        {
-            var course = this.db.Courses
-            .Include(x => x.Lectures)
-            .FirstOrDefault(x => x.Id == id);
-            if (course == null)
-            {
-                throw new ArgumentNullException(
-                    string.Format(ErrorMessages.NotFoundCourseById, id));
-            }
-
-            var model = this.mapper.Map<CourseEditViewModel>(course);
-
-            return model;
-        }
-
         public IEnumerable<CourseViewModel> GetCoursesByCategory(string categoryName)
         {
             var isValidEnum = Enum.TryParse(typeof(Category), categoryName, true, out object category);
