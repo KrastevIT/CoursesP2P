@@ -13,6 +13,6 @@ namespace CoursesP2P.Services.Students
 
         void AddRating(RatingViewModel model);
 
-        RatingViewModel GetRating(string studentId);
+        RatingViewModel GetRating(string studentId, int courseId);
     }
 }

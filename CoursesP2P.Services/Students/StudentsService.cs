@@ -85,7 +85,7 @@ namespace CoursesP2P.Services.Students
 
         public void AddRating(RatingViewModel model)
         {
-            var rating = this.db.Ratings.FirstOrDefault(x => x.StudentId == model.StudentId);
+            var rating = this.db.Ratings.FirstOrDefault(x => x.StudentId == model.StudentId && x.CourseId == model.CourseId);
             if (rating == null)
             {
                 rating = new Rating
@@ -104,13 +104,13 @@ namespace CoursesP2P.Services.Students
             this.db.SaveChanges();
         }
 
-        public RatingViewModel GetRating(string studentId)
+        public RatingViewModel GetRating(string studentId, int courseId)
         {
             var model = new RatingViewModel
             {
                 StudentId = studentId
             };
-            var rating = this.db.Ratings.FirstOrDefault(x => x.StudentId == studentId);
+            var rating = this.db.Ratings.FirstOrDefault(x => x.StudentId == studentId && x.CourseId == courseId);
             if (rating == null)
             {
                 model.Rating = 0;

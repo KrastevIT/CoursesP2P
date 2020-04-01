@@ -20,7 +20,7 @@ namespace CoursesP2P.App.ViewComponents
         public IViewComponentResult Invoke(int courseId)
         {
             var studentId = this.userManager.GetUserId(this.UserClaimsPrincipal);
-            var model = this.studentsService.GetRating(studentId);
+            var model = this.studentsService.GetRating(studentId, courseId);
             model.CourseId = courseId;
             return View(model);
         }

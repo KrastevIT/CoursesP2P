@@ -28,6 +28,8 @@ namespace CoursesP2P.App.Controllers
             var isAdmin = await this.userManager.IsInRoleAsync(user, "Administrator");
             var lectures = this.lectureService.GetLecturesByCourseIdAsync(id, user, isAdmin);
 
+            this.ViewData["id"] = id;
+
             return View(lectures);
         }
 

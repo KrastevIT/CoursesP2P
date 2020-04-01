@@ -8,7 +8,7 @@ namespace CoursesP2P.Services.ReCaptcha
 {
     public class ReCAPTCHAService : IReCAPTCHAService
     {
-        private ReCAPTCHASettings settings;
+        private readonly ReCAPTCHASettings settings;
 
         public ReCAPTCHAService(IOptions<ReCAPTCHASettings> settings)
         {

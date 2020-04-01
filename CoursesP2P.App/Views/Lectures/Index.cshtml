@@ -37,3 +37,11 @@
         </div>
     </section>
 </body>
+
+<div class="d-flex justify-content-center">
+    <vc:rating course-id=@int.Parse(ViewData["id"].ToString())></vc:rating>
+</div>
+
+@section Scripts {
+    <script src="~/js/rating.js"></script>
+}

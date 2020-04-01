@@ -41,6 +41,7 @@ namespace CoursesP2P.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
         public IActionResult Rating(RatingViewModel model)
         {
             if (!ModelState.IsValid)
@@ -48,7 +49,7 @@ namespace CoursesP2P.App.Controllers
                 return RedirectToAction("Index", model);
             }
             this.studentService.AddRating(model);
-            return RedirectToAction("Index",model);
+            return RedirectToAction("Index", model);
         }
     }
 }
