@@ -63,8 +63,8 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
-            [Range(0, 120)]
-            public int Age { get; set; }
+            [DataType(DataType.Date)]
+            public DateTime Birthday { get; set; }
 
             [Required]
             [MinLength(2)]
@@ -116,7 +116,7 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
                 {
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    Age = Input.Age,
+                    Birthday = Input.Birthday,
                     City = Input.City,
                     UserName = Input.Email,
                     Email = Input.Email

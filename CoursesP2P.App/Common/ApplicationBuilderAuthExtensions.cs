@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace CoursesP2P.App.Common
 {
@@ -43,7 +44,7 @@ namespace CoursesP2P.App.Common
                         FirstName = "default",
                         LastName = "default",
                         EmailConfirmed = true,
-                        Age = 27,
+                        Birthday = DateTime.UtcNow,
                         City = "default"
                     };
 

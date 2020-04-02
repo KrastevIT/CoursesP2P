@@ -27,7 +27,8 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account.Manage
 
         public string LastName { get; set; }
 
-        public int Age { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime Birthday { get; set; }
 
         public string City { get; set; }
 
@@ -54,8 +55,8 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account.Manage
             public string LastName { get; set; }
 
             [Required]
-            [Range(0, 120)]
-            public int Age { get; set; }
+            [DataType(DataType.Date)]
+            public DateTime Birthday { get; set; }
 
             [Required]
             [MinLength(2)]
@@ -71,7 +72,7 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account.Manage
             Username = userName;
             FirstName = user.FirstName;
             LastName = user.LastName;
-            Age = user.Age;
+            Birthday = user.Birthday;
             City = user.City;
 
             Input = new InputModel
@@ -79,7 +80,7 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account.Manage
                 PhoneNumber = phoneNumber,
                 FirstName = FirstName,
                 LastName = LastName,
-                Age = Age,
+                Birthday = Birthday,
                 City = City
             };
         }
@@ -123,7 +124,7 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account.Manage
 
             user.FirstName = Input.FirstName;
             user.LastName = Input.LastName;
-            user.Age = Input.Age;
+            user.Birthday = Input.Birthday;
             user.City = Input.City;
 
             await userManager.UpdateAsync(user);

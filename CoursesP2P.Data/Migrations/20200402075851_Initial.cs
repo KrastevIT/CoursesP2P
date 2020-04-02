@@ -40,14 +40,29 @@ namespace CoursesP2P.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Age = table.Column<int>(nullable: false),
-                    City = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    Age = table.Column<DateTime>(nullable: false),
+                    City = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PayoutPayPals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BatchId = table.Column<string>(nullable: true),
+                    Amount = table.Column<decimal>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PayoutPayPals", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -162,32 +177,81 @@ namespace CoursesP2P.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    Description = table.Column<string>(maxLength: 500, nullable: false),
                     Price = table.Column<decimal>(nullable: false),
                     Category = table.Column<int>(nullable: false),
-                    Image = table.Column<string>(nullable: true),
-                    LecturerId = table.Column<string>(nullable: true)
+                    Image = table.Column<string>(nullable: false),
+                    Skills = table.Column<string>(maxLength: 1000, nullable: false),
+                    Orders = table.Column<int>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    InstructorFullName = table.Column<string>(nullable: false),
+                    InstructorId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_AspNetUsers_LecturerId",
-                        column: x => x.LecturerId,
+                        name: "FK_Courses_AspNetUsers_InstructorId",
+                        column: x => x.InstructorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentEmail = table.Column<string>(nullable: false),
+                    PaymentId = table.Column<string>(nullable: false),
+                    CourseId = table.Column<int>(nullable: false),
+                    Amount = table.Column<decimal>(nullable: false),
+                    StudentId = table.Column<string>(nullable: false),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_AspNetUsers_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PaymentsToInstructors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InstructorEmail = table.Column<string>(nullable: false),
+                    Amount = table.Column<decimal>(nullable: false),
+                    InstructorId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentsToInstructors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PaymentsToInstructors_AspNetUsers_InstructorId",
+                        column: x => x.InstructorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Lectures",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Presentation = table.Column<string>(nullable: true),
-                    Video = table.Column<string>(nullable: true),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    Video = table.Column<string>(nullable: false),
                     CourseId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -195,6 +259,27 @@ namespace CoursesP2P.Data.Migrations
                     table.PrimaryKey("PK_Lectures", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Lectures_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ratings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<string>(nullable: true),
+                    Vote = table.Column<int>(nullable: false),
+                    CourseId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ratings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Ratings_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
@@ -265,13 +350,28 @@ namespace CoursesP2P.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_LecturerId",
+                name: "IX_Courses_InstructorId",
                 table: "Courses",
-                column: "LecturerId");
+                column: "InstructorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lectures_CourseId",
                 table: "Lectures",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_StudentId",
+                table: "Payments",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentsToInstructors_InstructorId",
+                table: "PaymentsToInstructors",
+                column: "InstructorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ratings_CourseId",
+                table: "Ratings",
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
@@ -299,6 +399,18 @@ namespace CoursesP2P.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Lectures");
+
+            migrationBuilder.DropTable(
+                name: "Payments");
+
+            migrationBuilder.DropTable(
+                name: "PaymentsToInstructors");
+
+            migrationBuilder.DropTable(
+                name: "PayoutPayPals");
+
+            migrationBuilder.DropTable(
+                name: "Ratings");
 
             migrationBuilder.DropTable(
                 name: "StudentCourses");
