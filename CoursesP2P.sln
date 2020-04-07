@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoursesP2P.ViewModels", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoursesP2P.Tests", "CoursesP2P.Tests\CoursesP2P.Tests.csproj", "{120B9B91-78C0-4D44-B456-D4E330468CD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Courses.P2P.Common", "Courses.P2P.Common\Courses.P2P.Common.csproj", "{0AB42AE3-E7A4-4995-994A-A98577EE903B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.P2P.Common", "Courses.P2P.Common\Courses.P2P.Common.csproj", "{0AB42AE3-E7A4-4995-994A-A98577EE903B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoursesP2P.Services.Mapping", "CoursesP2P.Services.Mapping\CoursesP2P.Services.Mapping.csproj", "{BB4CDD71-A9E0-4662-B86D-E60C94FC347C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{0AB42AE3-E7A4-4995-994A-A98577EE903B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AB42AE3-E7A4-4995-994A-A98577EE903B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AB42AE3-E7A4-4995-994A-A98577EE903B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB4CDD71-A9E0-4662-B86D-E60C94FC347C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB4CDD71-A9E0-4662-B86D-E60C94FC347C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB4CDD71-A9E0-4662-B86D-E60C94FC347C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB4CDD71-A9E0-4662-B86D-E60C94FC347C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

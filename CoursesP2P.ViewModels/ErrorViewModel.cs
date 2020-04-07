@@ -1,4 +1,4 @@
-﻿namespace CoursesP2P.ViewModels.Errors
+﻿namespace CoursesP2P.ViewModels
 {
     public class ErrorViewModel
     {

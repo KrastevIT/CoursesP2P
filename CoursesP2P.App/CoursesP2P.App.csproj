@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CoursesP2P.Data\CoursesP2P.Data.csproj" />
+    <ProjectReference Include="..\CoursesP2P.Services.Mapping\CoursesP2P.Services.Mapping.csproj" />
     <ProjectReference Include="..\CoursesP2P.Services\CoursesP2P.Services.csproj" />
   </ItemGroup>
 

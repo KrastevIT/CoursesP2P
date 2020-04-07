@@ -9,9 +9,11 @@ using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.Services.Instructors;
 using CoursesP2P.Services.Lectures;
+using CoursesP2P.Services.Mapping;
 using CoursesP2P.Services.Payments;
 using CoursesP2P.Services.ReCaptcha;
 using CoursesP2P.Services.Students;
+using CoursesP2P.ViewModels;
 using CoursesP2P.ViewModels.PayPal;
 using CoursesP2P.ViewModels.ReCaptcha;
 using Microsoft.AspNetCore.Builder;
@@ -23,6 +25,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace CoursesP2P.App
 {
@@ -80,6 +83,8 @@ namespace CoursesP2P.App
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -1,9 +1,11 @@
-﻿using CoursesP2P.ViewModels.Courses.ViewModels;
+﻿using CoursesP2P.Models;
+using CoursesP2P.Services.Mapping;
+using CoursesP2P.ViewModels.Courses.ViewModels;
 using System.Collections.Generic;
 
 namespace CoursesP2P.ViewModels.Admin
 {
-    public class AdminUserViewModel
+    public class AdminUserViewModel 
     {
         public string Id { get; set; }
 

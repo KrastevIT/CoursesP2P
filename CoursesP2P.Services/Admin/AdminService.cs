@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CoursesP2P.Data;
+using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Admin;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using Microsoft.EntityFrameworkCore;

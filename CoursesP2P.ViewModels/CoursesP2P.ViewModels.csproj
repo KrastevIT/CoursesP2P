@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Errors\" />
     <Folder Include="Instructors\BindingModels\" />
     <Folder Include="PayPal\BindingModels\" />
     <Folder Include="PayPal\ViewModels\" />
@@ -16,6 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Courses.P2P.Common\Courses.P2P.Common.csproj" />
+    <ProjectReference Include="..\CoursesP2P.Models\CoursesP2P.Models.csproj" />
+    <ProjectReference Include="..\CoursesP2P.Services.Mapping\CoursesP2P.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>
