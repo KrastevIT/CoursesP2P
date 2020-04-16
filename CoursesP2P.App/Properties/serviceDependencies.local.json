@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "appInsights1": {
+      "resourceId": "/subscriptions/6d3b6cb5-9f03-4b82-8290-9e7f742e3398/resourceGroups/CoursesP/providers/microsoft.insights/components/CoursesP",
+      "type": "appInsights.azure",
+      "connectionId": null
+    }
+  }
+}

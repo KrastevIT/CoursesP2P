@@ -42,7 +42,7 @@ namespace CoursesP2P.Data.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    Age = table.Column<DateTime>(nullable: false),
+                    Birthday = table.Column<DateTime>(nullable: false),
                     City = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>

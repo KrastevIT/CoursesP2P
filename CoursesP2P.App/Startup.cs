@@ -79,6 +79,7 @@ namespace CoursesP2P.App
             services.Configure<PayPalSettings>(Configuration.GetSection("PayPal"));
 
             services.AddMvc();
+            services.AddApplicationInsightsTelemetry();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
