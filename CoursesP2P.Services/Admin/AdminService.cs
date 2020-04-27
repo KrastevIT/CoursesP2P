@@ -39,14 +39,12 @@ namespace CoursesP2P.Services.Admin
 
         public IEnumerable<CourseViewModel> GetCreatedCoursesByUserId(string id)
         {
-            var courses = this.db.Users
+            var models = this.db.Users
                 .Where(x => x.Id == id)
                 .SelectMany(x => x.CreatedCourses)
-                .Include(x => x.Lectures)
+                .To<CourseViewModel>()
                 .ToList();
-
-            var models = this.mapper.Map<IEnumerable<CourseViewModel>>(courses);
-
+                
             return models;
         }
 

@@ -2,21 +2,19 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace CoursesP2P.App.Common
 {
     public static class ApplicationBuilderAuthExtensions
     {
         private const string DefaultAdminPassword = "Test123@";
+        private static readonly string Role = "Administrator";
+        private static readonly string AdminUsername = "admin@example.com";
+        private static readonly string AdminFirstName = "default";
+        private static readonly string AdminLastName = "default";
+        private static readonly string AdminEmail = "admin@example.com";
 
-        private static readonly IdentityRole[] roles =
-        {
-            new IdentityRole("Administrator"),
-            new IdentityRole("Instructor")
-        };
-
-        public static async void SeedDatabase(this IApplicationBuilder app)
+        public static async void SeedAdmin(this IApplicationBuilder app)
         {
             var serviceFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
             var scope = serviceFactory.CreateScope();
@@ -26,30 +24,21 @@ namespace CoursesP2P.App.Common
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 
-                foreach (var role in roles)
+                if (!await roleManager.RoleExistsAsync(Role))
                 {
-                    if (!await roleManager.RoleExistsAsync(role.Name))
-                    {
-                        await roleManager.CreateAsync(role);
-                    }
-                }
+                    await roleManager.CreateAsync(new IdentityRole(Role));
 
-                var user = await userManager.FindByNameAsync("admin");
-                if (user == null)
-                {
-                    user = new User()
+                    var user = new User()
                     {
-                        UserName = "admin@example.com",
-                        Email = "admin@example.com",
-                        FirstName = "default",
-                        LastName = "default",
+                        UserName = AdminUsername,
+                        FirstName = AdminFirstName,
+                        LastName = AdminLastName,
+                        Email = AdminEmail,
                         EmailConfirmed = true,
-                        Birthday = DateTime.UtcNow,
-                        City = "default"
                     };
 
                     await userManager.CreateAsync(user, DefaultAdminPassword);
-                    await userManager.AddToRoleAsync(user, roles[0].Name);
+                    await userManager.AddToRoleAsync(user, Role);
                 }
             }
         }

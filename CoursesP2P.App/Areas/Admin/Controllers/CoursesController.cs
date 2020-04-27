@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CoursesP2P.Services.Admin;
+﻿using CoursesP2P.Services.Admin;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoursesP2P.App.Areas.Admin.Controllers

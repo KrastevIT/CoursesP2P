@@ -104,7 +104,7 @@ namespace CoursesP2P.App
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.SeedDatabase();
+            app.SeedAdmin();
 
             app.Use(async (context, next) =>
             {

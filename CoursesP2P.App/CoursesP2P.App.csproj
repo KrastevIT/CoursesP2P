@@ -45,4 +45,7 @@
     <Folder Include="wwwroot\Videos\" />
   </ItemGroup>
 
+
+  <ProjectExtensions><VisualStudio><UserProperties wwwroot_4assets_4css_4blk-design-system_1css_1map__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>

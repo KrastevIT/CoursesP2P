@@ -1,8 +1,6 @@
 {
 	"version": 3,
-	"file": "kit-free.css",
 	"sources": [
-		"../scss/kit-free.scss",
 		"../scss/custom/_functions.scss",
 		"../scss/bootstrap/_functions.scss",
 		"../scss/custom/_variables.scss",

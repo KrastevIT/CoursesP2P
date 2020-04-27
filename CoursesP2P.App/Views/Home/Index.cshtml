@@ -21,7 +21,6 @@
 
 <vc:home-all-info></vc:home-all-info>
 <div>
-    @*<img src="../assets/img/path3.png" class="path">*@
     <div class="container">
         <div class="row">
             @foreach (var course in Model)
@@ -29,7 +28,7 @@
                 <div class="col-md-4">
                     <figure class="card card-coin card-plain">
                         <div class="img-wrap">
-                            <a href="@Url.Action("Details", "Courses", new { id=course.Id})">
+                            <a asp-area="" asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">
                                 <img src="@course.Image" style="width:348px;height:220px;">
                             </a>
                         </div>
