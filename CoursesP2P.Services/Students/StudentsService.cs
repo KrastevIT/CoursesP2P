@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using CoursesP2P.Data;
+﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
+using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using CoursesP2P.ViewModels.FiveStars;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 
 namespace CoursesP2P.Services.Students
@@ -16,26 +13,19 @@ namespace CoursesP2P.Services.Students
         private const decimal THIRTY_PERCENT = 0.30M;
 
         private readonly CoursesP2PDbContext db;
-        private readonly IMapper mapper;
 
-        public StudentsService(
-            CoursesP2PDbContext db,
-            IMapper mapper)
+        public StudentsService(CoursesP2PDbContext db)
         {
             this.db = db;
-            this.mapper = mapper;
         }
 
-        public IEnumerable<CourseEnrolledViewModel> GetMyCourses(User student)
+        public IEnumerable<CourseEnrolledViewModel> GetMyCourses(string userId)
         {
-            var courses = this.db.StudentCourses
-                .Where(x => x.StudentId == student.Id)
-                .Include(x => x.Course)
-                .ThenInclude(x => x.Lectures)
+            var models = this.db.StudentCourses
+                .Where(x => x.StudentId == userId)
                 .Select(x => x.Course)
+                .To<CourseEnrolledViewModel>()
                 .ToList();
-
-            var models = this.mapper.Map<IEnumerable<CourseEnrolledViewModel>>(courses);
 
             return models;
         }

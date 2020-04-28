@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Courses.P2P.Common;
+﻿using Courses.P2P.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Cloudinary;
@@ -7,7 +6,6 @@ using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Lectures.BindingModels;
 using CoursesP2P.ViewModels.Lectures.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +15,11 @@ namespace CoursesP2P.Services.Lectures
     public class LecturesService : ILecturesService
     {
         private readonly CoursesP2PDbContext db;
-        private readonly IMapper mapper;
         private readonly ICloudinaryService cloudinaryService;
 
-        public LecturesService(
-            CoursesP2PDbContext db,
-            IMapper mapper,
-            ICloudinaryService cloudinaryService)
+        public LecturesService(CoursesP2PDbContext db, ICloudinaryService cloudinaryService)
         {
             this.db = db;
-            this.mapper = mapper;
             this.cloudinaryService = cloudinaryService;
         }
 

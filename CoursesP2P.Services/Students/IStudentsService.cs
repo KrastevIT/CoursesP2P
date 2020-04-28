@@ -7,7 +7,7 @@ namespace CoursesP2P.Services.Students
 {
     public interface IStudentsService
     {
-        IEnumerable<CourseEnrolledViewModel> GetMyCourses(User user);
+        IEnumerable<CourseEnrolledViewModel> GetMyCourses(string userId);
 
         bool Add(int courseId, string studentId);
 

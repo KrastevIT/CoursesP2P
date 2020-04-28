@@ -1,9 +1,12 @@
-﻿using CoursesP2P.ViewModels.Lectures.ViewModels;
+﻿using CoursesP2P.Models;
+using CoursesP2P.Models.Enum;
+using CoursesP2P.Services.Mapping;
+using CoursesP2P.ViewModels.Lectures.ViewModels;
 using System.Collections.Generic;
 
 namespace CoursesP2P.ViewModels.Courses.ViewModels
 {
-    public class CourseEnrolledViewModel
+    public class CourseEnrolledViewModel : IMapFrom<Course>
     {
         public int Id { get; set; }
 
@@ -16,12 +19,13 @@ namespace CoursesP2P.ViewModels.Courses.ViewModels
 
         public decimal Price { get; set; }
 
-        public CategoryViewModel Category { get; set; }
+        public Category Category { get; set; }
 
         public string Image { get; set; }
 
+        public string InstructorFullName { get; set; }
+
         public ICollection<CourseLecturesViewModel> Lectures { get; set; }
 
-        public string InstructorFullName { get; set; }
     }
 }
