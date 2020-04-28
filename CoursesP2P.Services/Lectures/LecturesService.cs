@@ -23,11 +23,11 @@ namespace CoursesP2P.Services.Lectures
             this.cloudinaryService = cloudinaryService;
         }
 
-        public IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int id, string userId, bool isAdmin)
+        public IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int courseId, string userId, bool isAdmin)
         {
-            var models = this.db.Lectures
-                .Where(x => x.Course.Students.Select(y => y.StudentId == userId).FirstOrDefault()
-                && x.CourseId == id)
+            var models = this.db.StudentCourses
+                .Where(x => x.CourseId == courseId && x.StudentId == userId)
+                .SelectMany(x => x.Course.Lectures)
                 .To<LectureViewModel>()
                 .ToList();
 
@@ -36,8 +36,10 @@ namespace CoursesP2P.Services.Lectures
                 throw new InvalidOperationException(
                     string.Format(ErrorMessages.UnauthorizedUser, userId));
             }
-
-            return models;
+            else
+            {
+                return models;
+            }
         }
 
         [RequestFormLimits(MultipartBodyLengthLimit = 1073741824)]
@@ -57,12 +59,13 @@ namespace CoursesP2P.Services.Lectures
 
         public VideoViewModel GetVideoByLectureId(int lectureId, string userId)
         {
-            var courseId = this.db.Lectures
+            var courseId = this.db.StudentCourses
+                .Where(x => x.StudentId == userId)
+                .SelectMany(x => x.Course.Lectures)
                 .Where(x => x.Id == lectureId)
-                .SelectMany(x => x.Course.Students.Where(y => y.StudentId == userId))
-                .Select(x => x.Course)
-                .Select(x => x.Id)
+                .Select(x => x.Course.Id)
                 .FirstOrDefault();
+
             if (courseId == 0)
             {
                 throw new InvalidOperationException(

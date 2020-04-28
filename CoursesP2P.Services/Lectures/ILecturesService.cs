@@ -7,7 +7,7 @@ namespace CoursesP2P.Services.Lectures
 {
     public interface ILecturesService
     {
-        IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int id, string userId, bool isAdmin);
+        IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int courseId, string userId, bool isAdmin);
 
         void Add(AddLecturesBindingModel model);
 
