@@ -15,18 +15,14 @@ namespace CoursesP2P.Tests.Services.Courses
     public class CoursesServiceDetailsTests
     {
         private CoursesP2PDbContext db;
-        private IMapper mapper;
-        private UserManager<User> userManager;
         private CoursesService coursesService;
 
         public CoursesServiceDetailsTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            this.mapper = MapperMock.AutoMapperMock();
-            this.userManager = UserManagerMock.UserManagerMockTest();
             var cloudinary = new Mock<ICloudinaryService>().Object;
 
-            this.coursesService = new CoursesService(this.db, this.mapper, this.userManager, cloudinary);
+            this.coursesService = new CoursesService(this.db, cloudinary);
         }
 
         [Theory]

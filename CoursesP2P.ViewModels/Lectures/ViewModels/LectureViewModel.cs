@@ -1,6 +1,9 @@
-﻿namespace CoursesP2P.ViewModels.Lectures.ViewModels
+﻿using CoursesP2P.Models;
+using CoursesP2P.Services.Mapping;
+
+namespace CoursesP2P.ViewModels.Lectures.ViewModels
 {
-    public class LectureViewModel
+    public class LectureViewModel : IMapFrom<Lecture>
     {
         public int Id { get; set; }
 

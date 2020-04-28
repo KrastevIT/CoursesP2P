@@ -26,7 +26,7 @@ namespace CoursesP2P.App.Controllers
         {
             var user = await this.userManager.GetUserAsync(this.User);
             var isAdmin = await this.userManager.IsInRoleAsync(user, "Administrator");
-            var lectures = this.lectureService.GetLecturesByCourseIdAsync(id, user, isAdmin);
+            var lectures = this.lectureService.GetLecturesByCourseIdAsync(id, user.Id, isAdmin);
 
             this.ViewData["id"] = id;
 

@@ -3,6 +3,7 @@ using Courses.P2P.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Cloudinary;
+using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Lectures.BindingModels;
 using CoursesP2P.ViewModels.Lectures.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -29,23 +30,19 @@ namespace CoursesP2P.Services.Lectures
             this.cloudinaryService = cloudinaryService;
         }
 
-        public IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int id, User instructor, bool isAdmin)
+        public IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int id, string userId, bool isAdmin)
         {
-            var user = this.db.Users
-                .Include(x => x.EnrolledCourses)
-                .FirstOrDefault(x => x.Id == instructor.Id);
-
-            var isValidUser = user.EnrolledCourses.Any(x => x.CourseId == id);
-            if (!isValidUser && !isAdmin)
-            {
-                throw new InvalidOperationException(
-                    string.Format(ErrorMessages.UnauthorizedUser, instructor.UserName));
-            }
-            var lectures = this.db.Lectures
-                .Where(x => x.CourseId == id)
+            var models = this.db.Lectures
+                .Where(x => x.Course.Students.Select(y => y.StudentId == userId).FirstOrDefault()
+                && x.CourseId == id)
+                .To<LectureViewModel>()
                 .ToList();
 
-            var models = this.mapper.Map<IEnumerable<LectureViewModel>>(lectures);
+            if (models.Count == 0)
+            {
+                throw new InvalidOperationException(
+                    string.Format(ErrorMessages.UnauthorizedUser, userId));
+            }
 
             return models;
         }
@@ -54,8 +51,12 @@ namespace CoursesP2P.Services.Lectures
         [RequestSizeLimit(1073741824)]
         public void Add(AddLecturesBindingModel model)
         {
-            var lecture = this.mapper.Map<Lecture>(model);
-            lecture.Video = this.cloudinaryService.UploadVideo(model.Video);
+            var lecture = new Lecture
+            {
+                CourseId = model.CourseId,
+                Name = model.Name,
+                Video = this.cloudinaryService.UploadVideo(model.Video)
+            };
 
             this.db.Lectures.Add(lecture);
             this.db.SaveChanges();
