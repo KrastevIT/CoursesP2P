@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using CoursesP2P.Models;
+using CoursesP2P.Services.Mapping;
+using System.Collections.Generic;
 
 namespace CoursesP2P.ViewModels.Lectures.ViewModels
 {
-    public class VideoViewModel
+    public class VideoViewModel : IMapFrom<Lecture>
     {
         public string Name { get; set; }
 

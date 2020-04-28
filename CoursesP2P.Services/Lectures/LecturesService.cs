@@ -62,34 +62,32 @@ namespace CoursesP2P.Services.Lectures
             this.db.SaveChanges();
         }
 
-        public VideoViewModel GetVideoByLectureId(int id, User user)
+        public VideoViewModel GetVideoByLectureId(int lectureId, string userId)
         {
-            var lecture = this.db.Lectures.FirstOrDefault(x => x.Id == id);
-            var isValidUser = this.db.Courses
-                .Where(x => x.Id == lecture.CourseId)
-                .SelectMany(x => x.Students).Select(x => x.StudentId == user.Id)
+            var courseId = this.db.Lectures
+                .Where(x => x.Id == lectureId)
+                .SelectMany(x => x.Course.Students.Where(y => y.StudentId == userId))
+                .Select(x => x.Course)
+                .Select(x => x.Id)
                 .FirstOrDefault();
-
-            if (lecture == null)
-            {
-                throw new ArgumentNullException(
-                    string.Format(ErrorMessages.InvalidLectureId, id));
-            }
-            else if (!isValidUser)
+            if (courseId == 0)
             {
                 throw new InvalidOperationException(
-                    string.Format(ErrorMessages.UnauthorizedUser, user.Id));
+                    string.Format(ErrorMessages.UnauthorizedUser, userId));
             }
-            var lecturesOfCourse = this.db.Lectures
-                .Where(x => x.CourseId == lecture.CourseId)
-                .ToList();
+            else
+            {
+                var model = this.db.Lectures
+                .Where(x => x.Id == lectureId)
+                .To<VideoViewModel>()
+                .FirstOrDefault();
+                model.Lectures = this.db.Lectures
+                    .Where(x => x.CourseId == courseId)
+                    .To<VideoLectureViewModel>()
+                    .ToList();
 
-            var modelVideos = this.mapper.Map<IEnumerable<VideoLectureViewModel>>(lecturesOfCourse);
-
-            var model = this.mapper.Map<VideoViewModel>(lecture);
-            model.Lectures = modelVideos;
-
-            return model;
+                return model;
+            }
         }
 
         public AddLecturesBindingModel GetLectureBindingModelWithCourseId(int courseId, User user)

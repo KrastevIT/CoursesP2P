@@ -11,7 +11,7 @@ namespace CoursesP2P.Services.Lectures
 
         void Add(AddLecturesBindingModel model);
 
-        VideoViewModel GetVideoByLectureId(int id, User user);
+        VideoViewModel GetVideoByLectureId(int lectureId, string userId);
 
         AddLecturesBindingModel GetLectureBindingModelWithCourseId(int courseId, User user);
     }
