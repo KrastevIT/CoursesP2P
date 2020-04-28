@@ -12,6 +12,7 @@ namespace CoursesP2P.App.Common
         private static readonly string AdminUsername = "admin@example.com";
         private static readonly string AdminFirstName = "default";
         private static readonly string AdminLastName = "default";
+        private static readonly string AdminCity = "default";
         private static readonly string AdminEmail = "admin@example.com";
 
         public static async void SeedAdmin(this IApplicationBuilder app)
@@ -33,6 +34,7 @@ namespace CoursesP2P.App.Common
                         UserName = AdminUsername,
                         FirstName = AdminFirstName,
                         LastName = AdminLastName,
+                        City = AdminCity,
                         Email = AdminEmail,
                         EmailConfirmed = true,
                     };

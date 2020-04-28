@@ -18,7 +18,7 @@ namespace CoursesP2P.Tests.Services.Admin
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             this.mapper = MapperMock.AutoMapperMock();
-            this.adminService = new AdminService(db, mapper);
+            this.adminService = new AdminService(db);
         }
 
         [Theory]

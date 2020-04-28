@@ -1,10 +1,13 @@
-﻿using AutoMapper;
-using CoursesP2P.Data;
+﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Admin;
+using CoursesP2P.Services.Mapping;
 using CoursesP2P.Tests.Configuration;
+using CoursesP2P.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Admin
@@ -13,14 +16,13 @@ namespace CoursesP2P.Tests.Services.Admin
     {
 
         private CoursesP2PDbContext db;
-        private IMapper mapper;
         private AdminService adminService;
 
         public AdminServiceGetUsersTests()
         {
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            this.mapper = MapperMock.AutoMapperMock();
-            this.adminService = new AdminService(db, mapper);
+            this.adminService = new AdminService(db);
         }
 
         [Fact]
@@ -31,10 +33,19 @@ namespace CoursesP2P.Tests.Services.Admin
                 new User
                 {
                     Id = "1",
+                    FirstName = "Test1",
+                    LastName = "Test2",
+                    Birthday = DateTime.Today,
+                    City = "Test"
+
                 },
                 new User
                 {
                     Id = "2",
+                    FirstName = "Test1",
+                    LastName = "Test2",
+                    Birthday = DateTime.Today,
+                    City = "Test"
                 }
             };
 

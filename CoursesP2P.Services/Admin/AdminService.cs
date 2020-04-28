@@ -1,9 +1,7 @@
-﻿using AutoMapper;
-using CoursesP2P.Data;
+﻿using CoursesP2P.Data;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Admin;
 using CoursesP2P.ViewModels.Courses.ViewModels;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,27 +10,23 @@ namespace CoursesP2P.Services.Admin
     public class AdminService : IAdminService
     {
         private readonly CoursesP2PDbContext db;
-        private readonly IMapper mapper;
 
-        public AdminService(CoursesP2PDbContext db, IMapper mapper)
+        public AdminService(CoursesP2PDbContext db)
         {
             this.db = db;
-            this.mapper = mapper;
         }
 
         public IEnumerable<AdminUserViewModel> GetUsers()
         {
-            var users = this.db.Users
-                .Include(x => x.CreatedCourses)
-                .Include(x => x.EnrolledCourses)
-                .ToList();
+            //var users = this.db.Users
+            //    .Include(x => x.CreatedCourses)
+            //    .Include(x => x.EnrolledCourses)
+            //    .ToList();
 
-            var models = this.mapper.Map<IEnumerable<AdminUserViewModel>>(users);
+            //var models = this.mapper.Map<IEnumerable<AdminUserViewModel>>(users);
 
-            foreach (var user in models)
-            {
-                user.Sales = user.CreatedCourses.Select(x => x.Orders).Sum();
-            }
+            var models = this.db.Users.To<AdminUserViewModel>().ToList();
+
 
             return models;
         }
@@ -44,22 +38,22 @@ namespace CoursesP2P.Services.Admin
                 .SelectMany(x => x.CreatedCourses)
                 .To<CourseViewModel>()
                 .ToList();
-                
+
             return models;
         }
 
         public IEnumerable<CourseViewModel> GetEnrolledCoursesByUserId(string id)
         {
-            var courses = this.db.StudentCourses
-                .Where(x => x.StudentId == id)
-                .Include(x => x.Course)
-                .ThenInclude(x => x.Lectures)
-                .Select(x => x.Course)
-                .ToList();
+            //var courses = this.db.StudentCourses
+            //    .Where(x => x.StudentId == id)
+            //    .Include(x => x.Course)
+            //    .ThenInclude(x => x.Lectures)
+            //    .Select(x => x.Course)
+            //    .ToList();
 
-            var models = this.mapper.Map<IEnumerable<CourseViewModel>>(courses);
+            //var models = this.mapper.Map<IEnumerable<CourseViewModel>>(courses);
 
-            return models;
+            return null;
         }
     }
 }

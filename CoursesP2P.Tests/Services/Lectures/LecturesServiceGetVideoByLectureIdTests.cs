@@ -3,11 +3,14 @@ using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Lectures;
+using CoursesP2P.Services.Mapping;
 using CoursesP2P.Tests.Configuration;
+using CoursesP2P.ViewModels;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Xunit;
 
@@ -21,6 +24,7 @@ namespace CoursesP2P.Tests.Services.Lectures
 
         public LecturesServiceGetVideoByLectureIdTests()
         {
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             this.mapper = MapperMock.AutoMapperMock();
             var cloudinary = new Mock<ICloudinaryService>().Object;
