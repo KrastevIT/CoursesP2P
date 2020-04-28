@@ -10,14 +10,12 @@ namespace CoursesP2P.Tests.Services.Students
     public class StudentsServiceAddTests
     {
         private CoursesP2PDbContext db;
-        private readonly IMapper mapper;
         private StudentsService studentsService;
 
         public StudentsServiceAddTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            this.mapper = MapperMock.AutoMapperMock();
-            this.studentsService = new StudentsService(this.db, this.mapper);
+            this.studentsService = new StudentsService(this.db);
         }
 
         [Theory]

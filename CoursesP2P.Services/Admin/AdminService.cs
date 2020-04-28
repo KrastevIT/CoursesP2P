@@ -35,16 +35,14 @@ namespace CoursesP2P.Services.Admin
 
         public IEnumerable<CourseViewModel> GetEnrolledCoursesByUserId(string id)
         {
-            //var courses = this.db.StudentCourses
-            //    .Where(x => x.StudentId == id)
-            //    .Include(x => x.Course)
-            //    .ThenInclude(x => x.Lectures)
-            //    .Select(x => x.Course)
-            //    .ToList();
+            var models = this.db.StudentCourses
+                .Where(x => x.StudentId == id)
+                .Select(x => x.Course)
+                .To<CourseViewModel>()
+                .ToList();
 
-            //var models = this.mapper.Map<IEnumerable<CourseViewModel>>(courses);
 
-            return null;
+            return models;
         }
     }
 }

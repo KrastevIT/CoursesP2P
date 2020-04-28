@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CoursesP2P.Data;
+﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Instructors;
 using CoursesP2P.Tests.Configuration;
@@ -12,14 +11,12 @@ namespace CoursesP2P.Tests.Services.Instructors
     public class InstructorsServiceGetCreatedCoursesTests
     {
         private CoursesP2PDbContext db;
-        private IMapper mapper;
         private InstructorsService instructorsService;
 
         public InstructorsServiceGetCreatedCoursesTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            this.mapper = MapperMock.AutoMapperMock();
-            this.instructorsService = new InstructorsService(db, mapper);
+            this.instructorsService = new InstructorsService(db);
         }
 
         [Fact]
@@ -47,9 +44,9 @@ namespace CoursesP2P.Tests.Services.Instructors
             this.db.SaveChanges();
 
 
-           //var actual = this.instructorsService.GetCreatedCourses(user).Courses.Count();
+            var actual = this.instructorsService.GetCreatedCourses("1").Count();
 
-           // Assert.Equal(2, actual);
+            Assert.Equal(2, actual);
         }
 
         [Fact]

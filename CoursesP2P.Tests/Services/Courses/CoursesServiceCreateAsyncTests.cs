@@ -54,7 +54,7 @@ namespace CoursesP2P.Tests.Services.Courses
                 InstructorId = "1"
             };
 
-            await this.coursesService.CreateAsync(model, user);
+            await this.coursesService.CreateAsync(model, "1", "Pesho", "Ivanov");
 
             int actual = db.Courses.ToList().Count();
 
@@ -90,7 +90,7 @@ namespace CoursesP2P.Tests.Services.Courses
 
             int actual = db.Courses.ToList().Count();
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() => this.coursesService.CreateAsync(model, user));
+            await Assert.ThrowsAsync<InvalidOperationException>(() => this.coursesService.CreateAsync(model, "1", "Pesho", "Ivanov"));
         }
     }
 }

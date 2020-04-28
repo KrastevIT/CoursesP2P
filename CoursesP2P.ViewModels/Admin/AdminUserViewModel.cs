@@ -9,6 +9,12 @@ namespace CoursesP2P.ViewModels.Admin
 {
     public class AdminUserViewModel : IMapFrom<User>, IHaveCustomMappings
     {
+        public AdminUserViewModel()
+        {
+            this.CreatedCourses = new List<CourseViewModel>();
+            this.EnrolledCourses = new List<AdminEnrollmentViewModel>();
+        }
+
         public string Id { get; set; }
 
         public string Email { get; set; }

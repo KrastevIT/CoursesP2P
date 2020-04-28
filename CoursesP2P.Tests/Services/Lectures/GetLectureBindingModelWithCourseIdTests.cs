@@ -15,16 +15,14 @@ namespace CoursesP2P.Tests.Services.Lectures
     public class GetLectureBindingModelWithCourseIdTests
     {
         private CoursesP2PDbContext db;
-        private readonly IMapper mapper;
         private LecturesService lecturesService;
 
         public GetLectureBindingModelWithCourseIdTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            this.mapper = MapperMock.AutoMapperMock();
             var cloudinary = new Mock<ICloudinaryService>().Object;
 
-            this.lecturesService = new LecturesService(this.db, this.mapper, cloudinary);
+            this.lecturesService = new LecturesService(this.db, cloudinary);
         }
 
         [Fact]

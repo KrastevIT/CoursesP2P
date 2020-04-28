@@ -20,7 +20,6 @@ namespace CoursesP2P.Tests.Controllers.Courses
     {
         private CoursesP2PDbContext db;
         private ICoursesService coursesService;
-        private readonly IMapper mapper;
         private UserManager<User> userManager;
         private CoursesController coursesController;
 
@@ -28,7 +27,6 @@ namespace CoursesP2P.Tests.Controllers.Courses
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             this.userManager = UserManagerMock.UserManagerMockTest();
-            this.mapper = MapperMock.AutoMapperMock();
             var cloudinary = new Mock<ICloudinaryService>().Object;
 
             this.coursesService = new CoursesService(db, cloudinary);

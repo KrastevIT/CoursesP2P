@@ -15,16 +15,14 @@ namespace CoursesP2P.Tests.Services.Lectures
     public class LecturesServiceGetLecturesByCourseIdAsyncTests
     {
         private CoursesP2PDbContext db;
-        private readonly IMapper mapper;
         private LecturesService lecturesService;
 
         public LecturesServiceGetLecturesByCourseIdAsyncTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            this.mapper = MapperMock.AutoMapperMock();
             var cloudinary = new Mock<ICloudinaryService>().Object;
 
-            this.lecturesService = new LecturesService(this.db, this.mapper, cloudinary);
+            this.lecturesService = new LecturesService(this.db, cloudinary);
         }
 
         [Theory]
@@ -68,7 +66,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             this.db.SaveChanges();
 
 
-            var actual = this.lecturesService.GetLecturesByCourseIdAsync(courseId, user, false).Count();
+            var actual = this.lecturesService.GetLecturesByCourseIdAsync(courseId, "1", false).Count();
 
             Assert.Equal(expected, actual);
         }
@@ -114,7 +112,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             this.db.SaveChanges();
 
 
-            Assert.Throws<InvalidOperationException>(() => this.lecturesService.GetLecturesByCourseIdAsync(courseId, user, false));
+            Assert.Throws<InvalidOperationException>(() => this.lecturesService.GetLecturesByCourseIdAsync(courseId, "1", false));
         }
     }
 }

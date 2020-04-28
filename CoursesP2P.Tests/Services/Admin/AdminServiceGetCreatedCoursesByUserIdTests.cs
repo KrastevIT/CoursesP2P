@@ -15,14 +15,12 @@ namespace CoursesP2P.Tests.Services.Admin
     public class AdminServiceGetCreatedCoursesByUserIdTests
     {
         private CoursesP2PDbContext db;
-        private IMapper mapper;
         private AdminService adminService;
 
         public AdminServiceGetCreatedCoursesByUserIdTests()
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            this.mapper = MapperMock.AutoMapperMock();
             this.adminService = new AdminService(db);
         }
 

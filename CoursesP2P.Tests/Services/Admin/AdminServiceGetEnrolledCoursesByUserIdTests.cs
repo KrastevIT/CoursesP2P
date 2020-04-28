@@ -11,13 +11,11 @@ namespace CoursesP2P.Tests.Services.Admin
     public class AdminServiceGetEnrolledCoursesByUserIdTests
     {
         private CoursesP2PDbContext db;
-        private IMapper mapper;
         private AdminService adminService;
 
         public AdminServiceGetEnrolledCoursesByUserIdTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            this.mapper = MapperMock.AutoMapperMock();
             this.adminService = new AdminService(db);
         }
 

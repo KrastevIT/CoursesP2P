@@ -19,17 +19,15 @@ namespace CoursesP2P.Tests.Services.Lectures
     public class LecturesServiceGetVideoByLectureIdTests
     {
         private CoursesP2PDbContext db;
-        private readonly IMapper mapper;
         private LecturesService lecturesService;
 
         public LecturesServiceGetVideoByLectureIdTests()
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            this.mapper = MapperMock.AutoMapperMock();
             var cloudinary = new Mock<ICloudinaryService>().Object;
 
-            this.lecturesService = new LecturesService(this.db, this.mapper, cloudinary);
+            this.lecturesService = new LecturesService(this.db, cloudinary);
         }
 
         [Theory]
@@ -62,7 +60,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             this.db.Courses.Add(course);
             this.db.SaveChanges();
 
-            var model = this.lecturesService.GetVideoByLectureId(id, user);
+            var model = this.lecturesService.GetVideoByLectureId(id, "1");
 
             Assert.NotNull(model);
         }
@@ -97,7 +95,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             this.db.Courses.Add(course);
             this.db.SaveChanges();
 
-            Assert.Throws<ArgumentNullException>(() => this.lecturesService.GetVideoByLectureId(id, user));
+            Assert.Throws<ArgumentNullException>(() => this.lecturesService.GetVideoByLectureId(id, "1"));
         }
     }
 }

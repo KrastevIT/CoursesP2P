@@ -13,14 +13,12 @@ namespace CoursesP2P.Tests.Services.Instructors
     public class InstructorsServiceEditCourseTests
     {
         private CoursesP2PDbContext db;
-        private IMapper mapper;
         private InstructorsService instructorsService;
 
         public InstructorsServiceEditCourseTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            this.mapper = MapperMock.AutoMapperMock();
-            this.instructorsService = new InstructorsService(db, mapper);
+            this.instructorsService = new InstructorsService(db);
         }
 
         [Fact]

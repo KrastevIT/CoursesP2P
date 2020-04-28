@@ -4,7 +4,6 @@ using CoursesP2P.Services.Admin;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.Tests.Configuration;
 using CoursesP2P.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -33,28 +32,19 @@ namespace CoursesP2P.Tests.Services.Admin
                 new User
                 {
                     Id = "1",
-                    FirstName = "Test1",
-                    LastName = "Test2",
-                    Birthday = DateTime.Today,
-                    City = "Test"
-
                 },
                 new User
                 {
                     Id = "2",
-                    FirstName = "Test1",
-                    LastName = "Test2",
-                    Birthday = DateTime.Today,
-                    City = "Test"
                 }
             };
 
             this.db.Users.AddRange(users);
             this.db.SaveChanges();
 
-            var testUsers = this.adminService.GetUsers().ToList();
+            var actual = this.adminService.GetUsers();
 
-            Assert.Equal(2, testUsers.Count());
+            Assert.Equal(2, actual.Count());
         }
 
         [Fact]

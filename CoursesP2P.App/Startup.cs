@@ -1,4 +1,3 @@
-using AutoMapper;
 using CloudinaryDotNet;
 using CoursesP2P.App.Areas.Identity.Services;
 using CoursesP2P.App.Common;
@@ -49,10 +48,7 @@ namespace CoursesP2P.App
                 .AddEntityFrameworkStores<CoursesP2PDbContext>();
 
             services.AddControllersWithViews();
-
             services.AddRazorPages();
-
-            services.AddAutoMapper(typeof(Startup));
 
             RegisterServiceLayer(services);
 
