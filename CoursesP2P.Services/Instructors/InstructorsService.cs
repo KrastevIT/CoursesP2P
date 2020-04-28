@@ -2,6 +2,7 @@
 using Courses.P2P.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
+using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,15 +26,20 @@ namespace CoursesP2P.Services.Instructors
 
         public IEnumerable<CourseInstructorViewModel> GetCreatedCourses(User instructor)
         {
-            var courses = this.db.Users
-                .Where(x => x.Id == instructor.Id)
-                .SelectMany(x => x.CreatedCourses)
-                .Include(x => x.Lectures)
+            //var courses = this.db.Users
+            //    .Where(x => x.Id == instructor.Id)
+            //    .SelectMany(x => x.CreatedCourses)
+            //    .Include(x => x.Lectures)
+            //    .ToList();
+
+            //var modelsCourse = this.mapper.Map<IEnumerable<CourseInstructorViewModel>>(courses);
+
+            var models = this.db.Courses
+                .Where(x => x.InstructorId == instructor.Id)
+                .To<CourseInstructorViewModel>()
                 .ToList();
 
-            var modelsCourse = this.mapper.Map<IEnumerable<CourseInstructorViewModel>>(courses);
-
-            return modelsCourse;
+            return models;
         }
 
         public void EditCourse(CourseEditViewModel model)

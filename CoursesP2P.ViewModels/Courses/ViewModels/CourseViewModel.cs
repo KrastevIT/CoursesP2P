@@ -1,4 +1,5 @@
-﻿using CoursesP2P.Models;
+﻿using AutoMapper;
+using CoursesP2P.Models;
 using CoursesP2P.Models.Enum;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Lectures.ViewModels;

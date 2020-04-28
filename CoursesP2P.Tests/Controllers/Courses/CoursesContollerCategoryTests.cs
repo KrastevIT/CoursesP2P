@@ -31,7 +31,7 @@ namespace CoursesP2P.Tests.Controllers.Courses
             this.mapper = MapperMock.AutoMapperMock();
             var cloudinary = new Mock<ICloudinaryService>().Object;
 
-            this.coursesService = new CoursesService(db, mapper, userManager,cloudinary);
+            this.coursesService = new CoursesService(db, cloudinary);
             this.coursesController = new CoursesController(coursesService, userManager);
         }
 

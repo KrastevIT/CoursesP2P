@@ -18,16 +18,7 @@ namespace CoursesP2P.Services.Admin
 
         public IEnumerable<AdminUserViewModel> GetUsers()
         {
-            //var users = this.db.Users
-            //    .Include(x => x.CreatedCourses)
-            //    .Include(x => x.EnrolledCourses)
-            //    .ToList();
-
-            //var models = this.mapper.Map<IEnumerable<AdminUserViewModel>>(users);
-
             var models = this.db.Users.To<AdminUserViewModel>().ToList();
-
-
             return models;
         }
 

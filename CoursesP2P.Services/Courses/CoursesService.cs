@@ -1,17 +1,14 @@
-﻿using AutoMapper;
-using Courses.P2P.Common;
-using CoursesP2P.Common;
+﻿using Courses.P2P.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Models.Enum;
 using CoursesP2P.Services.Cloudinary;
+using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Courses.BindingModels;
 using CoursesP2P.ViewModels.Courses.ViewModels;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,32 +17,19 @@ namespace CoursesP2P.Services.Courses
     public class CoursesService : ICoursesService
     {
         private readonly CoursesP2PDbContext db;
-        private readonly IMapper mapper;
-        private readonly UserManager<User> userManager;
         private readonly ICloudinaryService cloudinaryService;
 
         public CoursesService(
             CoursesP2PDbContext db,
-            IMapper mapper,
-            UserManager<User> userManager,
             ICloudinaryService cloudinaryService)
         {
             this.db = db;
-            this.mapper = mapper;
-            this.userManager = userManager;
             this.cloudinaryService = cloudinaryService;
         }
 
         public IEnumerable<CourseViewModel> GetAllCourses()
         {
-            var courses = this.db.Courses
-                .Include(x => x.Lectures)
-                .ToList();
-
-            var test = courses.Select(x => x.Lectures.Count).Sum();
-
-            var models = this.mapper.Map<IEnumerable<CourseViewModel>>(courses);
-
+            var models = this.db.Courses.To<CourseViewModel>().ToList();
             return models;
         }
 
@@ -54,13 +38,10 @@ namespace CoursesP2P.Services.Courses
             var isValidEnum = Enum.TryParse(typeof(Category), categoryName, true, out object category);
             if (isValidEnum)
             {
-                var coursesByCategory = this.db.Courses
-                .Include(x => x.Lectures)
-                .ToList()
-                .Where(x => x.Category == (Category)category)
-                .ToList();
-
-                var models = this.mapper.Map<IEnumerable<CourseViewModel>>(coursesByCategory);
+                var models = this.db.Courses
+                    .Where(x => x.Category == (Category)category)
+                    .To<CourseViewModel>()
+                    .ToList();
 
                 return models;
             }
@@ -70,22 +51,20 @@ namespace CoursesP2P.Services.Courses
 
         }
 
-        public async Task CreateAsync(CreateCourseBindingModel model, User user)
+        public async Task CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName)
         {
-            if (string.IsNullOrEmpty(model.Name)
-                || string.IsNullOrEmpty(model.Description)
-                || string.IsNullOrEmpty(model.Skills))
+            var course = new Course
             {
-                //TODO
-                throw new InvalidOperationException();
-            }
-
-            model.InstructorFullName = user.FirstName + ' ' + user.LastName;
-            model.InstructorId = user.Id;
-
-            var course = this.mapper.Map<Course>(model);
-            course.Image = await this.cloudinaryService.UploadImageAsync(model.Image);
-            course.CreatedOn = DateTime.UtcNow.AddHours(GlobalConstants.BULGARIAN_HOURS_FROM_UTC_TIME);
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                Category = (Category)model.Category,
+                Image = await this.cloudinaryService.UploadImageAsync(model.Image),
+                Skills = model.Skills,
+                CreatedOn = DateTime.UtcNow,
+                InstructorFullName = userFirstName + ' ' + userLastName,
+                InstructorId = userId
+            };
 
             this.db.Courses.Add(course);
             this.db.SaveChanges();
@@ -109,22 +88,27 @@ namespace CoursesP2P.Services.Courses
                 .Where(x => x != string.Empty)
                 .ToList();
 
-            var model = this.mapper.Map<CourseDetailsViewModel>(course);
-            model.LectureName = lecturesName;
-            model.Skills = splitSkills;
+            //TODO Not Mapping exception
+            var model = new CourseDetailsViewModel
+            {
+                Id = id,
+                Name = course.Name,
+                Description = course.Description,
+                Price = course.Price,
+                Skills = splitSkills,
+                LectureName = lecturesName
+            };
 
             return model;
         }
 
         public IEnumerable<CourseViewModel> Search(string searchTerm)
         {
-            var foundCourses = this.db.Courses
-              .Include(x => x.Lectures)
+            var searchResult = this.db.Courses
               .Where(x => x.Name.ToLower()
               .Contains(searchTerm.ToLower()))
+              .To<CourseViewModel>()
               .ToList();
-
-            var searchResult = this.mapper.Map<IEnumerable<CourseViewModel>>(foundCourses);
 
             return searchResult;
         }
