@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using Courses.P2P.Common;
+﻿using Courses.P2P.Common;
 using CoursesP2P.Data;
-using CoursesP2P.Models;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Courses.ViewModels;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,28 +11,16 @@ namespace CoursesP2P.Services.Instructors
     public class InstructorsService : IInstructorsService
     {
         private readonly CoursesP2PDbContext db;
-        private readonly IMapper mapper;
 
-        public InstructorsService(
-            CoursesP2PDbContext db,
-            IMapper mapper)
+        public InstructorsService(CoursesP2PDbContext db)
         {
             this.db = db;
-            this.mapper = mapper;
         }
 
-        public IEnumerable<CourseInstructorViewModel> GetCreatedCourses(User instructor)
+        public IEnumerable<CourseInstructorViewModel> GetCreatedCourses(string userId)
         {
-            //var courses = this.db.Users
-            //    .Where(x => x.Id == instructor.Id)
-            //    .SelectMany(x => x.CreatedCourses)
-            //    .Include(x => x.Lectures)
-            //    .ToList();
-
-            //var modelsCourse = this.mapper.Map<IEnumerable<CourseInstructorViewModel>>(courses);
-
             var models = this.db.Courses
-                .Where(x => x.InstructorId == instructor.Id)
+                .Where(x => x.InstructorId == userId)
                 .To<CourseInstructorViewModel>()
                 .ToList();
 
@@ -60,23 +45,18 @@ namespace CoursesP2P.Services.Instructors
 
         public CourseEditViewModel GetCourseById(int id, string userId)
         {
-            var course = this.db.Courses
-            .Include(x => x.Lectures)
-            .FirstOrDefault(x => x.Id == id);
-            if (course == null)
+            var model = this.db.Courses
+                    .Where(x => x.Id == id && x.InstructorId == userId)
+                    .To<CourseEditViewModel>()
+                    .FirstOrDefault();
+
+            if (model == null)
             {
                 throw new ArgumentNullException(
                     string.Format(ErrorMessages.NotFoundCourseById, id));
             }
-            else if (course.InstructorId != userId)
-            {
-                throw new InvalidOperationException(
-                    string.Format(ErrorMessages.UnauthorizedUser, userId));
-            }
             else
             {
-                var model = this.mapper.Map<CourseEditViewModel>(course);
-
                 return model;
             }
         }

@@ -26,10 +26,10 @@ namespace CoursesP2P.App.Controllers
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-            var courses = this.instructorService.GetCreatedCourses(user);
+            var userId = this.userManager.GetUserId(this.User);
+            var courses = this.instructorService.GetCreatedCourses(userId);
 
             return View(courses);
         }
@@ -38,7 +38,7 @@ namespace CoursesP2P.App.Controllers
         {
             var userId = this.userManager.GetUserId(this.User);
             var course = this.instructorService.GetCourseById(id, userId);
-            
+
             return View(course);
         }
 
