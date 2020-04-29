@@ -9,12 +9,6 @@ namespace CoursesP2P.ViewModels.Admin
 {
     public class AdminUserViewModel : IMapFrom<User>, IHaveCustomMappings
     {
-        public AdminUserViewModel()
-        {
-            this.CreatedCourses = new List<CourseViewModel>();
-            this.EnrolledCourses = new List<AdminEnrollmentViewModel>();
-        }
-
         public string Id { get; set; }
 
         public string Email { get; set; }
@@ -34,6 +28,9 @@ namespace CoursesP2P.ViewModels.Admin
                  {
                      y.MapFrom(u => u.CreatedCourses.Select(x => x.Orders).Sum());
                  });
+
+            configuration.CreateMap<User, AdminUserViewModel>()
+                .ForMember(x => x.EnrolledCourses, y => y.MapFrom(x => x.EnrolledCourses));
         }
     }
 }
