@@ -5,6 +5,6 @@ namespace CoursesP2P.Services.ReCaptcha
 {
     public interface IReCAPTCHAService
     {
-        public Task<ReCAPTCHAResponse> Verify(string token);
+        public Task<ReCAPTCHAResponse> VerifyAsync(string token);
     }
 }

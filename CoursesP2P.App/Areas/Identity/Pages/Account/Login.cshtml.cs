@@ -80,7 +80,7 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
-            var ReCaptcha = this.reCAPTCHAService.Verify(Input.Token);
+            var ReCaptcha = this.reCAPTCHAService.VerifyAsync(Input.Token);
             if (!ReCaptcha.Result.Success && ReCaptcha.Result.Score <= 0.5)
             {
                 ModelState.AddModelError(string.Empty, "Your are Not Humman!");

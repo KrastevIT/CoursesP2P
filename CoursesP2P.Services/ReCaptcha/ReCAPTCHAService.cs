@@ -15,7 +15,7 @@ namespace CoursesP2P.Services.ReCaptcha
             this.settings = settings.Value;
         }
 
-        public async Task<ReCAPTCHAResponse> Verify(string token)
+        public async Task<ReCAPTCHAResponse> VerifyAsync(string token)
         {
             var myData = new ReCAPTCHAData
             {
