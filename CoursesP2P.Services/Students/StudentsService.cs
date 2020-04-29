@@ -5,6 +5,7 @@ using CoursesP2P.ViewModels.Courses.ViewModels;
 using CoursesP2P.ViewModels.FiveStars;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Students
 {
@@ -30,7 +31,7 @@ namespace CoursesP2P.Services.Students
             return models;
         }
 
-        public bool Add(int id, string studentId)
+        public async Task<bool> AddAsync(int id, string studentId)
         {
             var course = this.db.Courses.Find(id);
 
@@ -45,9 +46,9 @@ namespace CoursesP2P.Services.Students
 
             course.Orders++;
 
-            this.db.StudentCourses.Add(studentCourse);
+           await this.db.StudentCourses.AddAsync(studentCourse);
 
-            this.db.SaveChanges();
+           await this.db.SaveChangesAsync();
 
             return true;
         }

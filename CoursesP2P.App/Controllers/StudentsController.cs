@@ -31,7 +31,7 @@ namespace CoursesP2P.App.Controllers
         public async Task<IActionResult> Add(int id)
         {
             var student = await this.userManager.GetUserAsync(this.User);
-            var successfully = this.studentService.Add(id, student.Id);
+            var successfully = await this.studentService.AddAsync(id, student.Id);
             if (!successfully)
             {
                 return RedirectToAction("Index", "Home");

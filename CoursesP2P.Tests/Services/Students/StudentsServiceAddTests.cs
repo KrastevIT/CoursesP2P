@@ -46,7 +46,7 @@ namespace CoursesP2P.Tests.Services.Students
             await this.db.Users.AddAsync(instructor);
             await this.db.SaveChangesAsync();
 
-            var isValid = this.studentsService.Add(courseId, userId);
+            var isValid = await this.studentsService.AddAsync(courseId, userId);
 
             Assert.True(isValid);
         }
