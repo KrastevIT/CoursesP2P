@@ -33,7 +33,7 @@ namespace CoursesP2P.Tests.Services.Lectures
         }
 
         [Fact]
-        public void AddReturnCorrectly()
+        public async Task AddReturnCorrectly()
         {
             var video = new Mock<IFormFile>().Object;
 
@@ -44,7 +44,7 @@ namespace CoursesP2P.Tests.Services.Lectures
                 Video = video
             };
 
-            this.lecturesService.Add(model);
+            await this.lecturesService.AddAsync(model);
 
             var actual = this.db.Lectures.Count();
 

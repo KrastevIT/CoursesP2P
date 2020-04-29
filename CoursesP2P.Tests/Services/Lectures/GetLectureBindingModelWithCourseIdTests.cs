@@ -8,6 +8,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Lectures
@@ -26,23 +27,23 @@ namespace CoursesP2P.Tests.Services.Lectures
         }
 
         [Fact]
-        public void GetLectureBindingModelWithCourseIdReturnCorrectly()
+        public async Task GetLectureBindingModelWithCourseIdReturnCorrectly()
         {
             var user = new User
             {
                 Id = "100"
             };
 
-            this.db.Users.Add(user);
-            this.db.SaveChanges();
+           await this.db.Users.AddAsync(user);
+           await this.db.SaveChangesAsync();
 
             var course = new Course
             {
                 Id = 1,
                 InstructorId = "100"
             };
-            this.db.Courses.Add(course);
-            this.db.SaveChanges();
+           await this.db.Courses.AddAsync(course);
+           await this.db.SaveChangesAsync();
 
             var actual = this.lecturesService.GetLectureBindingModelWithCourseId(1, user);
 

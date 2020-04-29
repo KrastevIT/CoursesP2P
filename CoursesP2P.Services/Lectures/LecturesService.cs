@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Lectures
 {
@@ -23,7 +24,7 @@ namespace CoursesP2P.Services.Lectures
             this.cloudinaryService = cloudinaryService;
         }
 
-        public IEnumerable<LectureViewModel> GetLecturesByCourseIdAsync(int courseId, string userId, bool isAdmin)
+        public IEnumerable<LectureViewModel> GetLecturesByCourse(int courseId, string userId, bool isAdmin)
         {
             var models = this.db.StudentCourses
                 .Where(x => x.CourseId == courseId && x.StudentId == userId)
@@ -44,7 +45,7 @@ namespace CoursesP2P.Services.Lectures
 
         [RequestFormLimits(MultipartBodyLengthLimit = 1073741824)]
         [RequestSizeLimit(1073741824)]
-        public void Add(AddLecturesBindingModel model)
+        public async Task AddAsync(AddLecturesBindingModel model)
         {
             var lecture = new Lecture
             {
@@ -53,8 +54,8 @@ namespace CoursesP2P.Services.Lectures
                 Video = this.cloudinaryService.UploadVideo(model.Video)
             };
 
-            this.db.Lectures.Add(lecture);
-            this.db.SaveChanges();
+           await this.db.Lectures.AddAsync(lecture);
+           await this.db.SaveChangesAsync();
         }
 
         public VideoViewModel GetVideoByLectureId(int lectureId, string userId)

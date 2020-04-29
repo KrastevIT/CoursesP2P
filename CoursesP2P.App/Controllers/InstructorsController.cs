@@ -1,5 +1,4 @@
 ﻿using CoursesP2P.Models;
-using CoursesP2P.Services.Courses;
 using CoursesP2P.Services.Instructors;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using Microsoft.AspNetCore.Authorization;

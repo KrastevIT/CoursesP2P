@@ -8,6 +8,7 @@ using CoursesP2P.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Admin
@@ -26,7 +27,7 @@ namespace CoursesP2P.Tests.Services.Admin
 
         [Theory]
         [InlineData("1")]
-        public void GetCreatedCoursesByUserIdReturnCreatedCourses(string id)
+        public async Task GetCreatedCoursesByUserIdReturnCreatedCourses(string id)
         {
             var course = new List<Course>
             {
@@ -46,8 +47,8 @@ namespace CoursesP2P.Tests.Services.Admin
                 CreatedCourses = course
             };
 
-            this.db.Users.Add(users);
-            this.db.SaveChanges();
+           await this.db.Users.AddAsync(users);
+           await this.db.SaveChangesAsync();
 
             var testUsers = this.adminService.GetCreatedCoursesByUserId(id);
 

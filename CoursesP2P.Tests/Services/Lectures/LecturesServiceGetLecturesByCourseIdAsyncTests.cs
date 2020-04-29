@@ -8,6 +8,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Lectures
@@ -27,7 +28,7 @@ namespace CoursesP2P.Tests.Services.Lectures
 
         [Theory]
         [InlineData(1, 2)]
-        public void GetLecturesByCourseIdAsyncReturnCorrectly(int courseId, int expected)
+        public async Task GetLecturesByCourseIdAsyncReturnCorrectly(int courseId, int expected)
         {
             var lectures = new List<Lecture>
             {
@@ -52,9 +53,9 @@ namespace CoursesP2P.Tests.Services.Lectures
                 Id = "1",
             };
 
-            this.db.Users.Add(user);
-            this.db.Courses.Add(course);
-            this.db.SaveChanges();
+            await this.db.Users.AddAsync(user);
+            await this.db.Courses.AddAsync(course);
+            await this.db.SaveChangesAsync();
 
             var studentCourse = new StudentCourse
             {
@@ -62,18 +63,18 @@ namespace CoursesP2P.Tests.Services.Lectures
                 StudentId = user.Id
             };
 
-            this.db.StudentCourses.Add(studentCourse);
-            this.db.SaveChanges();
+            await this.db.StudentCourses.AddAsync(studentCourse);
+            await this.db.SaveChangesAsync();
 
 
-            var actual = this.lecturesService.GetLecturesByCourseIdAsync(courseId, "1", false).Count();
+            var actual = this.lecturesService.GetLecturesByCourse(courseId, "1", false).Count();
 
             Assert.Equal(expected, actual);
         }
 
         [Theory]
         [InlineData(2)]
-        public void GetLecturesByCourseIdAsyncWithInvalidIdReturnExceptions(int courseId)
+        public async Task GetLecturesByCourseIdAsyncWithInvalidIdReturnExceptions(int courseId)
         {
             var lectures = new List<Lecture>
             {
@@ -98,9 +99,9 @@ namespace CoursesP2P.Tests.Services.Lectures
                 Id = "1",
             };
 
-            this.db.Users.Add(user);
-            this.db.Courses.Add(course);
-            this.db.SaveChanges();
+            await this.db.Users.AddAsync(user);
+            await this.db.Courses.AddAsync(course);
+            await this.db.SaveChangesAsync();
 
             var studentCourse = new StudentCourse
             {
@@ -108,11 +109,11 @@ namespace CoursesP2P.Tests.Services.Lectures
                 StudentId = user.Id
             };
 
-            this.db.StudentCourses.Add(studentCourse);
-            this.db.SaveChanges();
+            await this.db.StudentCourses.AddAsync(studentCourse);
+            await this.db.SaveChangesAsync();
 
 
-            Assert.Throws<InvalidOperationException>(() => this.lecturesService.GetLecturesByCourseIdAsync(courseId, "1", false));
+            Assert.Throws<InvalidOperationException>(() => this.lecturesService.GetLecturesByCourse(courseId, "1", false));
         }
     }
 }

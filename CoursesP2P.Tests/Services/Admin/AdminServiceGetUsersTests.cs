@@ -7,6 +7,7 @@ using CoursesP2P.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Admin
@@ -25,7 +26,7 @@ namespace CoursesP2P.Tests.Services.Admin
         }
 
         [Fact]
-        public void GetUsersShouldReturnAllUsers()
+        public async Task GetUsersShouldReturnAllUsers()
         {
             var users = new List<User>
             {
@@ -39,8 +40,8 @@ namespace CoursesP2P.Tests.Services.Admin
                 }
             };
 
-            this.db.Users.AddRange(users);
-            this.db.SaveChanges();
+            await this.db.Users.AddRangeAsync(users);
+            await this.db.SaveChangesAsync();
 
             var actual = this.adminService.GetUsers();
 
@@ -48,7 +49,7 @@ namespace CoursesP2P.Tests.Services.Admin
         }
 
         [Fact]
-        public void GetUsersShouldReturnCreatedCourses()
+        public async Task GetUsersShouldReturnCreatedCourses()
         {
             var course = new List<Course>
             {
@@ -68,8 +69,8 @@ namespace CoursesP2P.Tests.Services.Admin
                 CreatedCourses = course
             };
 
-            this.db.Users.Add(users);
-            this.db.SaveChanges();
+           await this.db.Users.AddAsync(users);
+           await this.db.SaveChangesAsync();
 
             var testUsers = this.adminService.GetUsers();
 
@@ -79,7 +80,7 @@ namespace CoursesP2P.Tests.Services.Admin
         }
 
         [Fact]
-        public void GetUsersShouldReturnEnrolledCourses()
+        public async Task GetUsersShouldReturnEnrolledCourses()
         {
             var studentCourse = new List<StudentCourse>
             {
@@ -101,8 +102,8 @@ namespace CoursesP2P.Tests.Services.Admin
                 EnrolledCourses = studentCourse
             };
 
-            this.db.Users.Add(users);
-            this.db.SaveChanges();
+           await this.db.Users.AddAsync(users);
+           await this.db.SaveChangesAsync();
 
             var testUsers = this.adminService.GetUsers();
 

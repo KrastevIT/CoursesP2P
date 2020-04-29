@@ -4,6 +4,7 @@ using CoursesP2P.Models;
 using CoursesP2P.Services.Students;
 using CoursesP2P.Tests.Configuration;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Students
@@ -20,7 +21,7 @@ namespace CoursesP2P.Tests.Services.Students
         }
 
         [Fact]
-        public void GetMyCoursesAsyncReturnCorrectly()
+        public async Task GetMyCoursesAsyncReturnCorrectly()
         {
             var course = new Course
             {
@@ -32,9 +33,9 @@ namespace CoursesP2P.Tests.Services.Students
                 Id = "1",
             };
 
-            this.db.Courses.Add(course);
-            this.db.Users.Add(user);
-            this.db.SaveChanges();
+            await this.db.Courses.AddAsync(course);
+            await this.db.Users.AddAsync(user);
+            await this.db.SaveChangesAsync();
 
             var studentCourse = new StudentCourse
             {
@@ -42,8 +43,8 @@ namespace CoursesP2P.Tests.Services.Students
                 StudentId = user.Id
             };
 
-            this.db.StudentCourses.Add(studentCourse);
-            this.db.SaveChanges();
+            await this.db.StudentCourses.AddAsync(studentCourse);
+            await this.db.SaveChangesAsync();
 
             var actual = this.studentsService.GetMyCourses("1").Count();
 

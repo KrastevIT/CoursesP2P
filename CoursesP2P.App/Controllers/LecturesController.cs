@@ -26,7 +26,7 @@ namespace CoursesP2P.App.Controllers
         {
             var user = await this.userManager.GetUserAsync(this.User);
             var isAdmin = await this.userManager.IsInRoleAsync(user, "Administrator");
-            var lectures = this.lectureService.GetLecturesByCourseIdAsync(id, user.Id, isAdmin);
+            var lectures = this.lectureService.GetLecturesByCourse(id, user.Id, isAdmin);
 
             this.ViewData["id"] = id;
 
@@ -46,14 +46,14 @@ namespace CoursesP2P.App.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(AddLecturesBindingModel model)
+        public async Task<IActionResult> Add(AddLecturesBindingModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            this.lectureService.Add(model);
+           await this.lectureService.AddAsync(model);
 
             return RedirectToAction("Index", "Instructors");
         }

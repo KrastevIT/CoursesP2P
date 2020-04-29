@@ -3,6 +3,7 @@ using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Students;
 using CoursesP2P.Tests.Configuration;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Students
@@ -20,7 +21,7 @@ namespace CoursesP2P.Tests.Services.Students
 
         [Theory]
         [InlineData(1, "1")]
-        public void AddReturnCorrectly(int courseId, string userId)
+        public async Task AddReturnCorrectly(int courseId, string userId)
         {
             var student = new User
             {
@@ -40,10 +41,10 @@ namespace CoursesP2P.Tests.Services.Students
 
 
 
-            this.db.Courses.Add(course);
-            this.db.Users.Add(student);
-            this.db.Users.Add(instructor);
-            this.db.SaveChanges();
+            await this.db.Courses.AddAsync(course);
+            await this.db.Users.AddAsync(student);
+            await this.db.Users.AddAsync(instructor);
+            await this.db.SaveChangesAsync();
 
             var isValid = this.studentsService.Add(courseId, userId);
 

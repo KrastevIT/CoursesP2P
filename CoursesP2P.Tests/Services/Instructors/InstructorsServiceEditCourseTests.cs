@@ -1,11 +1,11 @@
-﻿using AutoMapper;
-using CoursesP2P.Data;
+﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Instructors;
 using CoursesP2P.Tests.Configuration;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Instructors
@@ -22,11 +22,11 @@ namespace CoursesP2P.Tests.Services.Instructors
         }
 
         [Fact]
-        public void EditCourseReturnCorrectly()
+        public async Task EditCourseReturnCorrectly()
         {
             var course = new Course { Id = 1, Name = "Pesho" };
-            this.db.Courses.Add(course);
-            this.db.SaveChanges();
+           await this.db.Courses.AddAsync(course);
+           await this.db.SaveChangesAsync();
 
             var model = new CourseEditViewModel
             {
@@ -34,7 +34,7 @@ namespace CoursesP2P.Tests.Services.Instructors
                 Name = "newName"
             };
 
-            this.instructorsService.EditCourseAsync(model);
+            await this.instructorsService.EditCourseAsync(model);
 
             var newCourse = this.db.Courses.FirstOrDefault(x => x.Id == 1);
             var isSetNewName = newCourse.Name == "newName";
@@ -43,11 +43,11 @@ namespace CoursesP2P.Tests.Services.Instructors
         }
 
         [Fact]
-        public void EditCourseWithInvalidIdReturnException()
+        public async Task EditCourseWithInvalidIdReturnException()
         {
             var course = new Course { Id = 1, Name = "Pesho" };
-            this.db.Courses.Add(course);
-            this.db.SaveChanges();
+           await this.db.Courses.AddAsync(course);
+           await this.db.SaveChangesAsync();
 
             var model = new CourseEditViewModel
             {
@@ -55,7 +55,7 @@ namespace CoursesP2P.Tests.Services.Instructors
                 Name = "newName"
             };
 
-            Assert.Throws<ArgumentNullException>(() => this.instructorsService.EditCourseAsync(model));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => this.instructorsService.EditCourseAsync(model));
         }
     }
 }

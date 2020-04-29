@@ -11,6 +11,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Courses
@@ -33,7 +34,7 @@ namespace CoursesP2P.Tests.Services.Courses
         [Theory]
         [InlineData(1, 1)]
         [InlineData(2, 2)]
-        public void DetailsReturnCorrectly(int id, int expected)
+        public async Task DetailsReturnCorrectly(int id, int expected)
         {
             var courses = new List<Course>
             {
@@ -48,8 +49,8 @@ namespace CoursesP2P.Tests.Services.Courses
                }
             };
 
-            this.db.Courses.AddRange(courses);
-            this.db.SaveChanges();
+            await this.db.Courses.AddRangeAsync(courses);
+            await this.db.SaveChangesAsync();
 
             var actual = this.coursesService.Details(id);
 
@@ -58,7 +59,7 @@ namespace CoursesP2P.Tests.Services.Courses
 
         [Theory]
         [InlineData(3)]
-        public void DetailsWithInvalidIdReturnException(int id)
+        public async Task DetailsWithInvalidIdReturnException(int id)
         {
             var courses = new List<Course>
             {
@@ -74,15 +75,15 @@ namespace CoursesP2P.Tests.Services.Courses
                }
             };
 
-            this.db.Courses.AddRange(courses);
-            this.db.SaveChanges();
+           await this.db.Courses.AddRangeAsync(courses);
+           await this.db.SaveChangesAsync();
 
             Assert.Throws<ArgumentNullException>(() => this.coursesService.Details(id));
         }
 
         [Theory]
         [InlineData(1, 2)]
-        public void DetailsReturnCourseWithLectures(int id, int expected)
+        public async Task DetailsReturnCourseWithLectures(int id, int expected)
         {
             var lectures = new List<Lecture>
             {
@@ -111,8 +112,8 @@ namespace CoursesP2P.Tests.Services.Courses
                }
             };
 
-            this.db.Courses.AddRange(courses);
-            this.db.SaveChanges();
+            await this.db.Courses.AddRangeAsync(courses);
+            await this.db.SaveChangesAsync();
 
             var actual = this.coursesService.Details(id).LectureName.Count;
 
@@ -121,7 +122,7 @@ namespace CoursesP2P.Tests.Services.Courses
 
         [Theory]
         [InlineData(1, 1)]
-        public void DetailsReturnCourseWithSkills(int id, int expected)
+        public async Task DetailsReturnCourseWithSkills(int id, int expected)
         {
             var courses = new List<Course>
             {
@@ -132,8 +133,8 @@ namespace CoursesP2P.Tests.Services.Courses
                },
             };
 
-            this.db.Courses.AddRange(courses);
-            this.db.SaveChanges();
+            await this.db.Courses.AddRangeAsync(courses);
+            await this.db.SaveChangesAsync();
 
             var actual = this.coursesService.Details(id);
 

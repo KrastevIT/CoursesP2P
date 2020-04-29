@@ -10,6 +10,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Courses
@@ -30,7 +31,7 @@ namespace CoursesP2P.Tests.Services.Courses
         [Theory]
         [InlineData("Development", 2)]
         [InlineData("Marketing", 1)]
-        public void GetCoursesByCategoryReturnCourseByCategory(string categoryName, int expected)
+        public async Task GetCoursesByCategoryReturnCourseByCategory(string categoryName, int expected)
         {
             var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Development");
             var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Marketing");
@@ -54,8 +55,8 @@ namespace CoursesP2P.Tests.Services.Courses
                 },
             };
 
-            this.db.Courses.AddRange(courses);
-            this.db.SaveChanges();
+            await this.db.Courses.AddRangeAsync(courses);
+            await this.db.SaveChangesAsync();
 
             var getCourses = this.coursesService.GetCoursesByCategory(categoryName);
 
@@ -64,7 +65,7 @@ namespace CoursesP2P.Tests.Services.Courses
 
         [Theory]
         [InlineData("InvalidCategory")]
-        public void GetCoursesByCategoryWithNonExistentCategoryReturnException(string categoryName)
+        public async Task GetCoursesByCategoryWithNonExistentCategoryReturnException(string categoryName)
         {
             var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Development");
             var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Marketing");
@@ -88,8 +89,8 @@ namespace CoursesP2P.Tests.Services.Courses
                 },
             };
 
-            this.db.Courses.AddRange(courses);
-            this.db.SaveChanges();
+            await this.db.Courses.AddRangeAsync(courses);
+            await this.db.SaveChangesAsync();
 
 
             Assert.Throws<InvalidCastException>(() => this.coursesService.GetCoursesByCategory(categoryName));
@@ -97,7 +98,7 @@ namespace CoursesP2P.Tests.Services.Courses
 
         [Theory]
         [InlineData("Development", 2)]
-        public void GetCoursesByCategoryReturnCoursesWithLectures(string categoryName, int expected)
+        public async Task GetCoursesByCategoryReturnCoursesWithLectures(string categoryName, int expected)
         {
             var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Development");
             var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Marketing");
@@ -134,8 +135,8 @@ namespace CoursesP2P.Tests.Services.Courses
                 },
             };
 
-            this.db.Courses.AddRange(courses);
-            this.db.SaveChanges();
+            await this.db.Courses.AddRangeAsync(courses);
+            await this.db.SaveChangesAsync();
 
             var getLecture = this.coursesService.GetCoursesByCategory(categoryName)
                 .Select(x => x.Lectures.Count)

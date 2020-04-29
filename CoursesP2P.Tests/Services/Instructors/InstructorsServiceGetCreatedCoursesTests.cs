@@ -4,6 +4,7 @@ using CoursesP2P.Services.Instructors;
 using CoursesP2P.Tests.Configuration;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Instructors
@@ -20,7 +21,7 @@ namespace CoursesP2P.Tests.Services.Instructors
         }
 
         [Fact]
-        public void GetCreatedCoursesReturnCorrectly()
+        public async Task GetCreatedCoursesReturnCorrectly()
         {
             var courses = new List<Course>
             {
@@ -40,8 +41,8 @@ namespace CoursesP2P.Tests.Services.Instructors
                 CreatedCourses = courses
             };
 
-            this.db.Users.Add(user);
-            this.db.SaveChanges();
+            await this.db.Users.AddAsync(user);
+            await this.db.SaveChangesAsync();
 
 
             var actual = this.instructorsService.GetCreatedCourses("1").Count();
@@ -50,7 +51,7 @@ namespace CoursesP2P.Tests.Services.Instructors
         }
 
         [Fact]
-        public void GetCreatedCoursesWithLecturesReturnCorrectly()
+        public async Task GetCreatedCoursesWithLecturesReturnCorrectly()
         {
             var lectures = new List<Lecture>
             {
@@ -79,16 +80,13 @@ namespace CoursesP2P.Tests.Services.Instructors
                 CreatedCourses = courses
             };
 
-            this.db.Users.Add(user);
-            this.db.SaveChanges();
+            await this.db.Users.AddAsync(user);
+            await this.db.SaveChangesAsync();
 
 
-            //var actual = this.instructorsService.GetCreatedCourses(user)
-            //    .Courses
-            //    .Select(x => x.Lectures.Count).Sum();
-                
+            var actual = this.instructorsService.GetCreatedCourses("1").Count();
 
-            //Assert.Equal(2, actual);
+            Assert.Equal(1, actual);
         }
     }
 }

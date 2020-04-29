@@ -27,7 +27,7 @@ namespace CoursesP2P.Tests.Services.Courses
         }
 
         [Fact]
-        public void GetAllCoursesReturnAllCourses()
+        public async Task GetAllCoursesReturnAllCourses()
         {
             var course = new List<Course>
             {
@@ -41,8 +41,8 @@ namespace CoursesP2P.Tests.Services.Courses
                 }
             };
 
-            this.db.Courses.AddRange(course);
-            this.db.SaveChanges();
+            await this.db.Courses.AddRangeAsync(course);
+            await this.db.SaveChangesAsync();
 
             var getCourses = this.coursesService.GetAllCourses().ToList();
 
@@ -50,7 +50,7 @@ namespace CoursesP2P.Tests.Services.Courses
         }
 
         [Fact]
-        public void GetAllCoursesReturnAllCoursesWithAllLectures()
+        public async Task GetAllCoursesReturnAllCoursesWithAllLectures()
         {
             var lectures = new List<Lecture>
             {
@@ -81,8 +81,8 @@ namespace CoursesP2P.Tests.Services.Courses
                 }
             };
 
-            this.db.Courses.AddRange(course);
-            this.db.SaveChanges();
+           await this.db.Courses.AddRangeAsync(course);
+           await this.db.SaveChangesAsync();
 
             var getCourses = this.coursesService.GetAllCourses()
                 .Select(x => x.Lectures.Count).Sum();

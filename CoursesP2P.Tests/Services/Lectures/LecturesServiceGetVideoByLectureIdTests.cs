@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Lectures
@@ -29,7 +30,7 @@ namespace CoursesP2P.Tests.Services.Lectures
 
         [Theory]
         [InlineData(2)]
-        public void GetVideoByLectureIdReturnCorrectly(int id)
+        public async Task GetVideoByLectureIdReturnCorrectly(int id)
         {
             var lectures = new List<Lecture>
             {
@@ -60,10 +61,10 @@ namespace CoursesP2P.Tests.Services.Lectures
                 StudentId = "1"
             };
 
-            this.db.Users.Add(user);
-            this.db.StudentCourses.Add(studentCourse);
-            this.db.Courses.Add(course);
-            this.db.SaveChanges();
+            await this.db.Users.AddAsync(user);
+            await this.db.StudentCourses.AddAsync(studentCourse);
+            await this.db.Courses.AddAsync(course);
+            await this.db.SaveChangesAsync();
 
             var model = this.lecturesService.GetVideoByLectureId(id, "1");
 
@@ -72,7 +73,7 @@ namespace CoursesP2P.Tests.Services.Lectures
 
         [Theory]
         [InlineData(3)]
-        public void GetVideoByLectureIdWithInvalidIdReturnException(int id)
+        public async Task GetVideoByLectureIdWithInvalidIdReturnException(int id)
         {
             var lectures = new List<Lecture>
             {
@@ -97,8 +98,8 @@ namespace CoursesP2P.Tests.Services.Lectures
                 Id = "1"
             };
 
-            this.db.Courses.Add(course);
-            this.db.SaveChanges();
+            await this.db.Courses.AddAsync(course);
+            await this.db.SaveChangesAsync();
 
             Assert.Throws<InvalidOperationException>(() => this.lecturesService.GetVideoByLectureId(id, "1"));
         }
