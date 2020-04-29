@@ -2,10 +2,12 @@
 {
     public class ErrorMessages
     {
-        public const string InvalidCourseId = "Invalid Course Id {0}.";
-        public const string InvalidLectureId = "Invalid Lecture  Id {0}.";
-        public const string NotFoundCourseById = "Course Id {0} does not exist";
-        public const string InvalidCastCategory = "{0} Category Not Found";
-        public const string UnauthorizedUser = "Unauthorized User {0}";
+        public const string FirstNameLength = "Името трябва да бъде между 2 и 50 символа.";
+
+        public const string LastNameLength = "Фамилията трябва да бъде между 2 и 50 символа.";
+
+        public const string Required = "Полето е задължително";
+
+        public const string CityLength = " Града трябва да бъде между 2 и 50 символа.";
     }
 }

@@ -33,7 +33,7 @@ namespace CoursesP2P.Services.Instructors
             if (course == null)
             {
                 throw new ArgumentNullException(
-                    string.Format(ErrorMessages.InvalidCourseId, model.Id));
+                    string.Format(ExceptionMessages.InvalidCourseId, model.Id));
             }
             model.Image = course.Image;
 
@@ -53,7 +53,7 @@ namespace CoursesP2P.Services.Instructors
             if (model == null)
             {
                 throw new ArgumentNullException(
-                    string.Format(ErrorMessages.NotFoundCourseById, id));
+                    string.Format(ExceptionMessages.NotFoundCourseById, id));
             }
             else
             {

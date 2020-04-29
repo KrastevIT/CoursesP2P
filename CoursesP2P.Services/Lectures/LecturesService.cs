@@ -36,7 +36,7 @@ namespace CoursesP2P.Services.Lectures
             if (models.Count == 0)
             {
                 throw new InvalidOperationException(
-                    string.Format(ErrorMessages.UnauthorizedUser, userId));
+                    string.Format(ExceptionMessages.UnauthorizedUser, userId));
             }
             else
             {
@@ -71,7 +71,7 @@ namespace CoursesP2P.Services.Lectures
             if (courseId == 0)
             {
                 throw new InvalidOperationException(
-                    string.Format(ErrorMessages.UnauthorizedUser, userId));
+                    string.Format(ExceptionMessages.UnauthorizedUser, userId));
             }
             else
             {

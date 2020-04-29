@@ -44,7 +44,7 @@ namespace CoursesP2P.Services.Courses
             }
 
             throw new InvalidCastException(
-                   string.Format(ErrorMessages.InvalidCastCategory, categoryName));
+                   string.Format(ExceptionMessages.InvalidCastCategory, categoryName));
 
         }
 
@@ -77,7 +77,7 @@ namespace CoursesP2P.Services.Courses
             if (model == null)
             {
                 throw new ArgumentNullException(
-                    string.Format(ErrorMessages.NotFoundCourseById, id));
+                    string.Format(ExceptionMessages.NotFoundCourseById, id));
             }
 
             model.Skills = this.db.Courses
