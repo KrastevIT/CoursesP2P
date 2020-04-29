@@ -12,7 +12,7 @@ namespace CoursesP2P.Services.Lectures
 
         Task AddAsync(AddLecturesBindingModel model);
 
-        VideoViewModel GetVideoByLectureId(int lectureId, string userId);
+        VideoViewModel GetVideoByLectureId(int lectureId, string userId, bool isAdmin);
 
         AddLecturesBindingModel GetLectureBindingModelWithCourseId(int courseId, User user);
     }

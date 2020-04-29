@@ -2,6 +2,7 @@
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Admin;
 using CoursesP2P.ViewModels.Courses.ViewModels;
+using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,7 +19,15 @@ namespace CoursesP2P.Services.Admin
 
         public IEnumerable<AdminUserViewModel> GetUsers()
         {
-            var models = this.db.Users.To<AdminUserViewModel>().ToList();
+            var models = this.db.Users
+                .To<AdminUserViewModel>()
+                .ToList();
+
+            foreach (var user in models)
+            {
+                user.Sales = user.CreatedCourses.Select(x => x.Orders).Sum();
+            }
+
             return models;
         }
 

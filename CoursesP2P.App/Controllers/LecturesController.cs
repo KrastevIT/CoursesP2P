@@ -58,10 +58,11 @@ namespace CoursesP2P.App.Controllers
             return RedirectToAction("Index", "Instructors");
         }
 
-        public IActionResult Video(int id)
+        public async Task<IActionResult> Video(int id)
         {
-            var userId = this.userManager.GetUserId(this.User);
-            var videoOfLecture = this.lectureService.GetVideoByLectureId(id, userId);
+            var user =  await this.userManager.GetUserAsync(this.User);
+            var isAdmin = await this.userManager.IsInRoleAsync(user, "Administrator");
+            var videoOfLecture = this.lectureService.GetVideoByLectureId(id, user.Id, isAdmin);
 
             return View(videoOfLecture);
         }

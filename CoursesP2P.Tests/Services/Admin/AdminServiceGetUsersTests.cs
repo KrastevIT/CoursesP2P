@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Sdk;
 
 namespace CoursesP2P.Tests.Services.Admin
 {
@@ -69,8 +70,8 @@ namespace CoursesP2P.Tests.Services.Admin
                 CreatedCourses = course
             };
 
-           await this.db.Users.AddAsync(users);
-           await this.db.SaveChangesAsync();
+            await this.db.Users.AddAsync(users);
+            await this.db.SaveChangesAsync();
 
             var testUsers = this.adminService.GetUsers();
 
@@ -102,14 +103,42 @@ namespace CoursesP2P.Tests.Services.Admin
                 EnrolledCourses = studentCourse
             };
 
-           await this.db.Users.AddAsync(users);
-           await this.db.SaveChangesAsync();
+            await this.db.Users.AddAsync(users);
+            await this.db.SaveChangesAsync();
 
             var testUsers = this.adminService.GetUsers();
 
             var actual = testUsers.Select(x => x.EnrolledCourses.Count()).Sum();
 
             Assert.Equal(2, actual);
+        }
+
+        [Fact]
+        public async Task GetUsersWithSales()
+        {
+            var course = new List<Course>
+            {
+                new Course
+                {
+                    Orders = 1
+                },
+                 new Course
+                {
+                    Orders = 2
+                }
+            };
+
+            var user = new User
+            {
+                CreatedCourses = course
+            };
+
+            await this.db.Users.AddAsync(user);
+            await this.db.SaveChangesAsync();
+
+            var actual = this.adminService.GetUsers().Select(x => x.Sales).FirstOrDefault();
+
+            Assert.Equal(3, actual);
         }
     }
 }

@@ -3,45 +3,49 @@
     ViewData["Title"] = "EnrolledCourses";
 }
 
-<div>
-    <h1 class="text-center">Enrolled Courses</h1>
-
-    <img src="../assets/img/path3.png" class="path">
-    <div class="container">
-        <div class="row">
-            @foreach (var course in Model)
-            {
-                <div class="col-md-4">
-                    <figure class="card card-coin card-plain">
-                        <div class="img-wrap">
-                            <a href="@Url.Action("Details", "Courses", new { id=course.Id})">
-                                <img src="@course.Image" style="width:348px;height:220px;">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <h4 class="text-uppercase">@course.Name</h4>
-                                    <h5>by @course.InstructorFullName</h5>
-                                    <hr class="line-primary">
+    <div>
+        <h1 class="text-center">Закупени курсове</h1>
+        <div class="container">
+            <div class="row">
+                @foreach (var course in Model)
+                {
+                    <div class="col-md-4">
+                        <figure class="card card-coin card-plain">
+                            <div class="img-wrap">
+                                <a asp-area="" asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">
+                                    <img src="@course.Image" style="width:348px;height:220px;">
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        @if (course.Name.Length > 29)
+                                        {
+                                            <h4 class="text-uppercase" rel="tooltip" title="@course.Name">@course.ShortName</h4>
+                                        }
+                                        else
+                                        {
+                                            <h4 class="text-uppercase">@course.Name</h4>
+                                        }
+                                        <h5>от @course.InstructorFullName</h5>
+                                        <hr class="line-primary">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">@course.Category</li>
+                                        <li class="list-group-item">@course.Lectures.Count Лекции</li>
+                                        <li class="list-group-item">@course.Orders Записани</li>
+                                        <li class="list-group-item text-danger">&euro; @course.Price</li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="row">
-                                <ul class="list-group">
-                                    <li class="list-group-item">@course.Category</li>
-                                    <li class="list-group-item">@course.Lectures.Count Lectures</li>
-                                    <li class="list-group-item">@course.Orders Orders</li>
-                                </ul>
+                            <div class="card-footer text-left">
+                                <vc:five-stars course-id="@course.Id"></vc:five-stars>
                             </div>
-                        </div>
-                        <div class="card-footer text-center">
-                            <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-success btn-sm btn-simple float-right">Details</a>
-                            <a asp-controller="Students" asp-action="Add" asp-route-id="@course.Id" class="btn btn-warning btn-sm btn-simple float-right">Buy</a>
-                            <h3>$@course.Price</h3>
-                        </div>
-                    </figure>
-                </div>
-            }
+                        </figure>
+                    </div>
+                }
+            </div>
         </div>
     </div>
-</div>

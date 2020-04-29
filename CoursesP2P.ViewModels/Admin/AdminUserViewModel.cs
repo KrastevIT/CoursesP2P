@@ -24,12 +24,6 @@ namespace CoursesP2P.ViewModels.Admin
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<User, AdminUserViewModel>()
-                 .ForMember(x => x.Sales, y =>
-                 {
-                     y.MapFrom(u => u.CreatedCourses.Select(x => x.Orders).Sum());
-                 });
-
-            configuration.CreateMap<User, AdminUserViewModel>()
                 .ForMember(x => x.EnrolledCourses, y => y.MapFrom(x => x.EnrolledCourses));
         }
     }

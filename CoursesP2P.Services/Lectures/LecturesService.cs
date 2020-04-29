@@ -27,7 +27,8 @@ namespace CoursesP2P.Services.Lectures
         public IEnumerable<LectureViewModel> GetLecturesByCourse(int courseId, string userId, bool isAdmin)
         {
             var models = this.db.StudentCourses
-                .Where(x => x.CourseId == courseId && x.StudentId == userId)
+                .Where(x => x.CourseId == courseId && x.StudentId == userId
+                || isAdmin && x.CourseId == courseId)
                 .SelectMany(x => x.Course.Lectures)
                 .To<LectureViewModel>()
                 .ToList();
@@ -54,14 +55,14 @@ namespace CoursesP2P.Services.Lectures
                 Video = this.cloudinaryService.UploadVideo(model.Video)
             };
 
-           await this.db.Lectures.AddAsync(lecture);
-           await this.db.SaveChangesAsync();
+            await this.db.Lectures.AddAsync(lecture);
+            await this.db.SaveChangesAsync();
         }
 
-        public VideoViewModel GetVideoByLectureId(int lectureId, string userId)
+        public VideoViewModel GetVideoByLectureId(int lectureId, string userId, bool isAdmin)
         {
             var courseId = this.db.StudentCourses
-                .Where(x => x.StudentId == userId)
+                .Where(x => x.StudentId == userId || isAdmin)
                 .SelectMany(x => x.Course.Lectures)
                 .Where(x => x.Id == lectureId)
                 .Select(x => x.Course.Id)

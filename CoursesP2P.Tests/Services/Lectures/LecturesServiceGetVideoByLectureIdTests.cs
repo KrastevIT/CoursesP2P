@@ -66,7 +66,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             await this.db.Courses.AddAsync(course);
             await this.db.SaveChangesAsync();
 
-            var model = this.lecturesService.GetVideoByLectureId(id, "1");
+            var model = this.lecturesService.GetVideoByLectureId(id, "1", false);
 
             Assert.NotNull(model);
         }
@@ -101,7 +101,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             await this.db.Courses.AddAsync(course);
             await this.db.SaveChangesAsync();
 
-            Assert.Throws<InvalidOperationException>(() => this.lecturesService.GetVideoByLectureId(id, "1"));
+            Assert.Throws<InvalidOperationException>(() => this.lecturesService.GetVideoByLectureId(id, "1", false));
         }
     }
 }
