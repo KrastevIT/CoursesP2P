@@ -34,7 +34,7 @@ namespace CoursesP2P.Tests.Services.Instructors
                 Name = "newName"
             };
 
-            this.instructorsService.EditCourse(model);
+            this.instructorsService.EditCourseAsync(model);
 
             var newCourse = this.db.Courses.FirstOrDefault(x => x.Id == 1);
             var isSetNewName = newCourse.Name == "newName";
@@ -55,7 +55,7 @@ namespace CoursesP2P.Tests.Services.Instructors
                 Name = "newName"
             };
 
-            Assert.Throws<ArgumentNullException>(() => this.instructorsService.EditCourse(model));
+            Assert.Throws<ArgumentNullException>(() => this.instructorsService.EditCourseAsync(model));
         }
     }
 }

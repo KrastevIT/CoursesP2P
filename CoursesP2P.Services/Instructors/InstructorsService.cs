@@ -2,9 +2,11 @@
 using CoursesP2P.Data;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Courses.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Instructors
 {
@@ -19,17 +21,15 @@ namespace CoursesP2P.Services.Instructors
 
         public IEnumerable<CourseInstructorViewModel> GetCreatedCourses(string userId)
         {
-            var models = this.db.Courses
+            return this.db.Courses
                 .Where(x => x.InstructorId == userId)
                 .To<CourseInstructorViewModel>()
                 .ToList();
-
-            return models;
         }
 
-        public void EditCourse(CourseEditViewModel model)
+        public async Task EditCourseAsync(CourseEditViewModel model)
         {
-            var course = this.db.Courses.FirstOrDefault(x => x.Id == model.Id);
+            var course = await this.db.Courses.FirstOrDefaultAsync(x => x.Id == model.Id);
             if (course == null)
             {
                 throw new ArgumentNullException(
@@ -40,7 +40,7 @@ namespace CoursesP2P.Services.Instructors
             this.db.Entry(course)
                  .CurrentValues.SetValues(model);
 
-            this.db.SaveChanges();
+            await this.db.SaveChangesAsync();
         }
 
         public CourseEditViewModel GetCourseById(int id, string userId)

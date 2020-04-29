@@ -98,13 +98,11 @@ namespace CoursesP2P.Services.Courses
 
         public IEnumerable<CourseViewModel> Search(string searchTerm)
         {
-            var searchResult = this.db.Courses
+            return this.db.Courses
               .Where(x => x.Name.ToLower()
               .Contains(searchTerm.ToLower()))
               .To<CourseViewModel>()
               .ToList();
-
-            return searchResult;
         }
     }
 }

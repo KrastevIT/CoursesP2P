@@ -1,5 +1,6 @@
 ﻿using CoursesP2P.ViewModels.Courses.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Instructors
 {
@@ -9,6 +10,6 @@ namespace CoursesP2P.Services.Instructors
 
         CourseEditViewModel GetCourseById(int id, string userId);
 
-        void EditCourse(CourseEditViewModel model);
+        Task EditCourseAsync(CourseEditViewModel model);
     }
 }

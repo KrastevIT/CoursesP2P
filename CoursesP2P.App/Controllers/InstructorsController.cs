@@ -13,16 +13,13 @@ namespace CoursesP2P.App.Controllers
     public class InstructorsController : Controller
     {
         private readonly IInstructorsService instructorService;
-        private readonly ICoursesService coursesService;
         private readonly UserManager<User> userManager;
 
         public InstructorsController(
             IInstructorsService instructorService,
-            ICoursesService coursesService,
             UserManager<User> userManager)
         {
             this.instructorService = instructorService;
-            this.coursesService = coursesService;
             this.userManager = userManager;
         }
 
@@ -43,9 +40,9 @@ namespace CoursesP2P.App.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(CourseEditViewModel model)
+        public async Task<IActionResult> Edit(CourseEditViewModel model)
         {
-            this.instructorService.EditCourse(model);
+            await this.instructorService.EditCourseAsync(model);
 
             return RedirectToAction("Index", "Instructors");
         }
