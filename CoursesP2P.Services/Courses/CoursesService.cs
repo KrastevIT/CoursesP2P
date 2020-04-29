@@ -6,7 +6,6 @@ using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Courses.BindingModels;
 using CoursesP2P.ViewModels.Courses.ViewModels;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,32 +71,29 @@ namespace CoursesP2P.Services.Courses
 
         public CourseDetailsViewModel Details(int id)
         {
-            var course = this.db.Courses
-                .Include(x => x.Lectures)
-                .FirstOrDefault(x => x.Id == id);
-            if (course == null)
+            var model = this.db.Courses
+                .Where(x => x.Id == id)
+                .To<CourseDetailsViewModel>()
+                .FirstOrDefault();
+
+            if (model == null)
             {
                 throw new ArgumentNullException(
                     string.Format(ErrorMessages.NotFoundCourseById, id));
             }
 
-            var lecturesName = course.Lectures.Select(x => x.Name).ToList();
-
-            var splitSkills = course.Skills.Split('*')
+            model.Skills = this.db.Courses
+                .Where(x => x.Id == id)
+                .Select(x => x.Skills)
+                .FirstOrDefault()?
+                .Split('*')
                 .Select(x => x.Trim())
-                .Where(x => x != string.Empty)
                 .ToList();
 
-            //TODO Not Mapping exception
-            var model = new CourseDetailsViewModel
-            {
-                Id = id,
-                Name = course.Name,
-                Description = course.Description,
-                Price = course.Price,
-                Skills = splitSkills,
-                LectureName = lecturesName
-            };
+            model.LectureName = this.db.Lectures
+                .Where(x => x.CourseId == id)
+                .Select(x => x.Name)
+                .ToList();
 
             return model;
         }

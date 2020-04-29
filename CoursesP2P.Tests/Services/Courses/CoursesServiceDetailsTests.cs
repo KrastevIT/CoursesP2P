@@ -3,11 +3,14 @@ using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
+using CoursesP2P.Services.Mapping;
 using CoursesP2P.Tests.Configuration;
+using CoursesP2P.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Courses
@@ -19,6 +22,8 @@ namespace CoursesP2P.Tests.Services.Courses
 
         public CoursesServiceDetailsTests()
         {
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             var cloudinary = new Mock<ICloudinaryService>().Object;
 
@@ -35,12 +40,11 @@ namespace CoursesP2P.Tests.Services.Courses
                new Course
                {
                    Id = 1,
-                   Skills = "skillOne"
+                   Skills = "skillOne *skilTwo"
                },
                new Course
                {
                    Id = 2,
-                   Skills = "skillTwo"
                }
             };
 
