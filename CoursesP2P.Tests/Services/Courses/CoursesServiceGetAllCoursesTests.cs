@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Courses

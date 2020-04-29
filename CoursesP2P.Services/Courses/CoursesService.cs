@@ -6,6 +6,7 @@ using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Courses.BindingModels;
 using CoursesP2P.ViewModels.Courses.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,7 @@ namespace CoursesP2P.Services.Courses
 
         public IEnumerable<CourseViewModel> GetAllCourses()
         {
-            var models = this.db.Courses.To<CourseViewModel>().ToList();
-            return models;
+            return this.db.Courses.To<CourseViewModel>().ToList();
         }
 
         public IEnumerable<CourseViewModel> GetCoursesByCategory(string categoryName)
@@ -37,12 +37,10 @@ namespace CoursesP2P.Services.Courses
             var isValidEnum = Enum.TryParse(typeof(Category), categoryName, true, out object category);
             if (isValidEnum)
             {
-                var models = this.db.Courses
+                return this.db.Courses
                     .Where(x => x.Category == (Category)category)
                     .To<CourseViewModel>()
                     .ToList();
-
-                return models;
             }
 
             throw new InvalidCastException(
@@ -65,8 +63,8 @@ namespace CoursesP2P.Services.Courses
                 InstructorId = userId
             };
 
-            this.db.Courses.Add(course);
-            this.db.SaveChanges();
+            await this.db.Courses.AddAsync(course);
+            await this.db.SaveChangesAsync();
         }
 
         public CourseDetailsViewModel Details(int id)
