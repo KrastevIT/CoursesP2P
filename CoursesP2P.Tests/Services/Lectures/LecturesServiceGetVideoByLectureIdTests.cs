@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CoursesP2P.Data;
+﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Lectures;
@@ -9,9 +8,7 @@ using CoursesP2P.ViewModels;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using Xunit;
 
 namespace CoursesP2P.Tests.Services.Lectures
@@ -54,9 +51,17 @@ namespace CoursesP2P.Tests.Services.Lectures
 
             var user = new User
             {
-                Id = "1"
+                Id = "1",
             };
 
+            var studentCourse = new StudentCourse
+            {
+                CourseId = 10,
+                StudentId = "1"
+            };
+
+            this.db.Users.Add(user);
+            this.db.StudentCourses.Add(studentCourse);
             this.db.Courses.Add(course);
             this.db.SaveChanges();
 
@@ -95,7 +100,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             this.db.Courses.Add(course);
             this.db.SaveChanges();
 
-            Assert.Throws<ArgumentNullException>(() => this.lecturesService.GetVideoByLectureId(id, "1"));
+            Assert.Throws<InvalidOperationException>(() => this.lecturesService.GetVideoByLectureId(id, "1"));
         }
     }
 }

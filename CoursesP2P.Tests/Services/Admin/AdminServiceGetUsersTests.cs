@@ -4,8 +4,6 @@ using CoursesP2P.Services.Admin;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.Tests.Configuration;
 using CoursesP2P.ViewModels;
-using CoursesP2P.ViewModels.Admin;
-using CoursesP2P.ViewModels.Courses.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -29,37 +27,24 @@ namespace CoursesP2P.Tests.Services.Admin
         [Fact]
         public void GetUsersShouldReturnAllUsers()
         {
-            var user = new User
+            var users = new List<User>
             {
-              Id = "1"
-            };
-
-            var create = new List<Course>
-            {
-                new Course
+                new User
                 {
-                    Id = 1
+                    Id = "1",
+                },
+                new User
+                {
+                    Id = "2",
                 }
             };
 
-            var enrolled = new List<StudentCourse>
-            {
-                new StudentCourse
-                {
-                    CourseId = 1,
-                    StudentId = "1"
-                }
-            };
-
-            user.CreatedCourses = create;
-            user.EnrolledCourses = enrolled;
-
-            this.db.Users.Add(user);
+            this.db.Users.AddRange(users);
             this.db.SaveChanges();
 
             var actual = this.adminService.GetUsers();
 
-            Assert.Equal(1, actual.Count());
+            Assert.Equal(2, actual.Count());
         }
 
         [Fact]

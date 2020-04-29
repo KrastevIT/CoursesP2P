@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CoursesP2P.Data;
+﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
@@ -7,7 +6,6 @@ using CoursesP2P.Tests.Configuration;
 using CoursesP2P.ViewModels.Courses.BindingModels;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Moq;
 using System;
 using System.Linq;
@@ -59,38 +57,6 @@ namespace CoursesP2P.Tests.Services.Courses
             int actual = db.Courses.ToList().Count();
 
             Assert.Equal(1, actual);
-        }
-
-
-        [Fact]
-        public async Task CreateCourseWithInvalidNameReturnException()
-        {
-            var categoryDevelopment = (CategoryViewModel)Enum.Parse(typeof(CategoryViewModel), "Development");
-
-            var image = new Mock<IFormFile>().Object;
-
-            var user = new User
-            {
-                Id = "1",
-                FirstName = "Pesho",
-                LastName = "Ivanov"
-            };
-
-            var model = new CreateCourseBindingModel
-            {
-                Name = null,
-                Description = null,
-                Price = 50,
-                Skills = null,
-                Category = categoryDevelopment,
-                Image = image,
-                InstructorFullName = "InstructorName",
-                InstructorId = "1"
-            };
-
-            int actual = db.Courses.ToList().Count();
-
-            await Assert.ThrowsAsync<InvalidOperationException>(() => this.coursesService.CreateAsync(model, "1", "Pesho", "Ivanov"));
         }
     }
 }
