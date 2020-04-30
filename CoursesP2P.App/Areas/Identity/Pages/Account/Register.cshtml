@@ -88,16 +88,17 @@
                                             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                                         </div>
                                         <input type="hidden" asp-for="Input.Token" />
-                                        <div class="form-check text-left">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox">
-                                                <span class="form-check-sign"></span>
-                                                I agree to the
-                                                <a href="javascript:void(0)">terms and conditions</a>.
-                                            </label>
+                                        <div class="text-center">
+                                            <hr />
+                                            <p>
+                                                Натискайки бутона "Регистрация", вие потвърждавате, че сте запознати и съгласни с нашата
+                                                <a asp-area="" asp-controller="Home" asp-action="Privacy">политика за опазване на личните данни</a>
+                                            </p>
                                             <hr />
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Регистрация</button>
+                                        <div class="form-group text-center">
+                                            <button type="submit" class="btn btn-info">Регистрация</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

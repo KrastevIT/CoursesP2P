@@ -40,17 +40,17 @@ namespace CoursesP2P.App.Controllers
             return View(foundCourses);
         }
 
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Test()
-        {
-            var test = this.db.Courses.To<CourseViewModel>().ToList();
 
-            return View();
-        }
     }
 }
