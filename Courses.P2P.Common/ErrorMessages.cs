@@ -17,5 +17,11 @@
         public const string RequiredOldPassword = "Полето стара парола е задължително.";
 
         public const string RequiredNewPassword = "Полето нова парола е задължително.";
+
+        public const string RequiredPassword = "Полето парола е задължително.";
+
+        public const string RequiredEmail = "Полето имейл адрес е задължително.";
+
+        public const string InvalidUserNameOrPassword = "Невалидно потребителско име или парола";
     }
 }
