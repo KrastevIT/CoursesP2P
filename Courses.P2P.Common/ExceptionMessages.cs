@@ -2,10 +2,10 @@
 {
     public class ExceptionMessages
     {
-        public const string InvalidCourseId = "Invalid Course Id {0}.";
-        public const string InvalidLectureId = "Invalid Lecture  Id {0}.";
-        public const string NotFoundCourseById = "Course Id {0} does not exist";
-        public const string InvalidCastCategory = "{0} Category Not Found";
-        public const string UnauthorizedUser = "Unauthorized User {0}";
+        public const string InvalidCourseId = "Невалиден курс {0}.";
+        public const string InvalidLectureId = "Невалидна лекция {0}.";
+        public const string NotFoundCourseById = "Курс {0} не е намерен";
+        public const string InvalidCastCategory = "{0} Категорията не е намерена";
+        public const string UnauthorizedUser = "Неупълномощен потребител {0}";
     }
 }
