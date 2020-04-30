@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using CoursesP2P.Services.ReCaptcha;
+using Courses.P2P.Common;
 
 namespace CoursesP2P.App.Areas.Identity.Pages.Account
 {
@@ -50,43 +51,36 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [MinLength(2)]
+            [Required(ErrorMessage = ErrorMessages.RequiredFirsName)]
+            [MinLength(2, ErrorMessage = ErrorMessages.FirstNameLength)]
             [MaxLength(50)]
-            [Display(Name = "Firt Name")]
             public string FirstName { get; set; }
 
-            [Required]
-            [MinLength(2)]
+            [Required(ErrorMessage = ErrorMessages.RequiredLastName)]
+            [MinLength(2, ErrorMessage = ErrorMessages.LastNameLength)]
             [MaxLength(50)]
-            [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = ErrorMessages.RequiredBirthday)]
             [DataType(DataType.Date)]
             public DateTime Birthday { get; set; }
 
-            [Required]
-            [MinLength(2)]
+            [Required(ErrorMessage = ErrorMessages.RequiredCity)]
+            [MinLength(2, ErrorMessage = ErrorMessages.CityLength)]
             [MaxLength(50)]
             public string City { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = ErrorMessages.RequiredEmail)]
             [EmailAddress]
-            [Display(Name = "Email")]
-
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = ErrorMessages.RequiredPassword)]
+            [MinLength(6, ErrorMessage = ErrorMessages.PasswordLength)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-
+            [Compare("Password", ErrorMessage = ErrorMessages.PasswordNotMatch)]
             public string ConfirmPassword { get; set; }
 
             [Required]
