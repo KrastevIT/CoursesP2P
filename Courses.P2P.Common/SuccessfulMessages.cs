@@ -5,5 +5,8 @@
         public const string SuccessfulUpdateProfile = "Успешно обновихте профила.";
 
         public const string SuccessfulUpdatePassword = "Успешно обновихте паролата.";
+
+        public const string SuccessfulConfirmRegistration = "Успешно потвърдихте регистрацията си.";
+
     }
 }

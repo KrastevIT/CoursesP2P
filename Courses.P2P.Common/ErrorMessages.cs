@@ -34,5 +34,7 @@
 
         public const string InvalidUserNameOrPassword = "Невалидно потребителско име или парола.";
 
+        public const string FailedConfirmRegistration = "Неуспешно потвърждаване на регистрацията.";
+
     }
 }
