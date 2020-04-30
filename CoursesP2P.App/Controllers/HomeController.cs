@@ -1,24 +1,17 @@
-﻿using CoursesP2P.Data;
-using CoursesP2P.Models;
-using CoursesP2P.Services.Courses;
-using CoursesP2P.Services.Mapping;
+﻿using CoursesP2P.Services.Courses;
 using CoursesP2P.ViewModels;
-using CoursesP2P.ViewModels.Courses.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Linq;
 
 namespace CoursesP2P.App.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ICoursesService coursesService;
-        private readonly CoursesP2PDbContext db;
 
-        public HomeController(ICoursesService coursesService, CoursesP2PDbContext db)
+        public HomeController(ICoursesService coursesService)
         {
             this.coursesService = coursesService;
-            this.db = db;
         }
 
         public IActionResult Index()

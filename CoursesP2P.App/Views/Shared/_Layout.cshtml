@@ -1,5 +1,12 @@
 ﻿@using CoursesP2P.Models.Enum
 
+@{
+    var test = new Dictionary<string, string>();
+
+    test.Add("Development", "fas fa-laptop-code");
+    test.Add("Marketing", "fas fa-bullhorn");
+}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,13 +66,7 @@
                                 <i class="fas fa-align-justify"></i> Категории
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                @*@foreach (var category in Enum.GetNames(typeof(Category)))
-                                    {
-                                        <a class="dropdown-item" asp-area="" asp-controller="Courses" asp-action="Category" asp-route-id="@category"><i class="fas fa-laptop-code"></i> @category</a>
-                                    }*@
-
-                                <a class="dropdown-item" asp-area="" asp-controller="Courses" asp-action="Category" asp-route-id="Development"><i class="fas fa-laptop-code"></i> Development</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Courses" asp-action="Category" asp-route-id="Marketing"><i class="fas fa-bullhorn"></i> Marketing</a>
+                                <vc:drop-down-categories></vc:drop-down-categories>
                             </div>
                         </div>
                     </li>
