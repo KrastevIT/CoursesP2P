@@ -26,7 +26,7 @@ namespace CoursesP2P.App.Controllers
             {
                 return NotFound();
             }
-
+            this.ViewData["category"] = id.Replace("_", " ");
             return View(coursesByCategory);
         }
 
