@@ -1,10 +1,10 @@
 ﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
+using CoursesP2P.Models.Enum;
 using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.Tests.Configuration;
 using CoursesP2P.ViewModels.Courses.BindingModels;
-using CoursesP2P.ViewModels.Courses.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
@@ -29,7 +29,7 @@ namespace CoursesP2P.Tests.Services.Courses
         [Fact]
         public async Task CreateCourseShouldCorrectly()
         {
-            var categoryDevelopment = (CategoryViewModel)Enum.Parse(typeof(CategoryViewModel), "Development");
+            var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Програмиране");
 
             var image = new Mock<IFormFile>().Object;
 

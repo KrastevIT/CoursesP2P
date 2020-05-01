@@ -52,7 +52,7 @@
         <div class="form-group">
             <label asp-for="Category" class="col-sm-2"></label>
             <div class="col-sm-10">
-                <select asp-for="Category" asp-items="Html.GetEnumSelectList<CategoryViewModel>()" class="form-control text-body"></select>
+                <select asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()" class="form-control text-body"></select>
                 <span asp-validation-for="Category"></span>
             </div>
         </div>

@@ -1,4 +1,4 @@
-﻿using CoursesP2P.ViewModels.Courses.ViewModels;
+﻿using CoursesP2P.Models.Enum;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -32,7 +32,7 @@ namespace CoursesP2P.ViewModels.Courses.BindingModels
 
         [Required]
         [Display(Name = "Категория")]
-        public CategoryViewModel Category { get; set; }
+        public Category Category { get; set; }
 
         [Required]
         public IFormFile Image { get; set; }
