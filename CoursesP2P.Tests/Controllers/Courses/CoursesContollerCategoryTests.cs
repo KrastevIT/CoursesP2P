@@ -34,7 +34,7 @@ namespace CoursesP2P.Tests.Controllers.Courses
         }
 
         [Theory]
-        [InlineData("Development")]
+        [InlineData("Програмиране")]
         public void CategoryReturnCorrectly(string categoryName)
         {
             var isValid = this.coursesController.Category(categoryName);

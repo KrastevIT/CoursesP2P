@@ -29,12 +29,12 @@ namespace CoursesP2P.Tests.Services.Courses
         }
 
         [Theory]
-        [InlineData("Development", 2)]
-        [InlineData("Marketing", 1)]
+        [InlineData("Програмиране", 2)]
+        [InlineData("Маркетинг", 1)]
         public async Task GetCoursesByCategoryReturnCourseByCategory(string categoryName, int expected)
         {
-            var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Development");
-            var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Marketing");
+            var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Програмиране");
+            var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Маркетинг");
 
             var courses = new List<Course>
             {
@@ -67,8 +67,8 @@ namespace CoursesP2P.Tests.Services.Courses
         [InlineData("InvalidCategory")]
         public async Task GetCoursesByCategoryWithNonExistentCategoryReturnException(string categoryName)
         {
-            var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Development");
-            var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Marketing");
+            var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Програмиране");
+            var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Маркетинг");
 
             var courses = new List<Course>
             {
@@ -97,11 +97,11 @@ namespace CoursesP2P.Tests.Services.Courses
         }
 
         [Theory]
-        [InlineData("Development", 2)]
+        [InlineData("Програмиране", 2)]
         public async Task GetCoursesByCategoryReturnCoursesWithLectures(string categoryName, int expected)
         {
-            var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Development");
-            var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Marketing");
+            var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Програмиране");
+            var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Маркетинг");
 
             var lectures = new List<Lecture>
             {

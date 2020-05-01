@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
-namespace CoursesP2P.Models.Enum
+﻿namespace CoursesP2P.Models.Enum
 {
     public enum Category
     {
