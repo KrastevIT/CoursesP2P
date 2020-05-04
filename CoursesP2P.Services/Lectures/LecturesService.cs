@@ -1,7 +1,7 @@
 ﻿using Courses.P2P.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
-using CoursesP2P.Services.Cloudinary;
+using CoursesP2P.Services.AzureStorageBlob;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Lectures.BindingModels;
 using CoursesP2P.ViewModels.Lectures.ViewModels;
@@ -16,12 +16,14 @@ namespace CoursesP2P.Services.Lectures
     public class LecturesService : ILecturesService
     {
         private readonly CoursesP2PDbContext db;
-        private readonly ICloudinaryService cloudinaryService;
+        private readonly IAzureStorageBlobService azureStorageBlobService;
 
-        public LecturesService(CoursesP2PDbContext db, ICloudinaryService cloudinaryService)
+        public IAzureStorageBlobService AzureStorageBlob { get; }
+
+        public LecturesService(CoursesP2PDbContext db, IAzureStorageBlobService azureStorageBlobService)
         {
             this.db = db;
-            this.cloudinaryService = cloudinaryService;
+            this.azureStorageBlobService = azureStorageBlobService;
         }
 
         public IEnumerable<LectureViewModel> GetLecturesByCourse(int courseId, string userId, bool isAdmin)
@@ -52,7 +54,7 @@ namespace CoursesP2P.Services.Lectures
             {
                 CourseId = model.CourseId,
                 Name = model.Name,
-                Video = this.cloudinaryService.UploadVideo(model.Video)
+                Video = await this.azureStorageBlobService.UploadVideoAsync(model.Video)
             };
 
             await this.db.Lectures.AddAsync(lecture);

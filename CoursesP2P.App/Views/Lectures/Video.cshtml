@@ -3,19 +3,53 @@
     ViewData["Title"] = "Video";
 }
 
+@*<div class="container">
+        <h1 class="my-4">
+            <small>@Model.Name</small>
+        </h1>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe src="https://player.cloudinary.com/embed/?cloud_name=demo&public_id=@Model.Video&fluid=true&controls=true&muted=false&autoplay=true&autoplay_on_scroll=false&source_types%5B0%5D=mp4"
+                            width="640"
+                            height="480"
+                            allow="autoplay; fullscreen; encrypted-media;"
+                            allowfullscreen
+                            frameborder="0">
+                    </iframe>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                        Lectures
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var lecture in Model.Lectures)
+                        {
+                            <li class="list-group-item">
+                                <a asp-controller="Lectures" asp-action="Video" asp-route-id="@lecture.Id"
+                                   class="list-group-item list-group-item-action text-center"><i class="fas fa-play"></i> @lecture.Name</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+
+@* TESt *@
+
+
+<link href="//amp.azure.net/libs/amp/2.3.4/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet">
+<script src="//amp.azure.net/libs/amp/2.3.4/azuremediaplayer.min.js"></script>
+
 <div class="container">
-    <h1 class="my-4">
-        <small>@Model.Name</small>
-    </h1>
     <div class="row">
-        <div class="col-md-8">
-            <iframe src="https://player.cloudinary.com/embed/?cloud_name=demo&public_id=@Model.Video&fluid=true&controls=true&muted=false&autoplay=true&autoplay_on_scroll=false&source_types%5B0%5D=mp4"
-                    width="640"
-                    height="480"
-                    allow="autoplay; fullscreen; encrypted-media;"
-                    allowfullscreen
-                    frameborder="0">
-            </iframe>
+        <div class="col-sm">
+            <video id="azuremediaplayer" class="azuremediaplayer amp-default-skin amp-big-play-centered" tabindex="0"></video>
         </div>
         <div class="col-md-4 text-center">
             <div class="card" style="width: 18rem;">
@@ -36,3 +70,21 @@
     </div>
 </div>
 
+
+
+<script>
+    var myOptions = {
+        "nativeControlsForTouch": false,
+        controls: true,
+        autoplay: true,
+        width: "640",
+        height: "400",
+    }
+    myPlayer = amp("azuremediaplayer", myOptions);
+    myPlayer.src([
+        {
+            "src": "@Model.Video",
+            "type": "video/mp4"
+        }
+    ]);
+</script>

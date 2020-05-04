@@ -1,9 +1,11 @@
+using Azure.Storage.Blobs;
 using CloudinaryDotNet;
 using CoursesP2P.App.Areas.Identity.Services;
 using CoursesP2P.App.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Admin;
+using CoursesP2P.Services.AzureStorageBlob;
 using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.Services.Instructors;
@@ -59,8 +61,10 @@ namespace CoursesP2P.App
                          this.Configuration["Cloudinary:AppKey"],
                          this.Configuration["Cloudinary:AppSecret"]);
             Cloudinary cloudinary = new Cloudinary(account);
-
             services.AddSingleton(cloudinary);
+
+            BlobServiceClient blobServiceClient = new BlobServiceClient(this.Configuration["AzureBlobStorage:ConnectionString"]);
+            services.AddSingleton(blobServiceClient);
 
             services.Configure<FormOptions>(options =>
             {
@@ -135,6 +139,7 @@ namespace CoursesP2P.App
             services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddTransient<IReCAPTCHAService, ReCAPTCHAService>();
             services.AddTransient<IPaymentsService, PaymentsService>();
+            services.AddScoped<IAzureStorageBlobService, AzureStorageBlobService>();
         }
     }
 }

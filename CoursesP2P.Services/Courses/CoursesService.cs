@@ -2,11 +2,10 @@
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Models.Enum;
-using CoursesP2P.Services.Cloudinary;
+using CoursesP2P.Services.AzureStorageBlob;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Courses.BindingModels;
 using CoursesP2P.ViewModels.Courses.ViewModels;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +16,14 @@ namespace CoursesP2P.Services.Courses
     public class CoursesService : ICoursesService
     {
         private readonly CoursesP2PDbContext db;
-        private readonly ICloudinaryService cloudinaryService;
+        private readonly IAzureStorageBlobService azureStorageBlobService;
 
         public CoursesService(
             CoursesP2PDbContext db,
-            ICloudinaryService cloudinaryService)
+            IAzureStorageBlobService azureStorageBlobService)
         {
             this.db = db;
-            this.cloudinaryService = cloudinaryService;
+            this.azureStorageBlobService = azureStorageBlobService;
         }
 
         public IEnumerable<CourseViewModel> GetAllCourses()
@@ -56,7 +55,7 @@ namespace CoursesP2P.Services.Courses
                 Description = model.Description,
                 Price = model.Price,
                 Category = (Category)model.Category,
-                Image = await this.cloudinaryService.UploadImageAsync(model.Image),
+                Image = await this.azureStorageBlobService.UploadImageAsync(model.Image),
                 Skills = model.Skills,
                 CreatedOn = DateTime.UtcNow,
                 InstructorFullName = userFirstName + ' ' + userLastName,
