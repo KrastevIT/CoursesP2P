@@ -49,7 +49,6 @@ namespace CoursesP2P.Services.AzureStorageBlob
                 ContentType = video.ContentType
             };
 
-
             await blobClient.UploadAsync(video.OpenReadStream(), blobHttpHeaders);
 
             var path = blobClient.Uri.AbsoluteUri;
