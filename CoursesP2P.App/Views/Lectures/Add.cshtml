@@ -5,14 +5,16 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
+<h1>@this.ViewData["t"]</h1>
+
 <div class="d-flex justify-content-center">
-    <form enctype="multipart/form-data" asp-controller="Lectures" asp-action="Add" method="post" class="form-horizontal">
+    <form enctype="multipart/form-data" class="form-horizontal">
         <h1 class="text-center">Добави нова лекция</h1>
-        <input type="hidden" asp-for="@Model.CourseId" />
+        <input type="hidden" asp-for="@Model.CourseId" id="courseId" />
         <div class="form-group">
             <label class="control-label col-sm-2">Име</label>
             <div class="col-sm-10">
-                <input class="form-control" asp-for="Name" />
+                <input class="form-control" asp-for="Name" id="nameId" />
                 <span class="text-danger" asp-validation-for="Name"></span>
             </div>
         </div>
@@ -29,7 +31,7 @@
         <hr />
         <div class="form-group">
             <div class="col-sm-10 col-sm-push-2">
-                <input type="submit" value="Добави" id="loading" class="btn btn-info" />
+                <input type="submit" value="Добави" id="saveId" class="btn btn-info" />
                 <a asp-controller="Instructors" asp-action="Index" class="btn btn-danger">Назад</a>
             </div>
         </div>
@@ -43,27 +45,27 @@
 </div>
 
 @*Spinner Loading*@
-<script>
-    jQuery(function ($) {
-        $(document).ajaxSend(function () {
-            $("#overlay").fadeIn(300);
-        });
+@*<script>
+        jQuery(function ($) {
+            $(document).ajaxSend(function () {
+                $("#overlay").fadeIn(300);
+            });
 
-        $('#loading').click(function () {
-            $.ajax({
-                type: 'GET',
-                success: function (data) {
-                    console.log(data);
-                }
-            }).
-                done(function () {
-                    setTimeout(function () {
-                        $("#overlay").fadeOut(300000);
-                    }, 500000);
-                });
+            $('#loading').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    success: function (data) {
+                        console.log(data);
+                    }
+                }).
+                    done(function () {
+                        setTimeout(function () {
+                            $("#overlay").fadeOut(300000);
+                        }, 500000);
+                    });
+            });
         });
-    });
-</script>
+    </script>*@
 
 @*Add Video*@
 <script>
@@ -94,3 +96,42 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+
+@* TEST *@
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#saveId').on('click', function () {
+
+            var data = new FormData();
+
+            var files = $("#uploadFile").get(0).files;
+
+            if (files.length > 0) {
+                data.append("Video", files[0]);
+                data.append("CourseId", $("#courseId").val());
+                data.append("Name", $("#nameId").val());
+            }
+
+            var ajaxRequest = $.ajax({
+                type: "POST",
+                url: '/Lectures/Add',
+                data: data,
+                datatype: "html",
+                contentType: false,
+                processData: false,
+            });
+
+            ajaxRequest.done(function (xhr, textStatus) {
+                // Do other operation
+            });
+        });
+    });
+</script>

@@ -2,6 +2,7 @@
 using CoursesP2P.Services.Lectures;
 using CoursesP2P.ViewModels.Lectures.BindingModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -46,16 +47,20 @@ namespace CoursesP2P.App.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddLecturesBindingModel model)
+        [RequestFormLimits(MultipartBodyLengthLimit = 1073741824)]
+        [RequestSizeLimit(1073741824)]
+        public async Task Add(AddLecturesBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+           
 
-           await this.lectureService.AddAsync(model);
+            // if (!ModelState.IsValid)
+            // {
+            //     return View(model);
+            // }
 
-            return RedirectToAction("Index", "Instructors");
+            //await this.lectureService.AddAsync(model);
+
+            //return RedirectToAction("Index", "Instructors");
         }
 
         public async Task<IActionResult> Video(int id)

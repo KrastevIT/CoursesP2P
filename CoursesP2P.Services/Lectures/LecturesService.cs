@@ -59,6 +59,8 @@ namespace CoursesP2P.Services.Lectures
 
             await this.db.Lectures.AddAsync(lecture);
             await this.db.SaveChangesAsync();
+
+            var lectureId = lecture.Id;
         }
 
         public VideoViewModel GetVideoByLectureId(int lectureId, string userId, bool isAdmin)
