@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.App.Controllers
@@ -51,7 +52,8 @@ namespace CoursesP2P.App.Controllers
         [RequestSizeLimit(1073741824)]
         public async Task Add(AddLecturesBindingModel model)
         {
-           
+
+            var ifromFile = HttpContext.Request.Form.Files["Video"];
 
             // if (!ModelState.IsValid)
             // {

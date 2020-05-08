@@ -5,10 +5,8 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-<h1>@this.ViewData["t"]</h1>
-
 <div class="d-flex justify-content-center">
-    <form enctype="multipart/form-data" class="form-horizontal">
+    <div class="form-horizontal">
         <h1 class="text-center">Добави нова лекция</h1>
         <input type="hidden" asp-for="@Model.CourseId" id="courseId" />
         <div class="form-group">
@@ -23,10 +21,10 @@
             <strong>ИЛИ</strong>
             <span class="dragBox">
                 Darg and Drop video here
-                <input asp-for="@Model.Video" type="file" onChange="changeVideo(this)" ondragover="drag()" ondrop="drop()" id="uploadFile" />
+                <input asp-for="@Model.Video" type="file" id="uploadFile" />
             </span>
         </div>
-        <div id="PostVideo"></div>
+        @*<div id="PostVideo"></div>*@
 
         <hr />
         <div class="form-group">
@@ -35,7 +33,7 @@
                 <a asp-controller="Instructors" asp-action="Index" class="btn btn-danger">Назад</a>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
 <div id="overlay" style="display: none;">
@@ -68,30 +66,30 @@
     </script>*@
 
 @*Add Video*@
-<script>
-    function changeVideo(input) {
-        if (input.files && input.files[0]) {
+@*<script>
+        function changeVideo(input) {
+            if (input.files && input.files[0]) {
 
-            let div = document.getElementById("PostVideo");
+                let div = document.getElementById("PostVideo");
 
-            let videoElement = document.createElement("video");
-            videoElement.setAttribute("width", "500");
-            videoElement.setAttribute("controls", "controls");
+                let videoElement = document.createElement("video");
+                videoElement.setAttribute("width", "500");
+                videoElement.setAttribute("controls", "controls");
 
-            let sourceElement = document.createElement("source");
-            sourceElement.setAttribute("src", "#");
-            sourceElement.setAttribute("type", "video/mp4");
-            videoElement.appendChild(sourceElement);
-            div.appendChild(videoElement);
+                let sourceElement = document.createElement("source");
+                sourceElement.setAttribute("src", "#");
+                sourceElement.setAttribute("type", "video/mp4");
+                videoElement.appendChild(sourceElement);
+                div.appendChild(videoElement);
 
-            videoElement.querySelectorAll("source")[0].src = URL.createObjectURL(
-                input.files[0]
-            );
+                videoElement.querySelectorAll("source")[0].src = URL.createObjectURL(
+                    input.files[0]
+                );
 
-            videoElement.load();
+                videoElement.load();
+            }
         }
-    }
-</script>
+    </script>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
