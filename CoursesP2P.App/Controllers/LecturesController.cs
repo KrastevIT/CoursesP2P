@@ -50,15 +50,15 @@ namespace CoursesP2P.App.Controllers
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 1073741824)]
         [RequestSizeLimit(1073741824)]
-        public async Task Add(AddLecturesBindingModel model)
+        public async Task<IActionResult> Add(AddLecturesBindingModel model)
         {
 
-            var ifromFile = HttpContext.Request.Form.Files["Video"];
+            if (!ModelState.IsValid)
+            {
+                return Json("invalid");
+            }
 
-            // if (!ModelState.IsValid)
-            // {
-            //     return View(model);
-            // }
+            return Json("valid");
 
             //await this.lectureService.AddAsync(model);
 
@@ -67,7 +67,7 @@ namespace CoursesP2P.App.Controllers
 
         public async Task<IActionResult> Video(int id)
         {
-            var user =  await this.userManager.GetUserAsync(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
             var isAdmin = await this.userManager.IsInRoleAsync(user, "Administrator");
             var videoOfLecture = this.lectureService.GetVideoByLectureId(id, user.Id, isAdmin);
 

@@ -10,8 +10,10 @@ namespace CoursesP2P.ViewModels.Lectures.BindingModels
         [MaxLength(200)]
         public string Name { get; set; }
 
+        [Required]
         public int CourseId { get; set; }
 
+        [Required]
         public IFormFile Video { get; set; }
     }
 }
