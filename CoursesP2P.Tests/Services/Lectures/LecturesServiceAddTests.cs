@@ -29,7 +29,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             var cloudinary = new Mock<ICloudinaryService>().Object;
 
 
-            this.lecturesService = new LecturesService(this.db, cloudinary);
+            this.lecturesService = new LecturesService(this.db);
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace CoursesP2P.Tests.Services.Lectures
                 Video = video
             };
 
-            await this.lecturesService.AddAsync(model);
+            //await this.lecturesService.AddAsync(model);
 
             var actual = this.db.Lectures.Count();
 

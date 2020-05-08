@@ -14,6 +14,6 @@ namespace CoursesP2P.Services.Lectures
 
         AddLecturesBindingModel GetLectureBindingModelWithCourseId(int courseId, User user);
 
-        Task<bool> SaveLectureDbAsync(int courseId, string name, string videoUrl);
+        Task<bool> SaveLectureDbAsync(int courseId, string name, string asset, string videoUrl);
     }
 }

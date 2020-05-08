@@ -77,7 +77,7 @@ namespace CoursesP2P.App.Controllers
 
             await this.azureMediaService.CleanUpAsync(transform.Name, inputAsset.Name);
 
-            await this.lectureService.SaveLectureDbAsync(model.CourseId, model.Name, getStreamingUrls[2]);
+            await this.lectureService.SaveLectureDbAsync(model.CourseId, model.Name,outputAsset.Name ,getStreamingUrls[2]);
 
             return Json("valid");
         }

@@ -23,7 +23,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             var cloudinary = new Mock<ICloudinaryService>().Object;
 
-            this.lecturesService = new LecturesService(this.db, cloudinary);
+            this.lecturesService = new LecturesService(this.db);
         }
 
         [Theory]

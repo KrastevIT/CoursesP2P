@@ -12,6 +12,11 @@ namespace CoursesP2P.ViewModels.Courses.ViewModels
 
         public string Name { get; set; }
 
+        public string ShortName =>
+          this.Name?.Length > 29
+          ? this.Name.Substring(0, 29) + "..."
+          : this.Name;
+
         public decimal Price { get; set; }
 
         public Category Category { get; set; }

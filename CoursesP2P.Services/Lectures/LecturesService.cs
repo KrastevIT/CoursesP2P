@@ -87,13 +87,14 @@ namespace CoursesP2P.Services.Lectures
             return model;
         }
 
-        public async Task<bool> SaveLectureDbAsync(int courseId, string name, string videoUrl)
+        public async Task<bool> SaveLectureDbAsync(int courseId, string name,string asset ,string videoUrl)
         {
             var lecture = new Lecture
             {
                 CourseId = courseId,
                 Name = name,
-                Video = videoUrl
+                Video = videoUrl,
+                Asset = asset
             };
 
             await this.db.Lectures.AddAsync(lecture);
