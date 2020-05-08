@@ -5,8 +5,7 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-<div id="alert" role="alert">
-</div>
+<div id="alert" role="alert"></div>
 
 <div class="d-flex justify-content-center">
     <div class="form-horizontal">
@@ -30,8 +29,6 @@
         <div id="vName" class="col-sm-10">
             <label class="text-success" id="label"></label>
         </div>
-        @*<div id="PostVideo"></div>*@
-
         <hr />
         <div class="form-group">
             <div class="col-sm-10 col-sm-push-2 text-center">
@@ -65,6 +62,10 @@
                 data.append("Video", files[0]);
                 data.append("CourseId", $("#courseId").val());
                 data.append("Name", $("#nameId").val());
+
+                let div = document.getElementById("alert");
+                div.setAttribute("class", "alert alert-success");
+                div.innerHTML = `Успешно добавихте лекция ${$("#nameId").val()}.Тя ще бъде обработена и до няколко минути ще я видиде в курса си.`;
             }
 
             var ajaxRequest = $.ajax({
@@ -81,10 +82,6 @@
                 if (x === 'invalid') {
                     div.setAttribute("class", "alert alert-danger");
                     div.innerHTML = 'Неуспешно добаване на лекция!';
-                }
-                else {
-                    div.setAttribute("class", "alert alert-success");
-                    div.innerHTML = 'Успешно добавихте лекция.';
                 }
             });
         });

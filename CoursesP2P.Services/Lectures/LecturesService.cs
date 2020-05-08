@@ -5,7 +5,6 @@ using CoursesP2P.Services.AzureStorageBlob;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Lectures.BindingModels;
 using CoursesP2P.ViewModels.Lectures.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +15,12 @@ namespace CoursesP2P.Services.Lectures
     public class LecturesService : ILecturesService
     {
         private readonly CoursesP2PDbContext db;
-        private readonly IAzureStorageBlobService azureStorageBlobService;
 
         public IAzureStorageBlobService AzureStorageBlob { get; }
 
-        public LecturesService(CoursesP2PDbContext db, IAzureStorageBlobService azureStorageBlobService)
+        public LecturesService(CoursesP2PDbContext db)
         {
             this.db = db;
-            this.azureStorageBlobService = azureStorageBlobService;
         }
 
         public IEnumerable<LectureViewModel> GetLecturesByCourse(int courseId, string userId, bool isAdmin)
@@ -44,23 +41,6 @@ namespace CoursesP2P.Services.Lectures
             {
                 return models;
             }
-        }
-
-        [RequestFormLimits(MultipartBodyLengthLimit = 1073741824)]
-        [RequestSizeLimit(1073741824)]
-        public async Task AddAsync(AddLecturesBindingModel model)
-        {
-            var lecture = new Lecture
-            {
-                CourseId = model.CourseId,
-                Name = model.Name,
-                Video = await this.azureStorageBlobService.UploadVideoAsync(model.Video)
-            };
-
-            await this.db.Lectures.AddAsync(lecture);
-            await this.db.SaveChangesAsync();
-
-            var lectureId = lecture.Id;
         }
 
         public VideoViewModel GetVideoByLectureId(int lectureId, string userId, bool isAdmin)
@@ -105,6 +85,21 @@ namespace CoursesP2P.Services.Lectures
             };
 
             return model;
+        }
+
+        public async Task<bool> SaveLectureDbAsync(int courseId, string name, string videoUrl)
+        {
+            var lecture = new Lecture
+            {
+                CourseId = courseId,
+                Name = name,
+                Video = videoUrl
+            };
+
+            await this.db.Lectures.AddAsync(lecture);
+            await this.db.SaveChangesAsync();
+
+            return true;
         }
     }
 }

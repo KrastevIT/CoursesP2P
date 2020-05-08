@@ -10,10 +10,10 @@ namespace CoursesP2P.Services.Lectures
     {
         IEnumerable<LectureViewModel> GetLecturesByCourse(int courseId, string userId, bool isAdmin);
 
-        Task AddAsync(AddLecturesBindingModel model);
-
         VideoViewModel GetVideoByLectureId(int lectureId, string userId, bool isAdmin);
 
         AddLecturesBindingModel GetLectureBindingModelWithCourseId(int courseId, User user);
+
+        Task<bool> SaveLectureDbAsync(int courseId, string name, string videoUrl);
     }
 }

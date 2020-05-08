@@ -5,6 +5,7 @@ using CoursesP2P.App.Common;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Admin;
+using CoursesP2P.Services.AzureMedia;
 using CoursesP2P.Services.AzureStorageBlob;
 using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
@@ -140,6 +141,7 @@ namespace CoursesP2P.App
             services.AddTransient<IReCAPTCHAService, ReCAPTCHAService>();
             services.AddTransient<IPaymentsService, PaymentsService>();
             services.AddScoped<IAzureStorageBlobService, AzureStorageBlobService>();
+            services.AddTransient<IAzureMediaService, AzureMediaService>();
         }
     }
 }

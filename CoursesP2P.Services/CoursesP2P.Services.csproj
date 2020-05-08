@@ -8,6 +8,9 @@
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.4.1" />
     <PackageReference Include="Cloudinary.Core" Version="1.31.0" />
+    <PackageReference Include="Microsoft.Azure.Management.Media" Version="2.0.4" />
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.5" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="2.4.0" />
     <PackageReference Include="PayPal" Version="1.9.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
