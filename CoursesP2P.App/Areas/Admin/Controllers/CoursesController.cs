@@ -23,5 +23,11 @@ namespace CoursesP2P.App.Areas.Admin.Controllers
             var courses = this.adminService.GetEnrolledCoursesByUserId(id);
             return View(courses);
         }
+
+        public IActionResult Approve(int id)
+        {
+            this.adminService.Approve(id);
+            return RedirectToAction("Index", "Waiting");
+        }
     }
 }

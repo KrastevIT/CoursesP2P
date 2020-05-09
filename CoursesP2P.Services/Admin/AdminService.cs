@@ -53,5 +53,13 @@ namespace CoursesP2P.Services.Admin
 
             return models;
         }
+
+        public void Approve(int id)
+        {
+            var course = this.db.Courses.Where(x => x.Id == id).FirstOrDefault();
+            course.Status = true;
+            this.db.Courses.Update(course);
+            this.db.SaveChanges();
+        }
     }
 }

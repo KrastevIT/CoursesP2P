@@ -11,5 +11,7 @@ namespace CoursesP2P.Services.Admin
         IEnumerable<CourseViewModel> GetCreatedCoursesByUserId(string id);
 
         IEnumerable<CourseViewModel> GetEnrolledCoursesByUserId(string id);
+
+        void Approve(int id);
     }
 }
