@@ -28,6 +28,8 @@ namespace CoursesP2P.ViewModels.Courses.ViewModels
 
         public bool IsReview { get; set; }
 
+        public bool Status { get; set; }
+
         public ICollection<CourseLecturesViewModel> Lectures { get; set; }
     }
 }

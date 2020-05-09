@@ -7,7 +7,9 @@ namespace CoursesP2P.Services.Courses
 {
     public interface ICoursesService
     {
-        IEnumerable<CourseViewModel> GetAllCourses();
+        IEnumerable<CourseViewModel> GetАpprovedCourses();
+
+        IEnumerable<CourseViewModel> GetWaitingCourses();
 
         IEnumerable<CourseViewModel> GetCoursesByCategory(string id);
 

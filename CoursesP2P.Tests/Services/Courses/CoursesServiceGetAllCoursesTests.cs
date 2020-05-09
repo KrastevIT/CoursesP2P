@@ -44,7 +44,7 @@ namespace CoursesP2P.Tests.Services.Courses
             await this.db.Courses.AddRangeAsync(course);
             await this.db.SaveChangesAsync();
 
-            var getCourses = this.coursesService.GetAllCourses().ToList();
+            var getCourses = this.coursesService.GetАpprovedCourses().ToList();
 
             Assert.Equal(2, getCourses.Count);
         }
@@ -84,7 +84,7 @@ namespace CoursesP2P.Tests.Services.Courses
            await this.db.Courses.AddRangeAsync(course);
            await this.db.SaveChangesAsync();
 
-            var getCourses = this.coursesService.GetAllCourses()
+            var getCourses = this.coursesService.GetАpprovedCourses()
                 .Select(x => x.Lectures.Count).Sum();
 
             Assert.Equal(3, getCourses);

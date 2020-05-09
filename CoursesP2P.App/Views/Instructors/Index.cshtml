@@ -71,6 +71,14 @@
                                         <li class="list-group-item">@Html.DisplayFor(e => course.Category)</li>
                                         <li class="list-group-item">@course.Lectures.Count Лекции</li>
                                         <li class="list-group-item">@course.Orders Записани </li>
+                                        @if (course.Status)
+                                        {
+                                            <li class="list-group-item text-success"> Одобрен</li>
+                                        }
+                                        else
+                                        {
+                                            <li class="list-group-item text-danger"> Обработва се</li>
+                                        }
                                     </ul>
                                 </div>
                             </div>

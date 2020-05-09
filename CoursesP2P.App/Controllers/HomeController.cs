@@ -16,7 +16,7 @@ namespace CoursesP2P.App.Controllers
 
         public IActionResult Index()
         {
-            var courses = this.coursesService.GetAllCourses();
+            var courses = this.coursesService.GetАpprovedCourses();
 
             return View(courses);
         }

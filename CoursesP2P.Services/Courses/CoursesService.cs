@@ -26,9 +26,9 @@ namespace CoursesP2P.Services.Courses
             this.azureStorageBlobService = azureStorageBlobService;
         }
 
-        public IEnumerable<CourseViewModel> GetAllCourses()
+        public IEnumerable<CourseViewModel> GetАpprovedCourses()
         {
-            return this.db.Courses.To<CourseViewModel>().ToList();
+            return this.db.Courses.Where(x => x.Status).To<CourseViewModel>().ToList();
         }
 
         public IEnumerable<CourseViewModel> GetCoursesByCategory(string categoryName)
@@ -37,7 +37,7 @@ namespace CoursesP2P.Services.Courses
             if (isValidEnum)
             {
                 return this.db.Courses
-                    .Where(x => x.Category == (Category)category)
+                    .Where(x => x.Category == (Category)category && x.Status)
                     .To<CourseViewModel>()
                     .ToList();
             }
@@ -107,6 +107,14 @@ namespace CoursesP2P.Services.Courses
               .Contains(searchTerm.ToLower()))
               .To<CourseViewModel>()
               .ToList();
+        }
+
+        public IEnumerable<CourseViewModel> GetWaitingCourses()
+        {
+            return this.db.Courses
+                .Where(x => x.Status == false)
+                .To<CourseViewModel>()
+                .ToList();
         }
     }
 }
