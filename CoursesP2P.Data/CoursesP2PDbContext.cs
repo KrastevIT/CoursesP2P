@@ -25,6 +25,8 @@ namespace CoursesP2P.Data
 
         public DbSet<Rating> Ratings { get; set; }
 
+        public DbSet<Review> Reviews { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<StudentCourse>(studentCourse =>
@@ -66,6 +68,11 @@ namespace CoursesP2P.Data
                 .WithMany(i => i.PaymentsToInstructor)
                 .HasForeignKey(pi => pi.InstructorId);
             });
+
+            builder.Entity<Course>()
+                .HasOne(c => c.Review)
+                .WithOne(r => r.Course)
+                .HasForeignKey<Review>(r => r.CourseId);
 
             base.OnModelCreating(builder);
         }

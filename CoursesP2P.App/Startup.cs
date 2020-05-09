@@ -14,6 +14,7 @@ using CoursesP2P.Services.Lectures;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.Services.Payments;
 using CoursesP2P.Services.ReCaptcha;
+using CoursesP2P.Services.Reviews;
 using CoursesP2P.Services.Students;
 using CoursesP2P.ViewModels;
 using CoursesP2P.ViewModels.PayPal;
@@ -138,6 +139,7 @@ namespace CoursesP2P.App
             services.AddScoped<IInstructorsService, InstructorsService>();
             services.AddScoped<ILecturesService, LecturesService>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
+            services.AddScoped<IReviewService, ReviewService>();
             services.AddTransient<IReCAPTCHAService, ReCAPTCHAService>();
             services.AddTransient<IPaymentsService, PaymentsService>();
             services.AddScoped<IAzureStorageBlobService, AzureStorageBlobService>();

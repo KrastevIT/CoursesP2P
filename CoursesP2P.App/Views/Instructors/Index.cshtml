@@ -75,7 +75,15 @@
                                 </div>
                             </div>
                             <div class="card-footer text-center">
-                                <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-info btn-sm">Добави лекция</a>
+                                @if (course.Lectures.Count > 0)
+                                {
+                                    <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-info btn-sm">Добави лекция</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Reviews" asp-action="Index" asp-route-id="@course.Id" class="btn btn-info btn-sm">Добави ревю</a>
+                                }
+
                                 <a asp-controller="Instructors" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-warning btn-sm">Редактирай</a>
                             </div>
 

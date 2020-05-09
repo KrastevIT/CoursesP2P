@@ -16,6 +16,8 @@ namespace CoursesP2P.ViewModels.Courses.ViewModels
 
         public decimal Price { get; set; }
 
+        public string Video { get; set; }
+
         [IgnoreMap]
         public ICollection<string> Skills { get; set; }
         [IgnoreMap]
@@ -23,14 +25,8 @@ namespace CoursesP2P.ViewModels.Courses.ViewModels
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            //configuration.CreateMap<Course, CourseDetailsViewModel>()
-            //    .ForMember(x => x.Skills, y =>
-            //    {
-            //        y.MapFrom(c => c.Skills.Split("*", System.StringSplitOptions.None)
-            //        .Select(x => x.Trim())
-            //        .Where(x => x != string.Empty)
-            //        .ToList());
-            //    });
+            //configuration.CreateMap<Review, CourseDetailsViewModel>()
+            //    .ForMember(x => x.Video, y => y.MapFrom(x => x.VideoUrl));
 
         }
     }

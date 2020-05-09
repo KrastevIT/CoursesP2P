@@ -92,6 +92,11 @@ namespace CoursesP2P.Services.Courses
                 .Select(x => x.Name)
                 .ToList();
 
+            model.Video = this.db.Reviews
+                .Where(x => x.CourseId == id)
+                .Select(x => x.VideoUrl)
+                .FirstOrDefault();
+
             return model;
         }
 

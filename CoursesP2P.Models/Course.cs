@@ -44,6 +44,8 @@ namespace CoursesP2P.Models
 
         public User Instructor { get; set; }
 
+        public Review Review { get; set; }
+
         public ICollection<StudentCourse> Students { get; set; } = new HashSet<StudentCourse>();
 
         public ICollection<Lecture> Lectures { get; set; } = new HashSet<Lecture>();

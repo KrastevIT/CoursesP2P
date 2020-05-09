@@ -1,4 +1,4 @@
-﻿@model AddLecturesBindingModel
+﻿@model ReviewBindingModel
 @{
     ViewData["Title"] = "Add";
 }
@@ -9,15 +9,8 @@
 
 <div class="d-flex justify-content-center">
     <div class="form-horizontal">
-        <h4 class="text-center">Добави нова лекция</h4>
+        <h4 class="text-center">Добави видео ревю</h4>
         <input type="hidden" asp-for="@Model.CourseId" id="courseId" />
-        <div class="form-group">
-            <label class="control-label col-sm-2">Име</label>
-            <div class="col-sm-10">
-                <input class="form-control" asp-for="Name" id="nameId" />
-                <span class="text-danger" asp-validation-for="Name"></span>
-            </div>
-        </div>
         <div class="uploadOuter">
             <label for="uploadFile" class="btn btn-primary">Качи видео до 1 ГБ</label>
             <strong>ИЛИ</strong>
@@ -49,6 +42,7 @@
     });
 </script>
 
+
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -61,16 +55,15 @@
             if (files.length > 0) {
                 data.append("Video", files[0]);
                 data.append("CourseId", $("#courseId").val());
-                data.append("Name", $("#nameId").val());
 
                 let div = document.getElementById("alert");
                 div.setAttribute("class", "alert alert-success");
-                div.innerHTML = `Успешно добавихте лекция ${$("#nameId").val()}.Тя ще бъде обработена и до няколко минути ще я видиде в курса си.`;
+                div.innerHTML = `Успешно добавихте ревю.То ще бъде обработено и до няколко минути ще го видите в курса си.`;
             }
 
             var ajaxRequest = $.ajax({
                 type: "POST",
-                url: '/Lectures/Add',
+                url: '/Reviews/Add',
                 data: data,
                 datatype: "html",
                 contentType: false,
@@ -81,7 +74,7 @@
                 let div = document.getElementById("alert");
                 if (x === 'invalid') {
                     div.setAttribute("class", "alert alert-danger");
-                    div.innerHTML = 'Неуспешно добаване на лекция!';
+                    div.innerHTML = 'Неуспешно добаване на ревю!';
                 }
             });
         });
