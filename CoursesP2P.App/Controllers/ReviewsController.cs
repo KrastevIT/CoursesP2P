@@ -1,7 +1,9 @@
-﻿using CoursesP2P.Services.AzureMedia;
+﻿using CoursesP2P.Models;
+using CoursesP2P.Services.AzureMedia;
 using CoursesP2P.Services.Reviews;
 using CoursesP2P.ViewModels.Reviews;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -11,20 +13,27 @@ namespace CoursesP2P.App.Controllers
     {
         private readonly IAzureMediaService azureMediaService;
         private readonly IReviewService reviewService;
+        private readonly UserManager<User> userManager;
 
-        public ReviewsController(IAzureMediaService azureMediaService, IReviewService reviewService)
+        public ReviewsController(
+            IAzureMediaService azureMediaService,
+            IReviewService reviewService,
+            UserManager<User> userManager)
         {
             this.azureMediaService = azureMediaService;
             this.reviewService = reviewService;
+            this.userManager = userManager;
         }
 
         [Authorize]
         public IActionResult Index(int id)
         {
-            var model = new ReviewBindingModel
+            var userId = this.userManager.GetUserId(this.User);
+            var model = this.reviewService.GetReviewBindingModelWithCourseId(id, userId);
+            if (model == null)
             {
-                CourseId = id
-            };
+                return NotFound();
+            }
             return View(model);
         }
 
@@ -33,7 +42,9 @@ namespace CoursesP2P.App.Controllers
         [RequestSizeLimit(1073741824)]
         public async Task<IActionResult> Add(ReviewBindingModel model)
         {
-            if (!ModelState.IsValid)
+            var userId = this.userManager.GetUserId(this.User);
+            var modelValid = this.reviewService.GetReviewBindingModelWithCourseId(model.CourseId, userId);
+            if (!ModelState.IsValid || modelValid == null)
             {
                 return Json("invalid");
             }

@@ -1,4 +1,5 @@
-﻿using CoursesP2P.Models;
+﻿using AutoMapper;
+using CoursesP2P.Models;
 using CoursesP2P.Models.Enum;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Lectures.ViewModels;
@@ -24,6 +25,8 @@ namespace CoursesP2P.ViewModels.Courses.ViewModels
         public string Image { get; set; }
 
         public int Orders { get; set; }
+
+        public bool IsReview { get; set; }
 
         public ICollection<CourseLecturesViewModel> Lectures { get; set; }
     }

@@ -39,11 +39,10 @@ namespace CoursesP2P.App.Controllers
             return View(lectures);
         }
 
-        public async Task<IActionResult> Add(int id)
+        public IActionResult Add(int id)
         {
-            var instructor = await this.userManager.GetUserAsync(this.User);
-
-            var model = this.lectureService.GetLectureBindingModelWithCourseId(id, instructor);
+            var userId = this.userManager.GetUserId(this.User);
+            var model = this.lectureService.GetLectureBindingModelWithCourseId(id, userId);
             if (model == null)
             {
                 return NotFound();
@@ -56,7 +55,9 @@ namespace CoursesP2P.App.Controllers
         [RequestSizeLimit(1073741824)]
         public async Task<IActionResult> Add(AddLecturesBindingModel model)
         {
-            if (!ModelState.IsValid)
+            var userId = this.userManager.GetUserId(this.User);
+            var modelValid = this.lectureService.GetLectureBindingModelWithCourseId(model.CourseId, userId);
+            if (!ModelState.IsValid || modelValid == null)
             {
                 return Json("invalid");
             }
@@ -77,7 +78,7 @@ namespace CoursesP2P.App.Controllers
 
             await this.azureMediaService.CleanUpAsync(transform.Name, inputAsset.Name);
 
-            await this.lectureService.SaveLectureDbAsync(model.CourseId, model.Name,outputAsset.Name ,getStreamingUrls[2]);
+            await this.lectureService.SaveLectureDbAsync(model.CourseId, model.Name, outputAsset.Name, getStreamingUrls[2]);
 
             return Json("valid");
         }

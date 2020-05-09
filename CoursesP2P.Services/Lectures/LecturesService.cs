@@ -72,9 +72,9 @@ namespace CoursesP2P.Services.Lectures
             }
         }
 
-        public AddLecturesBindingModel GetLectureBindingModelWithCourseId(int courseId, User user)
+        public AddLecturesBindingModel GetLectureBindingModelWithCourseId(int courseId, string userId)
         {
-            var isValid = this.db.Courses.Where(x => x.Id == courseId).FirstOrDefault()?.InstructorId == user.Id;
+            var isValid = this.db.Courses.Where(x => x.Id == courseId).FirstOrDefault()?.InstructorId == userId;
             if (!isValid)
             {
                 return null;
@@ -87,7 +87,7 @@ namespace CoursesP2P.Services.Lectures
             return model;
         }
 
-        public async Task<bool> SaveLectureDbAsync(int courseId, string name,string asset ,string videoUrl)
+        public async Task<bool> SaveLectureDbAsync(int courseId, string name, string asset, string videoUrl)
         {
             var lecture = new Lecture
             {

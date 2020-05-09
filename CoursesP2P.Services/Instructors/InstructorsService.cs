@@ -21,10 +21,17 @@ namespace CoursesP2P.Services.Instructors
 
         public IEnumerable<CourseInstructorViewModel> GetCreatedCourses(string userId)
         {
-            return this.db.Courses
+            var models = this.db.Courses
                 .Where(x => x.InstructorId == userId)
                 .To<CourseInstructorViewModel>()
                 .ToList();
+
+            foreach (var model in models)
+            {
+                model.IsReview = this.db.Reviews.Select(x => x.CourseId == model.Id).First();
+            }
+
+            return models;
         }
 
         public async Task EditCourseAsync(CourseEditViewModel model)
