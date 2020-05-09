@@ -26,11 +26,19 @@ namespace CoursesP2P.Services.Lectures
         public IEnumerable<LectureViewModel> GetLecturesByCourse(int courseId, string userId, bool isAdmin)
         {
             var models = this.db.StudentCourses
-                .Where(x => x.CourseId == courseId && x.StudentId == userId
-                || isAdmin && x.CourseId == courseId)
+                .Where(x => x.CourseId == courseId && x.StudentId == userId)
                 .SelectMany(x => x.Course.Lectures)
                 .To<LectureViewModel>()
                 .ToList();
+
+            if (isAdmin)
+            {
+                models = this.db.Courses
+               .Where(x => x.Id == courseId)
+               .SelectMany(x => x.Lectures)
+               .To<LectureViewModel>()
+               .ToList();
+            }
 
             if (models.Count == 0)
             {
@@ -46,18 +54,13 @@ namespace CoursesP2P.Services.Lectures
         public VideoViewModel GetVideoByLectureId(int lectureId, string userId, bool isAdmin)
         {
             var courseId = this.db.StudentCourses
-                .Where(x => x.StudentId == userId || isAdmin)
+                .Where(x => x.StudentId == userId)
                 .SelectMany(x => x.Course.Lectures)
                 .Where(x => x.Id == lectureId)
                 .Select(x => x.Course.Id)
                 .FirstOrDefault();
 
-            if (courseId == 0)
-            {
-                throw new InvalidOperationException(
-                    string.Format(ExceptionMessages.UnauthorizedUser, userId));
-            }
-            else
+            if (courseId != 0 || isAdmin)
             {
                 var model = this.db.Lectures
                 .Where(x => x.Id == lectureId)
@@ -69,6 +72,11 @@ namespace CoursesP2P.Services.Lectures
                     .ToList();
 
                 return model;
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                  string.Format(ExceptionMessages.UnauthorizedUser, userId));
             }
         }
 

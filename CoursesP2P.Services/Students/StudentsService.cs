@@ -42,6 +42,7 @@ namespace CoursesP2P.Services.Students
             };
 
             var instructor = this.db.Users.FirstOrDefault(x => x.Id == course.InstructorId);
+            instructor.Profit += course.Price * THIRTY_PERCENT;
             AddPaymentToInstructor(instructor, course.Price);
 
             course.Orders++;

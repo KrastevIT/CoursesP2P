@@ -45,7 +45,7 @@ namespace CoursesP2P.Tests.Services.Lectures
            await this.db.Courses.AddAsync(course);
            await this.db.SaveChangesAsync();
 
-            var actual = this.lecturesService.GetLectureBindingModelWithCourseId(1, user);
+            var actual = this.lecturesService.GetLectureBindingModelWithCourseId(1, "1");
 
             Assert.Equal(1, actual.CourseId);
         }

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoursesP2P.Models
 {
@@ -36,6 +35,8 @@ namespace CoursesP2P.Models
         public int Orders { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public bool Status { get; set; }
 
         [Required]
         public string InstructorFullName { get; set; }
