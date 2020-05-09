@@ -21,7 +21,8 @@ namespace CoursesP2P.Services.Reviews
         public ReviewBindingModel GetReviewBindingModelWithCourseId(int courseId, string userId)
         {
             var isValid = this.db.Courses.Where(x => x.Id == courseId).FirstOrDefault()?.InstructorId == userId;
-            if (!isValid)
+            var isReview = this.db.Reviews.Select(x => x.CourseId == courseId).First();
+            if (!isValid || isReview)
             {
                 return null;
             }

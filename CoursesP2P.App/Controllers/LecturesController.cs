@@ -3,10 +3,8 @@ using CoursesP2P.Services.AzureMedia;
 using CoursesP2P.Services.Lectures;
 using CoursesP2P.ViewModels.Lectures.BindingModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.App.Controllers
@@ -70,7 +68,7 @@ namespace CoursesP2P.App.Controllers
 
             var job = await this.azureMediaService.SubmitJobAsync(inputAsset.Name, outputAsset.Name, transform.Name);
 
-            var waitForJobToFinish = await this.azureMediaService.WaitForJobToFinishAsync(transform.Name, job.Name);
+            await this.azureMediaService.WaitForJobToFinishAsync(transform.Name, job.Name);
 
             var streamingLocator = await this.azureMediaService.CreateStreamingLocatorAsync(outputAsset.Name);
 
