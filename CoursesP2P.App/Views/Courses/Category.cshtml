@@ -21,15 +21,14 @@
         </div>
     }
 
-    <div class="row">
-        @foreach (var course in Model)
-        {
-            <div class="col-md-4">
-                <figure class="card card-coin card-plain">
+<div class="row">
+    @foreach (var course in Model)
+    {
+        <div class="col-md-4">
+            <figure class="card card-coin card-plain">
+                <a asp-area="" asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">
                     <div class="img-wrap">
-                        <a asp-area="" asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">
-                            <img src="@course.Image" style="width:348px;height:220px;">
-                        </a>
+                        <img src="@course.Image" style="width:348px;height:220px;">
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -42,11 +41,10 @@
                                 {
                                     <h4 class="text-uppercase">@course.Name</h4>
                                 }
-                                <span>от @course.InstructorFullName</span>
+                                <h5>от @course.InstructorFullName</h5>
                                 <hr class="line-primary">
                             </div>
                         </div>
-
                         <div class="row">
                             <ul class="list-group">
                                 <li class="list-group-item">@Html.DisplayFor(e => course.Category)</li>
@@ -56,11 +54,12 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="card-footer text-left">
-                        <vc:five-stars course-id="@course.Id"></vc:five-stars>
-                    </div>
-                </figure>
-            </div>
-        }
-    </div>
+                </a>
+                <div class="card-footer text-left">
+                    <vc:five-stars course-id="@course.Id"></vc:five-stars>
+                </div>
+            </figure>
+        </div>
+    }
+</div>
 </div>
