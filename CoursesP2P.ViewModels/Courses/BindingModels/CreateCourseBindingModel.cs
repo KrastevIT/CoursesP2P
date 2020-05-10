@@ -1,5 +1,7 @@
-﻿using CoursesP2P.Models.Enum;
+﻿using Courses.P2P.Common.Attributes;
+using CoursesP2P.Models.Enum;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -35,6 +37,8 @@ namespace CoursesP2P.ViewModels.Courses.BindingModels
         public Category Category { get; set; }
 
         [Required]
+        [Image(ErrorMessage = "Невалиден формат")]
+        [BytesSizeLimit(22000000, ErrorMessage = "Изображението е твърде голямо")]
         public IFormFile Image { get; set; }
 
         public DateTime CreatedOn { get; set; }
