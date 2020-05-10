@@ -33,13 +33,6 @@ namespace CoursesP2P.Tests.Services.Courses
 
             var image = new Mock<IFormFile>().Object;
 
-            var user = new User
-            {
-                Id = "1",
-                FirstName = "Pesho",
-                LastName = "Ivanov"
-            };
-
             var model = new CreateCourseBindingModel
             {
                 Name = "Kris",
@@ -52,7 +45,7 @@ namespace CoursesP2P.Tests.Services.Courses
                 InstructorId = "1"
             };
 
-            await this.coursesService.CreateAsync(model, "1", "Pesho", "Ivanov");
+            await this.coursesService.CreateAsync(model, "1", "Pesho", "Ivanov", "imageUrl");
 
             int actual = db.Courses.ToList().Count();
 

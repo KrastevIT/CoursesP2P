@@ -1,13 +1,12 @@
-﻿using AutoMapper;
-using CoursesP2P.Data;
+﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
-using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
+using CoursesP2P.Services.Mapping;
 using CoursesP2P.Tests.Configuration;
-using Microsoft.AspNetCore.Identity;
-using Moq;
+using CoursesP2P.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -21,8 +20,7 @@ namespace CoursesP2P.Tests.Services.Courses
         public CoursesServiceGetAllCoursesTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            var cloudinary = new Mock<ICloudinaryService>().Object;
-
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
             this.coursesService = new CoursesService(this.db, null);
         }
 
@@ -33,11 +31,13 @@ namespace CoursesP2P.Tests.Services.Courses
             {
                 new Course
                 {
-                    Id = 1
+                    Id = 1,
+                    Status = true
                 },
                 new Course
                 {
-                    Id = 2
+                    Id = 2,
+                    Status = true
                 }
             };
 
@@ -73,16 +73,18 @@ namespace CoursesP2P.Tests.Services.Courses
                 new Course
                 {
                     Id = 1,
-                    Lectures = lectures
+                    Lectures = lectures,
+                    Status = true
                 },
                 new Course
                 {
-                    Id = 2
+                    Id = 2,
+                    Status = true
                 }
             };
 
-           await this.db.Courses.AddRangeAsync(course);
-           await this.db.SaveChangesAsync();
+            await this.db.Courses.AddRangeAsync(course);
+            await this.db.SaveChangesAsync();
 
             var getCourses = this.coursesService.GetАpprovedCourses()
                 .Select(x => x.Lectures.Count).Sum();

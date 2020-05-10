@@ -47,7 +47,7 @@ namespace CoursesP2P.Services.Courses
 
         }
 
-        public async Task CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName)
+        public async Task CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName, string imageUrl)
         {
             var course = new Course
             {
@@ -55,7 +55,7 @@ namespace CoursesP2P.Services.Courses
                 Description = model.Description,
                 Price = model.Price,
                 Category = model.Category,
-                Image = await this.azureStorageBlobService.UploadImageAsync(model.Image),
+                Image = imageUrl,
                 Skills = model.Skills,
                 CreatedOn = DateTime.UtcNow,
                 InstructorFullName = userFirstName + ' ' + userLastName,

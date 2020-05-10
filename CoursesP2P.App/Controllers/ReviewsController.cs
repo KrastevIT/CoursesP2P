@@ -11,12 +11,12 @@ namespace CoursesP2P.App.Controllers
 {
     public class ReviewsController : Controller
     {
-        private readonly IAzureMediaService azureMediaService;
+        private readonly IAzureStorageBlob azureMediaService;
         private readonly IReviewService reviewService;
         private readonly UserManager<User> userManager;
 
         public ReviewsController(
-            IAzureMediaService azureMediaService,
+            IAzureStorageBlob azureMediaService,
             IReviewService reviewService,
             UserManager<User> userManager)
         {

@@ -40,7 +40,7 @@ namespace CoursesP2P.Tests.Services.Lectures
             var course = new Course
             {
                 Id = 1,
-                InstructorId = "100"
+                InstructorId = "1"
             };
            await this.db.Courses.AddAsync(course);
            await this.db.SaveChangesAsync();

@@ -1,9 +1,12 @@
 ﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Instructors;
+using CoursesP2P.Services.Mapping;
 using CoursesP2P.Tests.Configuration;
+using CoursesP2P.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -16,6 +19,7 @@ namespace CoursesP2P.Tests.Services.Instructors
 
         public InstructorsServiceGetCreatedCoursesTests()
         {
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             this.instructorsService = new InstructorsService(db);
         }
@@ -28,10 +32,12 @@ namespace CoursesP2P.Tests.Services.Instructors
                 new Course
                 {
                     Id = 1,
+                     Status = true
                 },
                 new Course
                 {
-                    Id = 2
+                    Id = 2,
+                     Status = true
                 }
             };
 

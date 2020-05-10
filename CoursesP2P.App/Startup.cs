@@ -143,7 +143,7 @@ namespace CoursesP2P.App
             services.AddTransient<IReCAPTCHAService, ReCAPTCHAService>();
             services.AddTransient<IPaymentsService, PaymentsService>();
             services.AddScoped<IAzureStorageBlobService, AzureStorageBlobService>();
-            services.AddTransient<IAzureMediaService, AzureMediaService>();
+            services.AddTransient<IAzureStorageBlob, AzureMediaService>();
         }
     }
 }

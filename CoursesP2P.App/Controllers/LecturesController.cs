@@ -13,12 +13,12 @@ namespace CoursesP2P.App.Controllers
     public class LecturesController : Controller
     {
         private readonly ILecturesService lectureService;
-        private readonly IAzureMediaService azureMediaService;
+        private readonly IAzureStorageBlob azureMediaService;
         private readonly UserManager<User> userManager;
 
         public LecturesController(
             ILecturesService lectureService,
-            IAzureMediaService azureMediaService,
+            IAzureStorageBlob azureMediaService,
             UserManager<User> userManager)
         {
             this.lectureService = lectureService;

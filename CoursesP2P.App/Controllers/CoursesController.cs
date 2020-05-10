@@ -1,4 +1,5 @@
 ﻿using CoursesP2P.Models;
+using CoursesP2P.Services.AzureStorageBlob;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.ViewModels.Courses.BindingModels;
 using Microsoft.AspNetCore.Authorization;
@@ -12,11 +13,16 @@ namespace CoursesP2P.App.Controllers
     {
         private readonly ICoursesService coursesService;
         private readonly UserManager<User> userManager;
+        private readonly IAzureStorageBlobService azureStorageBlobService;
 
-        public CoursesController(ICoursesService coursesService, UserManager<User> userManager)
+        public CoursesController(
+            ICoursesService coursesService,
+            UserManager<User> userManager,
+            IAzureStorageBlobService azureStorageBlobService)
         {
             this.coursesService = coursesService;
             this.userManager = userManager;
+            this.azureStorageBlobService = azureStorageBlobService;
         }
 
         public IActionResult Category(string id)
@@ -46,7 +52,8 @@ namespace CoursesP2P.App.Controllers
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.coursesService.CreateAsync(model, user.Id, user.FirstName, user.LastName);
+            var imageUrl = await this.azureStorageBlobService.UploadImageAsync(model.Image);
+            await this.coursesService.CreateAsync(model, user.Id, user.FirstName, user.LastName, imageUrl);
 
             return RedirectToAction("Index", "Instructors");
         }

@@ -13,7 +13,7 @@ namespace CoursesP2P.Services.Courses
 
         IEnumerable<CourseViewModel> GetCoursesByCategory(string id);
 
-        Task CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName);
+        Task CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName, string imageUrl);
 
         CourseDetailsViewModel Details(int id);
 

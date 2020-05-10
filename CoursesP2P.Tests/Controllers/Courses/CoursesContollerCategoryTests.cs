@@ -30,7 +30,7 @@ namespace CoursesP2P.Tests.Controllers.Courses
             var cloudinary = new Mock<ICloudinaryService>().Object;
 
             this.coursesService = new CoursesService(db, null);
-            this.coursesController = new CoursesController(coursesService, userManager);
+            this.coursesController = new CoursesController(coursesService, userManager, null);
         }
 
         [Theory]

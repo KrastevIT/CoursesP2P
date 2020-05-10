@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.AzureMedia
 {
-    public interface IAzureMediaService
+    public interface IAzureStorageBlob
     {
         Task<Asset> CreateInputAssetAsync(IFormFile video);
 

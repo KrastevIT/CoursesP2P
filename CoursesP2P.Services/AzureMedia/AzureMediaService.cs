@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.AzureMedia
 {
-    public class AzureMediaService : IAzureMediaService
+    public class AzureMediaService : IAzureStorageBlob
     {
         //Качва файла в контейнера в хранилището, използвайки URL адреса на SAS.
         public async Task<Asset> CreateInputAssetAsync(IFormFile video)

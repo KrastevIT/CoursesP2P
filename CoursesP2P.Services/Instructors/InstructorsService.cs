@@ -28,7 +28,7 @@ namespace CoursesP2P.Services.Instructors
 
             foreach (var model in models)
             {
-                model.IsReview = this.db.Reviews.Select(x => x.CourseId == model.Id).First();
+                model.IsReview = this.db.Reviews.Select(x => x.CourseId == model.Id).FirstOrDefault();
             }
 
             return models;
