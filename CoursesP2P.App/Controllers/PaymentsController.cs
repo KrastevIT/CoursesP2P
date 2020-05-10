@@ -1,11 +1,13 @@
 ﻿using CoursesP2P.Models;
 using CoursesP2P.Services.Payments;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.App.Controllers
 {
+    [Authorize]
     public class PaymentsController : Controller
     {
         private readonly IPaymentsService paymentsService;
