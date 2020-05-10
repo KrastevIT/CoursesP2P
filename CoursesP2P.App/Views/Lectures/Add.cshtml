@@ -57,8 +57,9 @@
             var data = new FormData();
 
             var files = $("#uploadFile").get(0).files;
+            var name = $("#nameId").val();
 
-            if (files.length > 0) {
+            if (files.length > 0 && name.length > 0) {
                 data.append("Video", files[0]);
                 data.append("CourseId", $("#courseId").val());
                 data.append("Name", $("#nameId").val());
@@ -66,24 +67,34 @@
                 let div = document.getElementById("alert");
                 div.setAttribute("class", "alert alert-success");
                 div.innerHTML = `Успешно добавихте лекция ${$("#nameId").val()}.Тя ще бъде обработена и до няколко минути ще я видиде в курса си.`;
+                $("#nameId").val("");
+                $("#uploadFile").val("");
+                $("#label").text("");
+
+                var ajaxRequest = $.ajax({
+                    type: "POST",
+                    url: '/Lectures/Add',
+                    data: data,
+                    datatype: "html",
+                    contentType: false,
+                    processData: false,
+                });
+
+                ajaxRequest.done(function (x) {
+                    let div = document.getElementById("alert");
+                    if (x === 'invalid') {
+                        div.setAttribute("class", "alert alert-danger");
+                        div.innerHTML = 'Неуспешно добаване на лекция!';
+                    }
+                });
+            }
+            else {
+                let div = document.getElementById("alert");
+                div.setAttribute("class", "alert alert-danger");
+                div.innerHTML = 'Неуспешно добаване на лекция.';
             }
 
-            var ajaxRequest = $.ajax({
-                type: "POST",
-                url: '/Lectures/Add',
-                data: data,
-                datatype: "html",
-                contentType: false,
-                processData: false,
-            });
 
-            ajaxRequest.done(function (x) {
-                let div = document.getElementById("alert");
-                if (x === 'invalid') {
-                    div.setAttribute("class", "alert alert-danger");
-                    div.innerHTML = 'Неуспешно добаване на лекция!';
-                }
-            });
         });
     });
 </script>
