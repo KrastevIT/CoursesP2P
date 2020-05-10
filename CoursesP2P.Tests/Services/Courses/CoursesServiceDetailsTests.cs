@@ -26,9 +26,8 @@ namespace CoursesP2P.Tests.Services.Courses
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            var cloudinary = new Mock<ICloudinaryService>().Object;
 
-            this.coursesService = new CoursesService(this.db, null);
+            this.coursesService = new CoursesService(this.db);
         }
 
         [Theory]

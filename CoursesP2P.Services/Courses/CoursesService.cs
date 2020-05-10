@@ -16,14 +16,10 @@ namespace CoursesP2P.Services.Courses
     public class CoursesService : ICoursesService
     {
         private readonly CoursesP2PDbContext db;
-        private readonly IAzureStorageBlobService azureStorageBlobService;
 
-        public CoursesService(
-            CoursesP2PDbContext db,
-            IAzureStorageBlobService azureStorageBlobService)
+        public CoursesService(CoursesP2PDbContext db)
         {
             this.db = db;
-            this.azureStorageBlobService = azureStorageBlobService;
         }
 
         public IEnumerable<CourseViewModel> GetАpprovedCourses()

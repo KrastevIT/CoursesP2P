@@ -22,8 +22,7 @@ namespace CoursesP2P.Tests.Services.Courses
         public CoursesServiceCreateAsyncTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            var cloudinary = new Mock<ICloudinaryService>().Object;
-            this.coursesService = new CoursesService(this.db, null);
+            this.coursesService = new CoursesService(this.db);
         }
 
         [Fact]

@@ -27,9 +27,8 @@ namespace CoursesP2P.Tests.Controllers.Courses
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             this.userManager = UserManagerMock.UserManagerMockTest();
-            var cloudinary = new Mock<ICloudinaryService>().Object;
 
-            this.coursesService = new CoursesService(db, null);
+            this.coursesService = new CoursesService(db);
             this.coursesController = new CoursesController(coursesService, userManager, null);
         }
 

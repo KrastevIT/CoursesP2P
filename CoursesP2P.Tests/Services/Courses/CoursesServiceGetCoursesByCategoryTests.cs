@@ -25,9 +25,9 @@ namespace CoursesP2P.Tests.Services.Courses
 
         public CoursesServiceGetCoursesByCategoryTests()
         {
-            this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
-            this.coursesService = new CoursesService(this.db, null);
+            this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
+            this.coursesService = new CoursesService(this.db);
         }
 
         [Theory]
