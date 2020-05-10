@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Courses.P2P.Common.Attributes;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace CoursesP2P.ViewModels.Reviews
@@ -9,6 +10,8 @@ namespace CoursesP2P.ViewModels.Reviews
         public int CourseId { get; set; }
 
         [Required]
+        [Video(ErrorMessage = "Невалиден формат")]
+        [BytesSizeLimit(1200000000)]
         public IFormFile Video { get; set; }
     }
 }

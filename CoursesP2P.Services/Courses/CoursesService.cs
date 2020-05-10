@@ -54,7 +54,7 @@ namespace CoursesP2P.Services.Courses
                 Name = model.Name,
                 Description = model.Description,
                 Price = model.Price,
-                Category = (Category)model.Category,
+                Category = model.Category,
                 Image = await this.azureStorageBlobService.UploadImageAsync(model.Image),
                 Skills = model.Skills,
                 CreatedOn = DateTime.UtcNow,

@@ -41,6 +41,7 @@ namespace CoursesP2P.App.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(CourseEditViewModel model)
         {
+            //TODO MODEL STATE VALID
             await this.instructorService.EditCourseAsync(model);
 
             return RedirectToAction("Index", "Instructors");

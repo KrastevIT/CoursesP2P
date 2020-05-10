@@ -38,8 +38,8 @@ namespace CoursesP2P.App.Controllers
         }
 
         [HttpPost]
-        [RequestFormLimits(MultipartBodyLengthLimit = 1073741824)]
-        [RequestSizeLimit(1073741824)]
+        [RequestFormLimits(MultipartBodyLengthLimit = 1200000000)]
+        [RequestSizeLimit(1200000000)]
         public async Task<IActionResult> Add(ReviewBindingModel model)
         {
             var userId = this.userManager.GetUserId(this.User);

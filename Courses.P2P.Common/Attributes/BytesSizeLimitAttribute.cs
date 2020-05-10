@@ -12,8 +12,8 @@ namespace Courses.P2P.Common.Attributes
 
         public override bool IsValid(object value)
         {
-            var image = (IFormFile)value;
-            if (image.Length > this.Bytes)
+            var formFile = (IFormFile)value;
+            if (formFile == null || formFile.Length > this.Bytes)
             {
                 return false;
             }
