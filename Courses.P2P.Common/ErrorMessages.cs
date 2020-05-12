@@ -44,6 +44,8 @@
 
         public const string RequiredImage = "Полето изображение е задължително.";
 
+        public const string RequiredVideo = "Полето видео е задължително.";
+
         public const string NewPasswordNotMatch = "Новата парола и потвърдената парола не съвпадат.";
 
         public const string PasswordNotMatch = "Паролите не съвпадат.";

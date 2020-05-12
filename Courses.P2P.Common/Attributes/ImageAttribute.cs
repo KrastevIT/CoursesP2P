@@ -9,7 +9,7 @@ namespace Courses.P2P.Common.Attributes
         {
             var image = (IFormFile)value;
 
-            if (!image.ContentType.Contains("image"))
+            if (image == null || !image.ContentType.Contains("image"))
             {
                 return false;
             }
