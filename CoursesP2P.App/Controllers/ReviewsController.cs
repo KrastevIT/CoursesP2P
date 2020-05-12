@@ -49,8 +49,6 @@ namespace CoursesP2P.App.Controllers
                 return Json("invalid");
             }
 
-            return Json("valid");
-
             var inputAsset = await this.azureMediaService.CreateInputAssetAsync(model.Video);
 
             var outputAsset = await this.azureMediaService.CreateOutputAssetAsync();
