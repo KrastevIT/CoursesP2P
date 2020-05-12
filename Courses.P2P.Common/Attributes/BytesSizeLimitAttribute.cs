@@ -12,6 +12,11 @@ namespace Courses.P2P.Common.Attributes
 
         public override bool IsValid(object value)
         {
+            if (value == null)
+            {
+                return true;
+            }
+
             var formFile = (IFormFile)value;
             if (formFile == null || formFile.Length > this.Bytes)
             {

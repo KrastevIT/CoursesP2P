@@ -7,6 +7,11 @@ namespace Courses.P2P.Common.Attributes
     {
         public override bool IsValid(object value)
         {
+            if (value == null)
+            {
+                return true;
+            }
+
             var video = (IFormFile)value;
             if (video == null || !video.ContentType.Contains("video"))
             {

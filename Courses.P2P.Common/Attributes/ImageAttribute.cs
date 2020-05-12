@@ -7,9 +7,14 @@ namespace Courses.P2P.Common.Attributes
     {
         public override bool IsValid(object value)
         {
+            if (value == null)
+            {
+                return true;
+            }
+
             var image = (IFormFile)value;
 
-            if (image == null || !image.ContentType.Contains("image"))
+            if (!image.ContentType.Contains("image"))
             {
                 return false;
             }

@@ -1,5 +1,6 @@
 ﻿using Courses.P2P.Common;
 using CoursesP2P.Data;
+using CoursesP2P.Services.AzureStorageBlob;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -19,10 +20,12 @@ namespace CoursesP2P.Services.Instructors
     public class InstructorsService : IInstructorsService
     {
         private readonly CoursesP2PDbContext db;
+        private readonly IAzureStorageBlobService azureStorageBlobService;
 
-        public InstructorsService(CoursesP2PDbContext db)
+        public InstructorsService(CoursesP2PDbContext db, IAzureStorageBlobService azureStorageBlobService)
         {
             this.db = db;
+            this.azureStorageBlobService = azureStorageBlobService;
         }
 
         public IEnumerable<CourseInstructorViewModel> GetCreatedCourses(string userId)
@@ -44,7 +47,11 @@ namespace CoursesP2P.Services.Instructors
                 throw new ArgumentNullException(
                     string.Format(ExceptionMessages.InvalidCourseId, model.Id));
             }
-            model.Image = course.Image;
+
+            if (model.ImageUpload != null)
+            {
+                model.Image = await this.azureStorageBlobService.UploadImageAsync(model.ImageUpload);
+            }
 
             this.db.Entry(course)
                  .CurrentValues.SetValues(model);
