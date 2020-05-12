@@ -3,6 +3,7 @@ using CoursesP2P.Data;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Courses.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,11 @@ using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Instructors
 {
+    public class Test
+    {
+        public bool Name { get; set; }
+    }
+
     public class InstructorsService : IInstructorsService
     {
         private readonly CoursesP2PDbContext db;
@@ -25,11 +31,7 @@ namespace CoursesP2P.Services.Instructors
                 .Where(x => x.InstructorId == userId)
                 .To<CourseInstructorViewModel>()
                 .ToList();
-
-            foreach (var model in models)
-            {
-                model.IsReview = this.db.Reviews.Select(x => x.CourseId == model.Id).FirstOrDefault();
-            }
+            models.ForEach(x => x.IsReview = this.db.Reviews.Any(y => y.CourseId == x.Id));
 
             return models;
         }

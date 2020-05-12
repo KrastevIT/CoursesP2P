@@ -8,7 +8,7 @@
 <div id="alert" role="alert"></div>
 
 <div class="d-flex justify-content-center">
-    <form class="form-horizontal">
+    <div class="form-horizontal">
         <h4 class="text-center">Добави видео ревю</h4>
         <input type="hidden" asp-for="@Model.CourseId" id="courseId" />
         <div class="uploadOuter">
@@ -29,7 +29,7 @@
                 <a asp-controller="Instructors" asp-action="Index" class="btn btn-danger">Назад</a>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
 <script>
