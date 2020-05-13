@@ -1,5 +1,6 @@
 ﻿using Courses.P2P.Common;
 using CoursesP2P.Data;
+using CoursesP2P.Models;
 using CoursesP2P.Services.AzureStorageBlob;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Courses.ViewModels;
@@ -39,9 +40,9 @@ namespace CoursesP2P.Services.Instructors
             return models;
         }
 
-        public async Task EditCourseAsync(CourseEditViewModel model)
+        public async Task EditCourseAsync(CourseEditViewModel model, string userId)
         {
-            var course = await this.db.Courses.FirstOrDefaultAsync(x => x.Id == model.Id);
+            var course = await this.db.Courses.FirstOrDefaultAsync(x => x.Id == model.Id && x.InstructorId == userId);
             if (course == null)
             {
                 throw new ArgumentNullException(

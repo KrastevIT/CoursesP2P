@@ -41,12 +41,15 @@ namespace CoursesP2P.App.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(CourseEditViewModel model)
         {
+            var userId = this.userManager.GetUserId(this.User);
+
             if (!ModelState.IsValid)
             {
-                return View(model);
+                var course = this.instructorService.GetCourseById(model.Id, userId);
+                return View(course);
             }
 
-            await this.instructorService.EditCourseAsync(model);
+            await this.instructorService.EditCourseAsync(model, userId);
 
             return RedirectToAction("Index", "Instructors");
         }

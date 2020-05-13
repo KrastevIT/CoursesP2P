@@ -21,22 +21,27 @@
                                 Или постави тук
                                 <input class="form-control" type="file" asp-for="@Model.ImageUpload" onChange="dragNdrop(event)" ondragover="drag()" ondrop="drop()" id="uploadFile" />
                             </span>
+                            <span class="text-danger" asp-validation-for="@Model.ImageUpload"></span>
                         </div>
                         <h5 class="text-uppercase text-center">Име</h5>
                         <hr class="line-primary">
                         <input class="form-control" asp-for="@Model.Name" />
+                        <span class="text-danger" asp-validation-for="@Model.Name"></span>
                         <br />
                         <h5 class="text-uppercase text-center">Описание</h5>
                         <hr class="line-primary">
                         <input class="form-control" asp-for="@Model.Description" />
+                        <span class="text-danger" asp-validation-for="@Model.Description"></span>
                         <br />
                         <h5 class="text-uppercase text-center">Умения</h5>
                         <hr class="line-primary">
                         <input class="form-control" asp-for="@Model.Skills" />
+                        <span class="text-danger" asp-validation-for="@Model.Skills"></span>
                         <br />
                         <h5 class="text-uppercase text-center">Цена</h5>
                         <hr class="line-primary">
                         <input class="form-control" asp-for="@Model.Price" />
+                        <span class="text-danger" asp-validation-for="@Model.Price"></span>
 
                         <br />
                         <h5 class="text-uppercase text-center">Категория</h5>
@@ -58,14 +63,19 @@
         @* TODO *@
         <div class="col-12 col-sm-6 col-md-8">
             <div class="list-group">
-                @foreach (var lecturesName in Model.Lectures)
+                @foreach (var lectures in Model.Lectures)
                 {
-                    <a href="#" class="list-group-item list-group-item-action text-center">@lecturesName.Name</a>
+                    <a asp-area="" asp-controller="Lectures" asp-action="VideoEdit" asp-route-id="@lectures.Id" 
+                       class="list-group-item list-group-item-action text-center">@lectures.Name</a>
                 }
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 
 <script>
     function dragNdrop(event) {

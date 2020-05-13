@@ -60,6 +60,10 @@ namespace CoursesP2P.Services.Lectures
                 .Select(x => x.Course.Id)
                 .FirstOrDefault();
 
+            var t = this.db.StudentCourses
+                .Where(x => x.StudentId == userId)
+                .FirstOrDefault();
+
             if (courseId != 0 || isAdmin)
             {
                 var model = this.db.Lectures
@@ -109,6 +113,49 @@ namespace CoursesP2P.Services.Lectures
             await this.db.SaveChangesAsync();
 
             return true;
+        }
+
+        public EditLectureBindingModel GetVideoEdit(int lectureId, string userId)
+        {
+            var model = this.db.Lectures
+                .Where(x => x.Id == lectureId && x.Course.InstructorId == userId)
+                .To<EditLectureBindingModel>()
+                .FirstOrDefault();
+
+            return model;
+        }
+
+        public async Task Edit(EditLectureBindingModel model, string userId)
+        {
+            var lecture = this.db.Lectures.FirstOrDefault(x => x.Id == model.Id && x.Course.InstructorId == userId);
+            if (lecture == null)
+            {
+                throw new ArgumentNullException(
+                   string.Format(ExceptionMessages.InvalidLectureId, model.Id));
+            }
+
+            this.db.Entry(lecture)
+                .CurrentValues.SetValues(model);
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task EditLectureDbAsync(EditLectureBindingModel model, string userId, string asset, string videoUrl)
+        {
+            var lecture = this.db.Lectures.FirstOrDefault(x => x.Id == model.Id && x.Course.InstructorId == userId);
+            if (lecture == null)
+            {
+                throw new ArgumentNullException(
+                   string.Format(ExceptionMessages.InvalidLectureId, model.Id));
+            }
+
+            model.Asset = asset;
+            model.Video = videoUrl;
+
+            this.db.Entry(lecture)
+                .CurrentValues.SetValues(model);
+
+            await this.db.SaveChangesAsync();
         }
     }
 }

@@ -10,6 +10,6 @@ namespace CoursesP2P.Services.Instructors
 
         CourseEditViewModel GetCourseById(int id, string userId);
 
-        Task EditCourseAsync(CourseEditViewModel model);
+        Task EditCourseAsync(CourseEditViewModel model, string userId);
     }
 }

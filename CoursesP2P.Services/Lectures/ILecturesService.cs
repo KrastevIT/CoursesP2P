@@ -1,5 +1,4 @@
-﻿using CoursesP2P.Models;
-using CoursesP2P.ViewModels.Lectures.BindingModels;
+﻿using CoursesP2P.ViewModels.Lectures.BindingModels;
 using CoursesP2P.ViewModels.Lectures.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,8 +11,14 @@ namespace CoursesP2P.Services.Lectures
 
         VideoViewModel GetVideoByLectureId(int lectureId, string userId, bool isAdmin);
 
+        EditLectureBindingModel GetVideoEdit(int lectureId, string userId);
+
         AddLecturesBindingModel GetLectureBindingModelWithCourseId(int courseId, string userId);
 
+        Task Edit(EditLectureBindingModel model, string userId);
+
         Task<bool> SaveLectureDbAsync(int courseId, string name, string asset, string videoUrl);
+
+        Task EditLectureDbAsync(EditLectureBindingModel model, string asset, string videoUrl);
     }
 }

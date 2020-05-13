@@ -42,6 +42,7 @@ namespace CoursesP2P.ViewModels.Courses.ViewModels
         [Display(Name = "Категория")]
         public Category Category { get; set; }
 
+        [Required]
         public string Image { get; set; }
 
         [Image(ErrorMessage = ErrorMessages.InvalidImageFormat)]

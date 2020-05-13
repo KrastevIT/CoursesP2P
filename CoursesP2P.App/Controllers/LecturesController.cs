@@ -89,5 +89,47 @@ namespace CoursesP2P.App.Controllers
 
             return View(videoOfLecture);
         }
+
+        public async Task<IActionResult> VideoEdit(int id)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            var videoOfLecture = this.lectureService.GetVideoEdit(id, user.Id);
+
+            return View(videoOfLecture);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditLectureBindingModel model)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+
+            if (model.VideoUpload == null)
+            {
+                await this.lectureService.Edit(model, userId);
+                return View(model);
+            }
+            else
+            {
+                var inputAsset = await this.azureMediaService.CreateInputAssetAsync(model.VideoUpload);
+
+                var outputAsset = await this.azureMediaService.CreateOutputAssetAsync();
+
+                var transform = await this.azureMediaService.GetOrCreateTransformAsync();
+
+                var job = await this.azureMediaService.SubmitJobAsync(inputAsset.Name, outputAsset.Name, transform.Name);
+
+                await this.azureMediaService.WaitForJobToFinishAsync(transform.Name, job.Name);
+
+                var streamingLocator = await this.azureMediaService.CreateStreamingLocatorAsync(outputAsset.Name);
+
+                var getStreamingUrls = await this.azureMediaService.GetStreamingUrlsAsync(streamingLocator.Name);
+
+                await this.azureMediaService.CleanUpAsync(transform.Name, inputAsset.Name);
+
+                await this.lectureService.EditLectureDbAsync(model, outputAsset.Name, getStreamingUrls[2]);
+
+                return Json("valid");
+            }
+        }
     }
 }
