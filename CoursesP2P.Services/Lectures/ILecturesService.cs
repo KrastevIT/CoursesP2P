@@ -19,6 +19,6 @@ namespace CoursesP2P.Services.Lectures
 
         Task<bool> SaveLectureDbAsync(int courseId, string name, string asset, string videoUrl);
 
-        Task EditLectureDbAsync(EditLectureBindingModel model, string asset, string videoUrl);
+        Task EditLectureDbAsync(EditLectureBindingModel model, string userId, string asset, string videoUrl);
     }
 }

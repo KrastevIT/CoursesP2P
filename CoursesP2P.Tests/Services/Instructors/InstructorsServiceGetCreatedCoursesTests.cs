@@ -21,7 +21,7 @@ namespace CoursesP2P.Tests.Services.Instructors
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            this.instructorsService = new InstructorsService(db);
+            this.instructorsService = new InstructorsService(db, null);
         }
 
         [Fact]

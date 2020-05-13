@@ -18,15 +18,15 @@ namespace CoursesP2P.Tests.Services.Instructors
         public InstructorsServiceEditCourseTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            this.instructorsService = new InstructorsService(db);
+            this.instructorsService = new InstructorsService(db, null);
         }
 
         [Fact]
         public async Task EditCourseReturnCorrectly()
         {
             var course = new Course { Id = 1, Name = "Pesho" };
-           await this.db.Courses.AddAsync(course);
-           await this.db.SaveChangesAsync();
+            await this.db.Courses.AddAsync(course);
+            await this.db.SaveChangesAsync();
 
             var model = new CourseEditViewModel
             {
@@ -34,7 +34,7 @@ namespace CoursesP2P.Tests.Services.Instructors
                 Name = "newName"
             };
 
-            await this.instructorsService.EditCourseAsync(model);
+            await this.instructorsService.EditCourseAsync(model, null);
 
             var newCourse = this.db.Courses.FirstOrDefault(x => x.Id == 1);
             var isSetNewName = newCourse.Name == "newName";
@@ -46,8 +46,8 @@ namespace CoursesP2P.Tests.Services.Instructors
         public async Task EditCourseWithInvalidIdReturnException()
         {
             var course = new Course { Id = 1, Name = "Pesho" };
-           await this.db.Courses.AddAsync(course);
-           await this.db.SaveChangesAsync();
+            await this.db.Courses.AddAsync(course);
+            await this.db.SaveChangesAsync();
 
             var model = new CourseEditViewModel
             {
@@ -55,7 +55,7 @@ namespace CoursesP2P.Tests.Services.Instructors
                 Name = "newName"
             };
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => this.instructorsService.EditCourseAsync(model));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => this.instructorsService.EditCourseAsync(model, null));
         }
     }
 }

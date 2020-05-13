@@ -51,6 +51,11 @@ namespace CoursesP2P.App
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CoursesP2PDbContext>();
 
+            services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -98,6 +103,7 @@ namespace CoursesP2P.App
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+            app.UseResponseCompression();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

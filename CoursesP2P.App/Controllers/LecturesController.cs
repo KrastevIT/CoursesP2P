@@ -126,9 +126,10 @@ namespace CoursesP2P.App.Controllers
 
                 await this.azureMediaService.CleanUpAsync(transform.Name, inputAsset.Name);
 
-                await this.lectureService.EditLectureDbAsync(model, outputAsset.Name, getStreamingUrls[2]);
+                await this.lectureService.EditLectureDbAsync(model, userId, outputAsset.Name, getStreamingUrls[2]);
 
                 return Json("valid");
+
             }
         }
     }
