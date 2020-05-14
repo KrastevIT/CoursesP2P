@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-CoursesP2P.App-8227BA92-7011-4B09-8C17-3B9A7FB7FD01</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/6d3b6cb5-9f03-4b82-8290-9e7f742e3398/resourceGroups/CoursesP/providers/microsoft.insights/components/CoursesP</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/6d3b6cb5-9f03-4b82-8290-9e7f742e3398/resourcegroups/CoursesGroup/providers/Microsoft.Insights/components/CoursesPInsights</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,8 +21,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

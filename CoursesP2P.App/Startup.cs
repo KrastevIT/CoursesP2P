@@ -43,6 +43,8 @@ namespace CoursesP2P.App
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ReCAPTCHASettings>(Configuration.GetSection("GooglereCAPTCHA"));
+
             services.AddDbContext<CoursesP2PDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -82,7 +84,7 @@ namespace CoursesP2P.App
                 options.MultipartHeadersLengthLimit = int.MaxValue;
             });
 
-            services.Configure<ReCAPTCHASettings>(Configuration.GetSection("GooglereCAPTCHA"));
+           
             services.Configure<PayPalSettings>(Configuration.GetSection("PayPal"));
 
             services.AddMvc();

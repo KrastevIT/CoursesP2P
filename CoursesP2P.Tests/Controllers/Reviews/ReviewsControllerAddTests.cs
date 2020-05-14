@@ -28,30 +28,6 @@ namespace CoursesP2P.Tests.Controllers.Reviews
             this.reviewsController = new ReviewsController(null, reviewService, userManager);
         }
 
-        [Fact]
-        public async Task AddReturnCorrently()
-        {
-            var course = new Course
-            {
-                Id = 2
-            };
-
-            var model = new ReviewBindingModel
-            {
-                CourseId = 2
-            };
-
-            await this.db.Courses.AddAsync(course);
-            await this.db.SaveChangesAsync();
-
-
-            var actionResult = await this.reviewsController.Add(model);
-
-            var jsonResult = Assert.IsType<JsonResult>(actionResult);
-
-            Assert.Equal("valid", jsonResult.Value);
-        }
-
         [Theory]
         [InlineData(1)]
         [InlineData(3)]

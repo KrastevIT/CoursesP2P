@@ -1,6 +1,5 @@
 ﻿using Courses.P2P.Common;
 using CoursesP2P.Models;
-using CoursesP2P.Services.ReCaptcha;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -17,18 +16,12 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<User> userManager;
-        private readonly IReCAPTCHAService reCAPTCHAService;
         private readonly SignInManager<User> signInManager;
         private readonly ILogger<LoginModel> logger;
 
         public LoginModel(SignInManager<User> signInManager,
-            ILogger<LoginModel> logger,
-            UserManager<User> userManager,
-            IReCAPTCHAService reCAPTCHAService)
+            ILogger<LoginModel> logger)
         {
-            this.userManager = userManager;
-            this.reCAPTCHAService = reCAPTCHAService;
             this.signInManager = signInManager;
             this.logger = logger;
         }
@@ -52,9 +45,6 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
             [Required(ErrorMessage = ErrorMessages.RequiredPassword)]
             [DataType(DataType.Password)]
             public string Password { get; set; }
-
-            [Required]
-            public string Token { get; set; }
 
             public bool RememberMe { get; set; }
         }
@@ -80,17 +70,8 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
-            var ReCaptcha = this.reCAPTCHAService.VerifyAsync(Input.Token);
-            if (!ReCaptcha.Result.Success && ReCaptcha.Result.Score <= 0.5)
-            {
-                ModelState.AddModelError(string.Empty, "Your are Not Humman!");
-                return Page();
-            }
-
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
@@ -113,7 +94,6 @@ namespace CoursesP2P.App.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
     }

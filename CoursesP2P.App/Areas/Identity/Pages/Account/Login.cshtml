@@ -1,8 +1,5 @@
 ﻿@page
 @model LoginModel
-@using Microsoft.Extensions.Options
-@inject IOptions<ReCAPTCHASettings> GooglereCAPTCHA
-
 
 <div class="container">
     <h4 class="text-center">Вход за потребители</h4>
@@ -21,7 +18,6 @@
                     <input asp-for="Input.Password" class="form-control" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
-                <input type="hidden" asp-for="Input.Token" />
                 <div class="form-group">
                     <div class="checkbox">
                         <label asp-for="Input.RememberMe">
@@ -46,16 +42,3 @@
         </section>
     </div>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
-
-<script src="https://www.google.com/recaptcha/api.js?render=@GooglereCAPTCHA.Value.ReCAPTCHA_Site_Key"></script>
-<script>
-    grecaptcha.ready(function () {
-        grecaptcha.execute('@GooglereCAPTCHA.Value.ReCAPTCHA_Site_Key', { action: 'homepage' }).then(function (token) {
-            $('#Input_Token').val(token);
-        });
-    });
-</script>
