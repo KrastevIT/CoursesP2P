@@ -11,7 +11,7 @@ namespace CoursesP2P.ViewModels.Reviews
 
         [Required]
         [Video(ErrorMessage = "Невалиден формат")]
-        [BytesSizeLimit(1200000000)]
+        [BytesSizeLimit(12000000000)]
         public IFormFile Video { get; set; }
     }
 }
