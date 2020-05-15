@@ -35,11 +35,11 @@
                             <div class="col-md-12 text-center">
                                 @if (course.Name.Length > 29)
                                 {
-                                    <h4 class="text-uppercase" rel="tooltip" title="@course.Name">@course.ShortName</h4>
+                                    <h4 rel="tooltip" title="@course.Name">@course.ShortName</h4>
                                 }
                                 else
                                 {
-                                    <h4 class="text-uppercase">@course.Name</h4>
+                                    <h4>@course.Name</h4>
                                 }
                                 <h5>от @course.InstructorFullName</h5>
                                 <hr class="line-primary">

@@ -16,7 +16,7 @@ namespace CoursesP2P.ViewModels.Lectures.BindingModels
 
         [Required(ErrorMessage = ErrorMessages.RequiredVideo)]
         [Video]
-        [BytesSizeLimit(1200000000)]
+        [BytesSizeLimit(12000000000)]
         public IFormFile Video { get; set; }
     }
 }
