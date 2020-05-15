@@ -49,8 +49,8 @@ namespace CoursesP2P.App.Controllers
         }
 
         [HttpPost]
-        [RequestFormLimits(MultipartBodyLengthLimit = 1200000000)]
-        [RequestSizeLimit(1200000000)]
+        [RequestFormLimits(MultipartBodyLengthLimit = 12000000000)]
+        [RequestSizeLimit(12000000000)]
         public async Task<IActionResult> Add(AddLecturesBindingModel model)
         {
             var userId = this.userManager.GetUserId(this.User);

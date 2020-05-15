@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="uploadOuter">
-            <label for="uploadFile" class="btn btn-primary">Качи видео до 1 ГБ</label>
+            <label for="uploadFile" class="btn btn-primary">Качи видео до 10 ГБ</label>
             <strong>ИЛИ</strong>
             <span class="dragBox">
                 Постави тук
@@ -64,7 +64,7 @@
             if (files.length > 0) {
                 size = document.getElementById('uploadFile').files[0].size;
             }
-            if (size > 1200000000) {
+            if (size > 12000000000) {
                 let div = document.getElementById("alert");
                 div.setAttribute("class", "alert alert-danger");
                 div.innerHTML = 'Лекцията трябва да е до 1 гигабайт!';

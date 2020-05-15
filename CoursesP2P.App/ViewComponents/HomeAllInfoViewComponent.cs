@@ -19,7 +19,7 @@ namespace CoursesP2P.App.ViewComponents
         {
             var students = this.db.Users.Count();
             var instructors = this.db.Users.Include(x => x.CreatedCourses).Where(x => x.CreatedCourses.Any()).Count();
-            var courses = this.db.Courses.Count();
+            var courses = this.db.Courses.Where(x => x.Status).Count();
             //var lectures = this.db.Courses.Include(x => x.Lectures).SelectMany(x => x.Lectures).Count();
             var lectures = this.db.Courses.Where(x => x.Status == false).SelectMany(x => x.Lectures).Count();
 
