@@ -2,7 +2,7 @@
 
 @foreach (var category in Enum.GetNames(typeof(Category)))
 {
-    <a class="dropdown-item" asp-area="" asp-controller="Courses" asp-action="Category" asp-route-id="@category">
+    <a class="dropdown-item" asp-area="" asp-controller="Courses" asp-action="Category" asp-route-name="@category">
         <i class="@Model[category.Replace("_", " ")]"></i> @category.Replace("_", " ")
     </a>
 }

@@ -25,15 +25,18 @@ namespace CoursesP2P.App.Controllers
             this.azureStorageBlobService = azureStorageBlobService;
         }
 
-        public IActionResult Category(string id)
+        public IActionResult Category(string name, int page = 1)
         {
-            var coursesByCategory = this.coursesService.GetCoursesByCategory(id);
+            var model = this.coursesService.GetCategoryDetails(name, page);
+            model.Courses = this.coursesService.GetCoursesByCategory(name, 3, (page - 1) * 3);
+
+            var coursesByCategory = this.coursesService.GetCoursesByCategory(name, 3, (page - 1) * 3);
             if (coursesByCategory == null)
             {
                 return NotFound();
             }
-            this.ViewData["category"] = id.Replace("_", " ");
-            return View(coursesByCategory);
+            this.ViewData["category"] = name.Replace("_", " ");
+            return View(model);
         }
 
         [Authorize]

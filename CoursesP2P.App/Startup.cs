@@ -127,6 +127,11 @@ namespace CoursesP2P.App
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                            "coursesCategory",
+                            "Courses/Category",
+                            new { controller = "Courses", action = "Category" });
+
+                endpoints.MapControllerRoute(
                    name: "areas",
                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 

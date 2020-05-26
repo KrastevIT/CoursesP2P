@@ -6,9 +6,11 @@ using CoursesP2P.Services.AzureStorageBlob;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Courses.BindingModels;
 using CoursesP2P.ViewModels.Courses.ViewModels;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.Services.Courses
@@ -27,15 +29,19 @@ namespace CoursesP2P.Services.Courses
             return this.db.Courses.Where(x => x.Status).To<CourseViewModel>().ToList();
         }
 
-        public IEnumerable<CourseViewModel> GetCoursesByCategory(string categoryName)
+        public IEnumerable<CourseViewModel> GetCoursesByCategory(string categoryName, int? take = null, int skip = 0)
         {
             var isValidEnum = Enum.TryParse(typeof(Category), categoryName, true, out object category);
             if (isValidEnum)
             {
-                return this.db.Courses
+                var models = this.db.Courses
                     .Where(x => x.Category == (Category)category && x.Status)
+                    .Skip(skip)
+                    .Take(take.Value)
                     .To<CourseViewModel>()
                     .ToList();
+
+                return models;
             }
 
             throw new InvalidCastException(
@@ -43,74 +49,88 @@ namespace CoursesP2P.Services.Courses
 
         }
 
-        public async Task CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName, string imageUrl)
+        public CategoryViewModel GetCategoryDetails(string name, int page)
         {
-            var course = new Course
+            var isValidEnum = Enum.TryParse(typeof(Category), name, true, out object category);
+            var count = this.db.Courses.Where(x => x.Status && x.Category == (Category)category).Count();
+            var categoryDetails = new CategoryViewModel
             {
-                Name = model.Name,
-                Description = model.Description,
-                Price = model.Price,
-                Category = model.Category,
-                Image = imageUrl,
-                Skills = model.Skills,
-                CreatedOn = DateTime.UtcNow,
-                InstructorFullName = userFirstName + ' ' + userLastName,
-                InstructorId = userId
+                Name = name,
+                PagesCount = (int)Math.Ceiling((double)count / 3),
+                CurrentPage = page
             };
 
-            await this.db.Courses.AddAsync(course);
-            await this.db.SaveChangesAsync();
+            return categoryDetails;
         }
 
-        public CourseDetailsViewModel Details(int id)
+    public async Task CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName, string imageUrl)
+    {
+        var course = new Course
         {
-            var model = this.db.Courses
-                .Where(x => x.Id == id)
-                .To<CourseDetailsViewModel>()
-                .FirstOrDefault();
+            Name = model.Name,
+            Description = model.Description,
+            Price = model.Price,
+            Category = model.Category,
+            Image = imageUrl,
+            Skills = model.Skills,
+            CreatedOn = DateTime.UtcNow,
+            InstructorFullName = userFirstName + ' ' + userLastName,
+            InstructorId = userId
+        };
 
-            if (model == null)
-            {
-                throw new ArgumentNullException(
-                    string.Format(ExceptionMessages.NotFoundCourseById, id));
-            }
-
-            model.Skills = this.db.Courses
-                .Where(x => x.Id == id)
-                .Select(x => x.Skills)
-                .FirstOrDefault()?
-                .Split('*')
-                .Select(x => x.Trim())
-                .ToList();
-
-            model.LectureName = this.db.Lectures
-                .Where(x => x.CourseId == id)
-                .Select(x => x.Name)
-                .ToList();
-
-            model.Video = this.db.Reviews
-                .Where(x => x.CourseId == id)
-                .Select(x => x.VideoUrl)
-                .FirstOrDefault();
-
-            return model;
-        }
-
-        public IEnumerable<CourseViewModel> Search(string searchTerm)
-        {
-            return this.db.Courses
-              .Where(x => x.Name.ToLower()
-              .Contains(searchTerm.ToLower()))
-              .To<CourseViewModel>()
-              .ToList();
-        }
-
-        public IEnumerable<CourseViewModel> GetWaitingCourses()
-        {
-            return this.db.Courses
-                .Where(x => x.Status == false)
-                .To<CourseViewModel>()
-                .ToList();
-        }
+        await this.db.Courses.AddAsync(course);
+        await this.db.SaveChangesAsync();
     }
+
+    public CourseDetailsViewModel Details(int id)
+    {
+        var model = this.db.Courses
+            .Where(x => x.Id == id)
+            .To<CourseDetailsViewModel>()
+            .FirstOrDefault();
+
+        if (model == null)
+        {
+            throw new ArgumentNullException(
+                string.Format(ExceptionMessages.NotFoundCourseById, id));
+        }
+
+        model.Skills = this.db.Courses
+            .Where(x => x.Id == id)
+            .Select(x => x.Skills)
+            .FirstOrDefault()?
+            .Split('*')
+            .Select(x => x.Trim())
+            .ToList();
+
+        model.LectureName = this.db.Lectures
+            .Where(x => x.CourseId == id)
+            .Select(x => x.Name)
+            .ToList();
+
+        model.Video = this.db.Reviews
+            .Where(x => x.CourseId == id)
+            .Select(x => x.VideoUrl)
+            .FirstOrDefault();
+
+        return model;
+    }
+
+    public IEnumerable<CourseViewModel> Search(string searchTerm)
+    {
+        return this.db.Courses
+          .Where(x => x.Name.ToLower()
+          .Contains(searchTerm.ToLower()))
+          .To<CourseViewModel>()
+          .ToList();
+    }
+
+    public IEnumerable<CourseViewModel> GetWaitingCourses()
+    {
+        return this.db.Courses
+            .Where(x => x.Status == false)
+            .To<CourseViewModel>()
+            .ToList();
+    }
+}
 }
