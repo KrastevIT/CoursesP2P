@@ -67,7 +67,7 @@
             if (size > 12000000000) {
                 let div = document.getElementById("alert");
                 div.setAttribute("class", "alert alert-danger");
-                div.innerHTML = 'Лекцията трябва да е до 1 гигабайт!';
+                div.innerHTML = 'Лекцията трябва да е до 10 гигабайт!';
             }
             else if (files.length > 0 && name.length > 0) {
                 data.append("Video", files[0]);
@@ -76,7 +76,7 @@
 
                 let div = document.getElementById("alert");
                 div.setAttribute("class", "alert alert-success");
-                div.innerHTML = `Успешно добавихте лекция ${$("#nameId").val()}.Тя ще бъде обработена и до няколко минути ще я видиде в курса си.`;
+                div.innerHTML = `Успешно добавихте лекция ${$("#nameId").val()}.Тя ще бъде обработена и до няколко часа ще я видиде в курса си.`;
                 $("#nameId").val("");
                 $("#uploadFile").val("");
                 $("#label").text("");

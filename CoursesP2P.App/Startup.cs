@@ -84,7 +84,7 @@ namespace CoursesP2P.App
                 options.MultipartHeadersLengthLimit = int.MaxValue;
             });
 
-           
+
             services.Configure<PayPalSettings>(Configuration.GetSection("PayPal"));
 
             services.AddMvc();

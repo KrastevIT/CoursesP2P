@@ -5,6 +5,7 @@ using CoursesP2P.ViewModels.Lectures.BindingModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.App.Controllers
@@ -50,15 +51,22 @@ namespace CoursesP2P.App.Controllers
 
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 12000000000)]
-        [RequestSizeLimit(12000000000)]
+        //[RequestSizeLimit(12000000000)]
         public async Task<IActionResult> Add(AddLecturesBindingModel model)
         {
+            if (model.Video == null)
+            {
+                return Json("null");
+            }
+
             var userId = this.userManager.GetUserId(this.User);
             var modelValid = this.lectureService.GetLectureBindingModelWithCourseId(model.CourseId, userId);
             if (!ModelState.IsValid || modelValid == null)
             {
                 return Json("invalid");
             }
+
+            //return Json("valid");
 
             var inputAsset = await this.azureMediaService.CreateInputAssetAsync(model.Video);
 

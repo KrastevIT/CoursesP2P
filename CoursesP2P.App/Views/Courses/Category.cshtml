@@ -4,7 +4,6 @@
 }
 
 <div class="container">
-
     @if (Model.Count() == 0)
     {
         <div class="card text-center">
@@ -20,46 +19,5 @@
             </div>
         </div>
     }
-
-<div class="row">
-    @foreach (var course in Model)
-    {
-        <div class="col-md-4">
-            <figure class="card card-coin card-plain">
-                <a asp-area="" asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">
-                    <div class="img-wrap">
-                        <img src="@course.Image" style="width:348px;height:220px;">
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-                                @if (course.Name.Length > 29)
-                                {
-                                    <h4 rel="tooltip" title="@course.Name">@course.ShortName</h4>
-                                }
-                                else
-                                {
-                                    <h4>@course.Name</h4>
-                                }
-                                <h5>от @course.InstructorFullName</h5>
-                                <hr class="line-primary">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <ul class="list-group">
-                                <li class="list-group-item">@Html.DisplayFor(e => course.Category)</li>
-                                <li class="list-group-item">@course.Lectures.Count Лекции</li>
-                                <li class="list-group-item">@course.Orders Записани</li>
-                                <li class="list-group-item text-danger">&euro; @course.Price</li>
-                            </ul>
-                        </div>
-                    </div>
-                </a>
-                <div class="card-footer text-left">
-                    <vc:five-stars course-id="@course.Id"></vc:five-stars>
-                </div>
-            </figure>
-        </div>
-    }
-</div>
+    <partial name="_CoursesPartial" />
 </div>
