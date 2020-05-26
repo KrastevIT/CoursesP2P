@@ -56,7 +56,7 @@ namespace CoursesP2P.Services.Courses
             var categoryDetails = new CategoryViewModel
             {
                 Name = name,
-                PagesCount = (int)Math.Ceiling((double)count / 3),
+                PagesCount = (int)Math.Ceiling((double)count / 6),
                 CurrentPage = page
             };
 

@@ -11,6 +11,8 @@ namespace CoursesP2P.App.Controllers
 {
     public class CoursesController : Controller
     {
+        private const int ItemsPerPage = 6;
+
         private readonly ICoursesService coursesService;
         private readonly UserManager<User> userManager;
         private readonly IAzureStorageBlobService azureStorageBlobService;
@@ -28,9 +30,9 @@ namespace CoursesP2P.App.Controllers
         public IActionResult Category(string name, int page = 1)
         {
             var model = this.coursesService.GetCategoryDetails(name, page);
-            model.Courses = this.coursesService.GetCoursesByCategory(name, 3, (page - 1) * 3);
+            model.Courses = this.coursesService.GetCoursesByCategory(name, ItemsPerPage, (page - 1) * ItemsPerPage);
 
-            var coursesByCategory = this.coursesService.GetCoursesByCategory(name, 3, (page - 1) * 3);
+            var coursesByCategory = this.coursesService.GetCoursesByCategory(name, ItemsPerPage, (page - 1) * ItemsPerPage);
             if (coursesByCategory == null)
             {
                 return NotFound();

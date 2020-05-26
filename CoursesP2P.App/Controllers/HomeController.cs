@@ -2,6 +2,7 @@
 using CoursesP2P.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Linq;
 
 namespace CoursesP2P.App.Controllers
 {
@@ -17,6 +18,7 @@ namespace CoursesP2P.App.Controllers
         public IActionResult Index()
         {
             var courses = this.coursesService.GetАpprovedCourses();
+            courses = courses.Take(9);
 
             return View(courses);
         }
