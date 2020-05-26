@@ -18,7 +18,7 @@ namespace CoursesP2P.App.Controllers
         public IActionResult Index()
         {
             var courses = this.coursesService.GetАpprovedCourses();
-            courses = courses.Take(9);
+            courses = courses.OrderByDescending(x => x.Orders).Take(9);
 
             return View(courses);
         }
