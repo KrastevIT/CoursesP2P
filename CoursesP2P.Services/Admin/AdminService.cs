@@ -56,7 +56,7 @@ namespace CoursesP2P.Services.Admin
 
         public void Approve(int id)
         {
-            var course = this.db.Courses.Where(x => x.Id == id).FirstOrDefault();
+            var course = this.db.Courses.FirstOrDefault(x => x.Id == id);
             course.Status = true;
             this.db.Courses.Update(course);
             this.db.SaveChanges();

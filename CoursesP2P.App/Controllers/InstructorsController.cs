@@ -53,5 +53,11 @@ namespace CoursesP2P.App.Controllers
 
             return RedirectToAction("Index", "Instructors");
         }
+
+        public IActionResult Active(int courseId)
+        {
+            this.instructorService.Active(courseId);
+            return RedirectToAction("Index");
+        }
     }
 }

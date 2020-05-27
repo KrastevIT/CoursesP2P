@@ -30,13 +30,12 @@
                             <ul class="list-group">
                                 <li class="list-group-item">@Html.DisplayFor(e => course.Category)</li>
                                 <li class="list-group-item">@course.Lectures.Count Лекции</li>
-                                <li class="list-group-item">@course.Orders Записани</li>
-                                <li class="list-group-item text-danger">&euro; @course.Price</li>
+                                <li class="list-group-item text-warning">&euro; @course.Price</li>
                             </ul>
                         </div>
                         <div class="card-footer text-center">
                             <a asp-area="" asp-controller="Lectures" asp-action="Index" asp-route-id="@course.Id" class="btn btn-info btn-sm">Лекции</a>
-                            <a asp-area="Admin" asp-controller="Courses" asp-action="Approve" asp-route-id="@course.Id" class="btn btn-success btn-sm">Одобри</a>
+                            <a asp-area="Admin" asp-controller="Courses" asp-action="Approve" asp-route-id="@course.Id" class="btn btn-danger btn-sm">Одобри</a>
                         </div>
                     </div>
                 </figure>

@@ -38,6 +38,8 @@ namespace CoursesP2P.Models
 
         public bool Status { get; set; }
 
+        public bool Active { get; set; }
+
         [Required]
         public string InstructorFullName { get; set; }
 

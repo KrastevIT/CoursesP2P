@@ -30,6 +30,8 @@ namespace CoursesP2P.ViewModels.Courses.ViewModels
 
         public bool Status { get; set; }
 
+        public bool Active { get; set; }
+
         public ICollection<CourseLecturesViewModel> Lectures { get; set; }
     }
 }

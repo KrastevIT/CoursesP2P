@@ -77,5 +77,14 @@ namespace CoursesP2P.Services.Instructors
                 return model;
             }
         }
+
+        public void Active(int courseId)
+        {
+            var course = this.db.Courses.FirstOrDefault(x => x.Id == courseId);
+            course.Active = true;
+
+            this.db.Courses.Update(course);
+            this.db.SaveChanges();
+        }
     }
 }

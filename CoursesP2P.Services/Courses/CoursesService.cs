@@ -63,74 +63,74 @@ namespace CoursesP2P.Services.Courses
             return categoryDetails;
         }
 
-    public async Task CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName, string imageUrl)
-    {
-        var course = new Course
+        public async Task CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName, string imageUrl)
         {
-            Name = model.Name,
-            Description = model.Description,
-            Price = model.Price,
-            Category = model.Category,
-            Image = imageUrl,
-            Skills = model.Skills,
-            CreatedOn = DateTime.UtcNow,
-            InstructorFullName = userFirstName + ' ' + userLastName,
-            InstructorId = userId
-        };
+            var course = new Course
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                Category = model.Category,
+                Image = imageUrl,
+                Skills = model.Skills,
+                CreatedOn = DateTime.UtcNow,
+                InstructorFullName = userFirstName + ' ' + userLastName,
+                InstructorId = userId
+            };
 
-        await this.db.Courses.AddAsync(course);
-        await this.db.SaveChangesAsync();
-    }
-
-    public CourseDetailsViewModel Details(int id)
-    {
-        var model = this.db.Courses
-            .Where(x => x.Id == id)
-            .To<CourseDetailsViewModel>()
-            .FirstOrDefault();
-
-        if (model == null)
-        {
-            throw new ArgumentNullException(
-                string.Format(ExceptionMessages.NotFoundCourseById, id));
+            await this.db.Courses.AddAsync(course);
+            await this.db.SaveChangesAsync();
         }
 
-        model.Skills = this.db.Courses
-            .Where(x => x.Id == id)
-            .Select(x => x.Skills)
-            .FirstOrDefault()?
-            .Split('*')
-            .Select(x => x.Trim())
-            .ToList();
+        public CourseDetailsViewModel Details(int id)
+        {
+            var model = this.db.Courses
+                .Where(x => x.Id == id)
+                .To<CourseDetailsViewModel>()
+                .FirstOrDefault();
 
-        model.LectureName = this.db.Lectures
-            .Where(x => x.CourseId == id)
-            .Select(x => x.Name)
-            .ToList();
+            if (model == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(ExceptionMessages.NotFoundCourseById, id));
+            }
 
-        model.Video = this.db.Reviews
-            .Where(x => x.CourseId == id)
-            .Select(x => x.VideoUrl)
-            .FirstOrDefault();
+            model.Skills = this.db.Courses
+                .Where(x => x.Id == id)
+                .Select(x => x.Skills)
+                .FirstOrDefault()?
+                .Split('*')
+                .Select(x => x.Trim())
+                .ToList();
 
-        return model;
+            model.LectureName = this.db.Lectures
+                .Where(x => x.CourseId == id)
+                .Select(x => x.Name)
+                .ToList();
+
+            model.Video = this.db.Reviews
+                .Where(x => x.CourseId == id)
+                .Select(x => x.VideoUrl)
+                .FirstOrDefault();
+
+            return model;
+        }
+
+        public IEnumerable<CourseViewModel> Search(string searchTerm)
+        {
+            return this.db.Courses
+              .Where(x => x.Name.ToLower()
+              .Contains(searchTerm.ToLower()))
+              .To<CourseViewModel>()
+              .ToList();
+        }
+
+        public IEnumerable<CourseViewModel> GetWaitingCourses()
+        {
+            return this.db.Courses
+                .Where(x => x.Status == false && x.Active)
+                .To<CourseViewModel>()
+                .ToList();
+        }
     }
-
-    public IEnumerable<CourseViewModel> Search(string searchTerm)
-    {
-        return this.db.Courses
-          .Where(x => x.Name.ToLower()
-          .Contains(searchTerm.ToLower()))
-          .To<CourseViewModel>()
-          .ToList();
-    }
-
-    public IEnumerable<CourseViewModel> GetWaitingCourses()
-    {
-        return this.db.Courses
-            .Where(x => x.Status == false)
-            .To<CourseViewModel>()
-            .ToList();
-    }
-}
 }
