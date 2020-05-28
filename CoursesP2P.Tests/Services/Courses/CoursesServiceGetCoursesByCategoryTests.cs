@@ -104,7 +104,7 @@ namespace CoursesP2P.Tests.Services.Courses
 
         [Theory]
         [InlineData("Програмиране", 2)]
-        public async Task GetCoursesByCategoryReturnCoursesWithLectures(string categoryName, int expected)
+        public void GetCoursesByCategoryReturnCoursesWithLectures(string categoryName, int expected)
         {
             var categoryDevelopment = (Category)Enum.Parse(typeof(Category), "Програмиране");
             var categoryMarkiting = (Category)Enum.Parse(typeof(Category), "Маркетинг");
@@ -145,8 +145,8 @@ namespace CoursesP2P.Tests.Services.Courses
                 },
             };
 
-            await this.db.Courses.AddRangeAsync(courses);
-            await this.db.SaveChangesAsync();
+            this.db.Courses.AddRange(courses);
+            this.db.SaveChanges();
 
             var getLecture = this.coursesService.GetCoursesByCategory(categoryName)
                 .Select(x => x.Lectures.Count)

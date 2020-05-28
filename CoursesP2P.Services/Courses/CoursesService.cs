@@ -34,14 +34,20 @@ namespace CoursesP2P.Services.Courses
             var isValidEnum = Enum.TryParse(typeof(Category), categoryName, true, out object category);
             if (isValidEnum)
             {
-                var models = this.db.Courses
+                var t = this.db.Courses
                     .Where(x => x.Category == (Category)category && x.Status)
-                    .Skip(skip)
-                    .Take(take.Value)
-                    .To<CourseViewModel>()
+                     .To<CourseViewModel>()
                     .ToList();
 
-                return models;
+                var models = this.db.Courses
+                    .Where(x => x.Category == (Category)category && x.Status)
+                    .Skip(skip);
+                if (take.HasValue)
+                {
+                    models = models.Take(take.Value);
+                }
+
+                return models.To<CourseViewModel>().ToList();
             }
 
             throw new InvalidCastException(
