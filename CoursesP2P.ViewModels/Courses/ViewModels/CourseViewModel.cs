@@ -1,4 +1,5 @@
-﻿using CoursesP2P.Models;
+﻿using AutoMapper;
+using CoursesP2P.Models;
 using CoursesP2P.Models.Enum;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.ViewModels.Lectures.ViewModels;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 
 namespace CoursesP2P.ViewModels.Courses.ViewModels
 {
-    public class CourseViewModel : IMapFrom<Course>
+    public class CourseViewModel : IMapFrom<Course>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -30,5 +31,13 @@ namespace CoursesP2P.ViewModels.Courses.ViewModels
         public bool Status { get; set; }
 
         public ICollection<CourseLecturesViewModel> Lectures { get; set; }
+
+        public int Ratings { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Course, CourseViewModel>()
+                .ForMember(x => x.Ratings, y => y.MapFrom(x => x.Ratings.Count));
+        }
     }
 }
