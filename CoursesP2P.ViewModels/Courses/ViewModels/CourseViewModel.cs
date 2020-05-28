@@ -27,6 +27,8 @@ namespace CoursesP2P.ViewModels.Courses.ViewModels
 
         public int Orders { get; set; }
 
+        public bool Status { get; set; }
+
         public ICollection<CourseLecturesViewModel> Lectures { get; set; }
     }
 }
