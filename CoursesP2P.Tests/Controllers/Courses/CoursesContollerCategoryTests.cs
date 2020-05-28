@@ -1,16 +1,9 @@
-﻿using AutoMapper;
-using CloudinaryDotNet;
-using CoursesP2P.App.Controllers;
+﻿using CoursesP2P.App.Controllers;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
-using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.Tests.Configuration;
 using Microsoft.AspNetCore.Identity;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace CoursesP2P.Tests.Controllers.Courses

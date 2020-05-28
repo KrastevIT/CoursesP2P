@@ -32,7 +32,7 @@ namespace CoursesP2P.ViewModels.Courses.ViewModels
 
         public ICollection<CourseLecturesViewModel> Lectures { get; set; }
 
-        public int Ratings { get; set; }
+        public int? Ratings { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
