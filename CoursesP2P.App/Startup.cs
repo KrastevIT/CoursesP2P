@@ -49,6 +49,8 @@ namespace CoursesP2P.App
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
+            var test = Configuration.GetConnectionString("DefaultConnection");
+
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CoursesP2PDbContext>();

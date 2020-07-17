@@ -186,6 +186,8 @@ namespace CoursesP2P.Data.Migrations
                     Skills = table.Column<string>(maxLength: 1000, nullable: false),
                     Orders = table.Column<int>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<bool>(nullable: false),
+                    Active = table.Column<bool>(nullable: false),
                     InstructorFullName = table.Column<string>(nullable: false),
                     InstructorId = table.Column<string>(nullable: true)
                 },
@@ -252,7 +254,8 @@ namespace CoursesP2P.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 200, nullable: false),
-                    Video = table.Column<string>(nullable: false),
+                    Video = table.Column<string>(nullable: true),
+                    Asset = table.Column<string>(nullable: true),
                     CourseId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -281,6 +284,27 @@ namespace CoursesP2P.Data.Migrations
                     table.PrimaryKey("PK_Ratings", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Ratings_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VideoUrl = table.Column<string>(nullable: true),
+                    Asset = table.Column<string>(nullable: true),
+                    CourseId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
@@ -376,6 +400,12 @@ namespace CoursesP2P.Data.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reviews_CourseId",
+                table: "Reviews",
+                column: "CourseId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StudentCourses_CourseId",
                 table: "StudentCourses",
                 column: "CourseId");
@@ -412,6 +442,9 @@ namespace CoursesP2P.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ratings");
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "StudentCourses");

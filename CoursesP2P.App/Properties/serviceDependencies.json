@@ -2,7 +2,11 @@
   "dependencies": {
     "appInsights1": {
       "type": "appInsights",
-      "connectionId": "APPINSIGHTS_INSTRUMENTATIONKEY"
+      "suggestion": "true",
+      "ignored": "true"
+    },
+    "secrets1": {
+      "type": "secrets"
     },
     "mssql1": {
       "type": "mssql",

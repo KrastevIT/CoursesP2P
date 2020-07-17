@@ -1,16 +1,18 @@
 {
   "dependencies": {
+    "storage1": {
+      "type": "storage",
+      "connectionId": "AzureBlobStorage/ConnectionString",
+      "suggestion": "true",
+      "ignored": "true"
+    },
+    "secrets1": {
+      "type": "secrets.user"
+    },
     "mssql1": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/coursesserver/databases/CoursesDb",
-      "type": "mssql.azure",
+      "type": "mssql.onprem",
       "connectionId": "DefaultConnection",
       "secretStore": "LocalSecretsFile"
-    },
-    "appInsights1": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroup')]/providers/Microsoft.Insights/components/CoursesPInsights",
-      "type": "appInsights.azure",
-      "connectionId": "APPINSIGHTS_INSTRUMENTATIONKEY",
-      "secretStore": null
     }
   }
 }
