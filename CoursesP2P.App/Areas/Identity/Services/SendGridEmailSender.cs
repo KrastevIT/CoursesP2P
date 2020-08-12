@@ -18,7 +18,7 @@ namespace CoursesP2P.App.Areas.Identity.Services
         {
             var apiKey = this.options.SendGridApiKey;
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("kasparch000@gmail.com", "CoursesP2P");
+            var from = new EmailAddress("coursesp2p@gmail.com", "CoursesP2P");
             var to = new EmailAddress(email, email);
             var msg = MailHelper.CreateSingleEmail(from, to, subject, htmlMessage, htmlMessage);
             var response = await client.SendEmailAsync(msg);
