@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
-using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.Tests.Configuration;

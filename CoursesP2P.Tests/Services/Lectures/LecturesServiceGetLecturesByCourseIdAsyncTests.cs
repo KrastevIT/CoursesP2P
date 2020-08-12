@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CoursesP2P.Data;
 using CoursesP2P.Models;
-using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Lectures;
 using CoursesP2P.Tests.Configuration;
 using Moq;
@@ -21,7 +20,6 @@ namespace CoursesP2P.Tests.Services.Lectures
         public LecturesServiceGetLecturesByCourseIdAsyncTests()
         {
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            var cloudinary = new Mock<ICloudinaryService>().Object;
 
             this.lecturesService = new LecturesService(this.db);
         }

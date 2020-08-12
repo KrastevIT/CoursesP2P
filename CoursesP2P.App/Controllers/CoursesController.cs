@@ -57,7 +57,11 @@ namespace CoursesP2P.App.Controllers
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
-            var imageUrl = await this.azureStorageBlobService.UploadImageAsync(model.Image);
+
+            //TODO NEXT HOSTING
+            //var imageUrl = await this.azureStorageBlobService.UploadImageAsync(model.Image);
+            var imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/C_Sharp_logo.svg/1200px-C_Sharp_logo.svg.png";
+
             await this.coursesService.CreateAsync(model, user.Id, user.FirstName, user.LastName, imageUrl);
 
             return RedirectToAction("Index", "Instructors");

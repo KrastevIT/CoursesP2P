@@ -1,6 +1,5 @@
 ﻿using CoursesP2P.Data;
 using CoursesP2P.Models;
-using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Lectures;
 using CoursesP2P.Services.Mapping;
 using CoursesP2P.Tests.Configuration;
@@ -23,7 +22,6 @@ namespace CoursesP2P.Tests.Services.Lectures
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
             this.db = new CoursesP2PDbContext(MemoryDatabase.OptionBuilder());
-            var cloudinary = new Mock<ICloudinaryService>().Object;
 
             this.lecturesService = new LecturesService(this.db);
         }

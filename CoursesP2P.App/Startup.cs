@@ -1,5 +1,4 @@
 using Azure.Storage.Blobs;
-using CloudinaryDotNet;
 using CoursesP2P.App.Areas.Identity.Services;
 using CoursesP2P.App.Common;
 using CoursesP2P.Data;
@@ -7,7 +6,6 @@ using CoursesP2P.Models;
 using CoursesP2P.Services.Admin;
 using CoursesP2P.Services.AzureMedia;
 using CoursesP2P.Services.AzureStorageBlob;
-using CoursesP2P.Services.Cloudinary;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.Services.Instructors;
 using CoursesP2P.Services.Lectures;
@@ -64,13 +62,6 @@ namespace CoursesP2P.App
             RegisterServiceLayer(services);
 
             services.Configure<SendGridOptions>(this.Configuration.GetSection("EmailSettings"));
-
-            Account account = new Account(
-                         this.Configuration["Cloudinary:AppName"],
-                         this.Configuration["Cloudinary:AppKey"],
-                         this.Configuration["Cloudinary:AppSecret"]);
-            Cloudinary cloudinary = new Cloudinary(account);
-            services.AddSingleton(cloudinary);
 
             BlobServiceClient blobServiceClient = new BlobServiceClient(this.Configuration["AzureBlobStorage:ConnectionString"]);
             services.AddSingleton(blobServiceClient);
@@ -151,7 +142,6 @@ namespace CoursesP2P.App
             services.AddScoped<IStudentsService, StudentsService>();
             services.AddScoped<IInstructorsService, InstructorsService>();
             services.AddScoped<ILecturesService, LecturesService>();
-            services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddScoped<IReviewService, ReviewService>();
             services.AddTransient<IReCAPTCHAService, ReCAPTCHAService>();
             services.AddTransient<IPaymentsService, PaymentsService>();
