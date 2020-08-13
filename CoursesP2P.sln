@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoursesP2P.Tests", "Courses
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.P2P.Common", "Courses.P2P.Common\Courses.P2P.Common.csproj", "{0AB42AE3-E7A4-4995-994A-A98577EE903B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoursesP2P.Services.Mapping", "CoursesP2P.Services.Mapping\CoursesP2P.Services.Mapping.csproj", "{BB4CDD71-A9E0-4662-B86D-E60C94FC347C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoursesP2P.Services.Mapping", "CoursesP2P.Services.Mapping\CoursesP2P.Services.Mapping.csproj", "{BB4CDD71-A9E0-4662-B86D-E60C94FC347C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

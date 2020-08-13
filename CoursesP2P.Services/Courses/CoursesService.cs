@@ -96,13 +96,16 @@ namespace CoursesP2P.Services.Courses
                     string.Format(ExceptionMessages.NotFoundCourseById, id));
             }
 
-            model.Skills = this.db.Courses
-                .Where(x => x.Id == id)
-                .Select(x => x.Skills)
-                .FirstOrDefault()?
-                .Split('*')
-                .Select(x => x.Trim())
-                .ToList();
+            var skills = this.db.Courses
+               .Where(x => x.Id == id)
+               .Select(x => x.Skills)
+               .FirstOrDefault()?
+               .Split('*')
+               .Select(x => x.Trim())
+               .ToList();
+            skills.RemoveAt(skills.Count - 1);
+
+            model.Skills = skills;
 
             model.LectureName = this.db.Lectures
                 .Where(x => x.CourseId == id)

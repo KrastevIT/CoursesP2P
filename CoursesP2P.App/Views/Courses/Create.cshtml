@@ -18,10 +18,15 @@
                 <span class="text-danger" asp-validation-for="@Model.Description"></span>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Skills"></label>
-                <span class="control-label col-sm-2"><small class="text-primary">Всяко ново умение трябва да започва със *</small></span>
-                <input class="form-control" asp-for="@Model.Skills" placeholder="Пример: *Работа с текст *Използване на масиви и листове" />
-                <span class="text-danger" asp-validation-for="@Model.Skills"></span>
+                <div class="form-group">
+                    <label asp-for="@Model.Skills"></label>
+                    <input type="hidden" class="form-control" asp-for="@Model.Skills" id="inputSkills" />
+                    <input class="form-control" id="skills" placeholder="Въведете умение и натиснете ENTER"/>
+
+                    <div id="span-filed"></div>
+
+                    <span class="text-danger" asp-validation-for="@Model.Skills"></span>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Price"></label>
@@ -72,6 +77,26 @@
     function drop() {
         document.getElementById('uploadFile').parentNode.className = 'dragBox';
     }
+</script>
+
+<script>
+    document.getElementById('skills').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const input = document.getElementById('inputSkills');
+            const skill = document.getElementById('skills');
+            const spanFiled = document.getElementById('span-filed');
+            const span = document.createElement('span');
+
+            span.setAttribute('class', 'badge badge-success');
+            span.textContent = skill.value;
+            span.style.margin = '2px';
+
+            input.value += `${skill.value}*`;
+            skill.value = '';
+            spanFiled.appendChild(span);
+        }
+    })
 </script>
 
 @section Scripts {
