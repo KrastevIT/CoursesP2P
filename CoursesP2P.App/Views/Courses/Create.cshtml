@@ -80,12 +80,13 @@
 </script>
 
 <script>
+    const spanFiled = document.getElementById('span-filed');
+
     document.getElementById('skills').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             e.preventDefault();
             const input = document.getElementById('inputSkills');
             const skill = document.getElementById('skills');
-            const spanFiled = document.getElementById('span-filed');
             const span = document.createElement('span');
 
             span.setAttribute('class', 'badge badge-success');
@@ -95,6 +96,19 @@
             input.value += `${skill.value}*`;
             skill.value = '';
             spanFiled.appendChild(span);
+        }
+    })
+
+
+    spanFiled.addEventListener('click', function (e) {
+        const skills = document.getElementById('inputSkills').value.split('*');
+        const index = skills.indexOf(e.target.textContent);
+        if (index > -1) {
+            skills.splice(index, 1);
+            document.getElementById('inputSkills').value = skills.join('*');
+
+            const span = spanFiled.children[index];
+            spanFiled.removeChild(span);
         }
     })
 </script>

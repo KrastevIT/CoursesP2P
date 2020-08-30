@@ -33,10 +33,23 @@
                         <input class="form-control" asp-for="@Model.Description" />
                         <span class="text-danger" asp-validation-for="@Model.Description"></span>
                         <br />
-                        <h5 class="text-uppercase text-center">Умения</h5>
-                        <hr class="line-primary">
-                        <input class="form-control" asp-for="@Model.Skills" />
-                        <span class="text-danger" asp-validation-for="@Model.Skills"></span>
+                        @*<h5 class="text-uppercase text-center">Умения</h5>
+                            <hr class="line-primary">
+                            <input class="form-control" asp-for="@Model.Skills" />
+                            <span class="text-danger" asp-validation-for="@Model.Skills"></span>*@
+
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label asp-for="@Model.Skills"></label>
+                                <input type="hidden" class="form-control" asp-for="@Model.Skills" id="inputSkills" />
+                                <input class="form-control" id="skills" placeholder="Въведете умение и натиснете ENTER" />
+
+                                <div id="span-filed"></div>
+
+                                <span class="text-danger" asp-validation-for="@Model.Skills"></span>
+                            </div>
+                        </div>
+
                         <br />
                         <h5 class="text-uppercase text-center">Цена</h5>
                         <hr class="line-primary">
@@ -51,7 +64,7 @@
 
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-10 col-sm-push-2">
+                        <div class="text-center">
                             <input type="submit" value="Редактирай" class="btn btn-sm btn-warning" />
                             <a asp-controller="Instructors" asp-action="Index" class="btn btn-sm btn-info">Назад</a>
                         </div>
@@ -65,7 +78,7 @@
             <div class="list-group">
                 @foreach (var lectures in Model.Lectures)
                 {
-                    <a asp-area="" asp-controller="Lectures" asp-action="VideoEdit" asp-route-id="@lectures.Id" 
+                    <a asp-area="" asp-controller="Lectures" asp-action="VideoEdit" asp-route-id="@lectures.Id"
                        class="list-group-item list-group-item-action text-center">@lectures.Name</a>
                 }
             </div>
@@ -90,4 +103,52 @@
     function drop() {
         document.getElementById('uploadFile').parentNode.className = 'dragBox';
     }
+</script>
+
+<script>
+    const skills = document.getElementById('inputSkills').value.split('*');
+    skills.pop();
+
+    skills.forEach(skill => {
+        const span = document.createElement('span');
+
+        span.setAttribute('class', 'badge badge-success');
+        span.textContent = skill;
+        span.style.margin = '2px';
+
+        const spanFiled = document.getElementById('span-filed');
+        spanFiled.appendChild(span);
+    })
+
+
+    const spanFiled = document.getElementById('span-filed');
+    spanFiled.addEventListener('click', function (e) {
+        const skills = document.getElementById('inputSkills').value.split('*');
+
+        const index = skills.indexOf(e.target.textContent);
+        if (index > -1) {
+            skills.splice(index, 1);
+            document.getElementById('inputSkills').value = skills.join('*');
+
+            const span = spanFiled.children[index];
+            spanFiled.removeChild(span);
+        }
+    })
+
+    document.getElementById('skills').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const input = document.getElementById('inputSkills');
+            const skill = document.getElementById('skills');
+            const span = document.createElement('span');
+
+            span.setAttribute('class', 'badge badge-success');
+            span.textContent = skill.value;
+            span.style.margin = '2px';
+
+            input.value += `${skill.value}*`;
+            skill.value = '';
+            spanFiled.appendChild(span);
+        }
+    })
 </script>
