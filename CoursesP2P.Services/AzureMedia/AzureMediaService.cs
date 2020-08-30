@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CoursesP2P.ViewModels.AzureMedia;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Management.Media;
 using Microsoft.Azure.Management.Media.Models;
 using Microsoft.Azure.Storage.Blob;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure.Authentication;
@@ -14,13 +16,20 @@ namespace CoursesP2P.Services.AzureMedia
 {
     public class AzureMediaService : IAzureStorageBlob
     {
+        private AzureMediaSettings options;
+
+        public AzureMediaService(IOptions<AzureMediaSettings> options)
+        {
+            this.options = options.Value;
+        }
+
         //Качва файла в контейнера в хранилището, използвайки URL адреса на SAS.
         public async Task<Asset> CreateInputAssetAsync(IFormFile video)
         {
             IAzureMediaServicesClient client = await CreateMediaServicesClientAsync();
 
-            string resourceGroupName = "StorageTest";
-            string accountName = "coursesmedia";
+            string resourceGroupName = "coursesP2P";
+            string accountName = "coursesp2p";
             string assetName = Guid.NewGuid().ToString();
 
             Asset asset = await client.Assets.CreateOrUpdateAsync(resourceGroupName, accountName, assetName, new Asset());
@@ -51,8 +60,8 @@ namespace CoursesP2P.Services.AzureMedia
         {
             IAzureMediaServicesClient client = await CreateMediaServicesClientAsync();
 
-            string resourceGroupName = "StorageTest";
-            string accountName = "coursesmedia";
+            string resourceGroupName = "coursesP2P";
+            string accountName = "coursesp2p";
             string assetName = Guid.NewGuid().ToString();
 
             Asset outputAsset = await client.Assets.GetAsync(resourceGroupName, accountName, assetName);
@@ -76,8 +85,8 @@ namespace CoursesP2P.Services.AzureMedia
         {
             IAzureMediaServicesClient client = await CreateMediaServicesClientAsync();
 
-            string resourceGroupName = "StorageTest";
-            string accountName = "coursesmedia";
+            string resourceGroupName = "coursesP2P";
+            string accountName = "coursesp2p";
             string transformName = Guid.NewGuid().ToString();
 
             Transform transform = await client.Transforms.GetAsync(resourceGroupName, accountName, transformName);
@@ -106,8 +115,8 @@ namespace CoursesP2P.Services.AzureMedia
         {
             IAzureMediaServicesClient client = await CreateMediaServicesClientAsync();
 
-            string resourceGroupName = "StorageTest";
-            string accountName = "coursesmedia";
+            string resourceGroupName = "coursesP2P";
+            string accountName = "coursesp2p";
             string jobName = Guid.NewGuid().ToString();
 
             JobInput jobInput = new JobInputAsset(assetName: inputAssetName);
@@ -135,8 +144,8 @@ namespace CoursesP2P.Services.AzureMedia
         {
             IAzureMediaServicesClient client = await CreateMediaServicesClientAsync();
 
-            string resourceGroupName = "StorageTest";
-            string accountName = "coursesmedia";
+            string resourceGroupName = "coursesP2P";
+            string accountName = "coursesp2p";
 
             const int SleepIntervalMs = 60 * 1000;
 
@@ -174,12 +183,12 @@ namespace CoursesP2P.Services.AzureMedia
         {
             IAzureMediaServicesClient client = await CreateMediaServicesClientAsync();
 
-            string resourceGroup = "StorageTest";
-            string accountName = "coursesmedia";
+            string resourceGroupName = "coursesP2P";
+            string accountName = "coursesp2p";
             string locatorName = Guid.NewGuid().ToString();
 
             StreamingLocator locator = await client.StreamingLocators.CreateAsync(
-                resourceGroup,
+                resourceGroupName,
                 accountName,
                 locatorName,
         new StreamingLocator
@@ -196,8 +205,8 @@ namespace CoursesP2P.Services.AzureMedia
         {
             IAzureMediaServicesClient client = await CreateMediaServicesClientAsync();
 
-            string resourceGroupName = "StorageTest";
-            string accountName = "coursesmedia";
+            string resourceGroupName = "coursesP2P";
+            string accountName = "coursesp2p";
 
             const string DefaultStreamingEndpointName = "default";
 
@@ -233,25 +242,25 @@ namespace CoursesP2P.Services.AzureMedia
         {
             IAzureMediaServicesClient client = await CreateMediaServicesClientAsync();
 
-            string resourceGroupName = "StorageTest";
-            string accountName = "coursesmedia";
+            string resourceGroupName = "coursesP2P";
+            string accountName = "coursesp2p";
 
             await client.Assets.DeleteAsync(resourceGroupName, accountName, assetName);
         }
 
-        private static async Task<ServiceClientCredentials> GetCredentialsAsync()
+        private async Task<ServiceClientCredentials> GetCredentialsAsync()
         {
-            ClientCredential clientCredential = new ClientCredential("24b4eed7-c690-4128-80ce-39b55db2ee98", "01=yKAQ4KQ:HNsib@7Z[-a9KB.3SN7vG");
-            return await ApplicationTokenProvider.LoginSilentAsync("4a06d40c-e447-42be-baef-dd0421ed10bd", clientCredential, ActiveDirectoryServiceSettings.Azure);
+            ClientCredential clientCredential = new ClientCredential(this.options.ClientId, this.options.ClientSecret);
+            return await ApplicationTokenProvider.LoginSilentAsync("coursesp2pgmail.onmicrosoft.com", clientCredential, ActiveDirectoryServiceSettings.Azure);
         }
 
-        private static async Task<IAzureMediaServicesClient> CreateMediaServicesClientAsync()
+        private async Task<IAzureMediaServicesClient> CreateMediaServicesClientAsync()
         {
             var credentials = await GetCredentialsAsync();
 
             return new AzureMediaServicesClient(new Uri("https://management.azure.com"), credentials)
             {
-                SubscriptionId = "6d3b6cb5-9f03-4b82-8290-9e7f742e3398",
+                SubscriptionId = this.options.SubscriptionId
             };
         }
     }

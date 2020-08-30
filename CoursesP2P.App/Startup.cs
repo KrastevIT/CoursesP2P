@@ -15,6 +15,7 @@ using CoursesP2P.Services.ReCaptcha;
 using CoursesP2P.Services.Reviews;
 using CoursesP2P.Services.Students;
 using CoursesP2P.ViewModels;
+using CoursesP2P.ViewModels.AzureMedia;
 using CoursesP2P.ViewModels.PayPal;
 using CoursesP2P.ViewModels.ReCaptcha;
 using Microsoft.AspNetCore.Builder;
@@ -62,6 +63,8 @@ namespace CoursesP2P.App
             RegisterServiceLayer(services);
 
             services.Configure<SendGridOptions>(this.Configuration.GetSection("EmailSettings"));
+
+            services.Configure<AzureMediaSettings>(this.Configuration.GetSection("AzureMedia"));
 
             BlobServiceClient blobServiceClient = new BlobServiceClient(this.Configuration["AzureBlobStorage:ConnectionString"]);
             services.AddSingleton(blobServiceClient);
