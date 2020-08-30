@@ -29,7 +29,7 @@ namespace CoursesP2P.ViewModels.Courses.BindingModels
         [Required(ErrorMessage = ErrorMessages.RequiredSkills)]
         [MinLength(3, ErrorMessage = ErrorMessages.SkillLength)]
         [MaxLength(1000)]
-        [Display(Name = "Умения")]
+        [Display(Name = "Умения,които ще придобиеш")]
         public string Skills { get; set; }
 
         [Required]

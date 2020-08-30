@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-CoursesP2P.App-8227BA92-7011-4B09-8C17-3B9A7FB7FD01</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/45cf56e3-825d-472a-a001-862983ba9fe8/resourceGroups/coursesP2P/providers/microsoft.insights/components/coursesP2PInsights</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>

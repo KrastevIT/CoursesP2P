@@ -1,16 +1,15 @@
 {
   "dependencies": {
-    "appInsights1": {
-      "type": "appInsights",
-      "suggestion": "true",
-      "ignored": "true"
-    },
     "secrets1": {
       "type": "secrets"
     },
     "mssql1": {
       "type": "mssql",
       "connectionId": "DefaultConnection"
+    },
+    "appInsights1": {
+      "type": "appInsights",
+      "connectionId": "APPINSIGHTS_INSTRUMENTATIONKEY"
     }
   }
 }
