@@ -5,6 +5,8 @@ using CoursesP2P.ViewModels.Reviews;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.App.Controllers
@@ -38,36 +40,45 @@ namespace CoursesP2P.App.Controllers
         }
 
         [HttpPost]
-        [RequestFormLimits(MultipartBodyLengthLimit = 12000000000)]
-        [RequestSizeLimit(12000000000)]
+        [RequestFormLimits(MultipartBodyLengthLimit = 1200000000)]
+        [RequestSizeLimit(1200000000)]
         public async Task<IActionResult> Add(ReviewBindingModel model)
         {
             var userId = this.userManager.GetUserId(this.User);
             var modelValid = this.reviewService.GetReviewBindingModelWithCourseId(model.CourseId, userId);
             if (!ModelState.IsValid || modelValid == null)
             {
-                return Json("invalid");
+                ViewBag.Alert = "Невалидни Данни!";
+                return Json("Invalid");
             }
 
-            var inputAsset = await this.azureMediaService.CreateInputAssetAsync(model.Video);
 
-            var outputAsset = await this.azureMediaService.CreateOutputAssetAsync();
+            try
+            {
+                var inputAsset = await this.azureMediaService.CreateInputAssetAsync(model.Video);
 
-            var transform = await this.azureMediaService.GetOrCreateTransformAsync();
+                var outputAsset = await this.azureMediaService.CreateOutputAssetAsync();
 
-            var job = await this.azureMediaService.SubmitJobAsync(inputAsset.Name, outputAsset.Name, transform.Name);
+                var transform = await this.azureMediaService.GetOrCreateTransformAsync();
 
-            await this.azureMediaService.WaitForJobToFinishAsync(transform.Name, job.Name);
+                var job = await this.azureMediaService.SubmitJobAsync(inputAsset.Name, outputAsset.Name, transform.Name);
 
-            var streamingLocator = await this.azureMediaService.CreateStreamingLocatorAsync(outputAsset.Name);
+                await this.azureMediaService.WaitForJobToFinishAsync(transform.Name, job.Name);
 
-            var getStreamingUrls = await this.azureMediaService.GetStreamingUrlsAsync(streamingLocator.Name);
+                var streamingLocator = await this.azureMediaService.CreateStreamingLocatorAsync(outputAsset.Name);
 
-            await this.azureMediaService.CleanUpAsync(transform.Name, inputAsset.Name);
+                var getStreamingUrls = await this.azureMediaService.GetStreamingUrlsAsync(streamingLocator.Name);
 
-            await this.reviewService.SaveReviewDbAsync(model.CourseId, outputAsset.Name, getStreamingUrls[2]);
+                await this.azureMediaService.CleanUpAsync(transform.Name, inputAsset.Name);
 
-            return Json("valid");
+                await this.reviewService.SaveReviewDbAsync(model.CourseId, outputAsset.Name, getStreamingUrls[2]);
+
+                return Json("Valid");
+            }
+            catch
+            {
+                throw new InvalidOperationException("Неуспешно добаване в AzureMedia");
+            }
         }
     }
 }

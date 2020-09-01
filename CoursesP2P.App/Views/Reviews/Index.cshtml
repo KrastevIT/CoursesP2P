@@ -53,6 +53,20 @@
         const data = document.getElementById('uploadFile').files[0];
         const courseId = document.getElementById('courseId').value;
 
+        function successfully() {
+            document.getElementById('uploadFile').value = '';
+            document.querySelector('.loader').style.display = 'none'
+            alertDiv.setAttribute("class", "alert alert-success");
+            alertDiv.textContent = `Успешно добавихте ревю`;
+        }
+
+        function invalidAdd(message) {
+            alertDiv.setAttribute("class", "alert alert-danger");
+            alertDiv.innerHTML = message;
+            $("#uploadFile").val("");
+            $("#label").text("");
+        }
+
         const formData = new FormData();
         formData.append('video', data);
         formData.append('courseId', courseId);
@@ -61,7 +75,7 @@
             document.querySelector('.loader').style.display = 'block'
 
             alertDiv.setAttribute("class", "alert alert-info");
-            alertDiv.textContent = `Моля, изчакайте!`;
+            alertDiv.textContent = `Моля, изчакайте това ще отнеме 10-15 минути`;
             $("#label").text("");
             document.querySelector('.form-group').style.display = 'none';
             document.querySelector('.uploadOuter').style.display = 'none';
@@ -70,24 +84,25 @@
             fetch('/Reviews/Add', {
                 method: 'POST',
                 body: formData
-            });
-        } else if (data === undefined) {
-            alertDiv.setAttribute("class", "alert alert-danger");
-            alertDiv.innerHTML = 'Не сте добавили видео ревю';
-            $("#uploadFile").val("");
-            $("#label").text("");
-        } else if (data.size > 1200000000) {
-            alertDiv.setAttribute("class", "alert alert-danger");
-            alertDiv.innerHTML = 'Ревюто трябва да е до 1 гигабайт!';
-            $("#uploadFile").val("");
-            $("#label").text("");
-        } else {
-            alertDiv.setAttribute("class", "alert alert-danger");
-            alertDiv.textContent = 'Невалидни Данни!';
-            $("#uploadFile").val("");
-            $("#label").text("");
-        }
+            }).then(r => r.json())
+                .then(result => {
+                    if (result === 'Valid') {
+                        successfully();
+                    } else {
+                        alertDiv.setAttribute("class", "alert alert-danger");
+                        alertDiv.innerHTML = 'Неуспешно добавяне!';
+                    }
+                }).catch((e) => {
+                    successfully();
+                });
 
+        } else if (data === undefined) {
+            invalidAdd('Не сте добавили видео ревю');
+        } else if (data.size > 1200000000) {
+            invalidAdd('Ревюто трябва да е до 1 гигабайт!');
+        } else {
+            invalidAdd('Невалидни Данни!');
+        }
     });
 </script>
 

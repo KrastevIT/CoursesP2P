@@ -47,6 +47,9 @@
                                 <a asp-controller="Instructors" asp-action="Index" class="btn btn-info btn-sm">Назад</a>
                             </div>
                         </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="loader"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -82,61 +85,78 @@
     });
 </script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
+<script>
+    document.getElementById('saveId').addEventListener('click', function (e) {
+        const alertDiv = document.getElementById("alert");
+        const data = document.getElementById('uploadFile').files[0];
+        const name = document.getElementById('nameId').value;
 
-        $('#saveId').on('click', function () {
+        function successfully() {
+            document.getElementById('uploadFile').value = '';
+            document.querySelector('.loader').style.display = 'none'
+            alertDiv.setAttribute("class", "alert alert-success");
+            alertDiv.textContent = `Успешно редактирахте лекция`;
+            document.querySelectorAll('.form-group')[0].style.display = 'block';
+            document.querySelectorAll('.form-group')[1].style.display = 'block';
+            document.querySelector('.uploadOuter').style.display = 'block';
 
-            var data = new FormData();
+            setTimeout(() => {
+                alertDiv.setAttribute("class", "text-center");
+                alertDiv.textContent = '';
+            }, 5000)
+        }
 
-            var files = $("#uploadFile").get(0).files;
-            var name = $("#nameId").val();
+        function invalidAdd(message) {
+            alertDiv.setAttribute("class", "alert alert-danger");
+            alertDiv.innerHTML = message;
+            $("#uploadFile").val("");
+            $("#label").text("");
+        }
 
-            var size;
-            if (files.length > 0) {
-                size = document.getElementById('uploadFile').files[0].size;
-            }
-            if (size > 1200000000) {
-                let div = document.getElementById("alert");
-                div.setAttribute("class", "alert alert-danger");
-                div.innerHTML = 'Лекцията трябва да е до 1 гигабайт!';
-            }
-            if (name.length > 0) {
-                data.append("VideoUpload", files[0]);
-                data.append("id", $("#lectureId").val());
-                data.append("Name", $("#nameId").val());
-                data.append("Asset", $("#assetId").val());
-                data.append("Video", $("#videoId").val());
+        const formData = new FormData();
+        formData.append("VideoUpload", data);
+        formData.append("id", $("#lectureId").val());
+        formData.append("Name", $("#nameId").val());
+        formData.append("Asset", $("#assetId").val());
+        formData.append("Video", $("#videoId").val());
 
-                let div = document.getElementById("alert");
-                div.setAttribute("class", "alert alert-success");
-                div.innerHTML = `Успешно редактирахте лекция ${$("#nameId").val()}.Тя ще бъде обработена и до няколко минути ще я видиде в курса си.`;
-                $("#uploadFile").val("");
-                $("#label").text("");
+        if (name.length > 0) {
+            document.querySelector('.loader').style.display = 'block'
 
-                var ajaxRequest = $.ajax({
-                    type: "POST",
-                    url: '/Lectures/Edit',
-                    data: data,
-                    datatype: "html",
-                    contentType: false,
-                    processData: false,
-                });
+            alertDiv.setAttribute("class", "alert alert-info");
+            alertDiv.textContent = `Моля, изчакайте това ще отнеме 10-15 минути`;
+            $("#label").text("");
+            document.querySelectorAll('.form-group')[0].style.display = 'none';
+            document.querySelectorAll('.form-group')[1].style.display = 'none';
+            document.querySelector('.uploadOuter').style.display = 'none';
 
-                ajaxRequest.done(function (x) {
-                    let div = document.getElementById("alert");
-                    if (x === 'invalid') {
-                        div.setAttribute("class", "alert alert-danger");
-                        div.innerHTML = 'Неуспешно редактиране на лекция!';
+            fetch('/Lectures/Edit', {
+                method: 'POST',
+                body: formData
+            }).then(r => r.json())
+                .then(result => {
+                    if (result === 'Valid') {
+                        successfully();
+                        location.reload();
+                    } else {
+                        alertDiv.setAttribute("class", "alert alert-danger");
+                        alertDiv.innerHTML = 'Неуспешно добавяне!';
                     }
+                }).catch((e) => {
+                    successfully();
+                    location.reload();
                 });
-            }
-            else {
-                let div = document.getElementById("alert");
-                div.setAttribute("class", "alert alert-danger");
-                div.innerHTML = 'Неуспешно редактиране на лекция.';
-            }
-        });
+
+        } else if (data === undefined) {
+            invalidAdd('Не сте добавили видео');
+        } else if (data.size > 1200000000) {
+            invalidAdd('Видеото трябва да е до 1 гигабайт!');
+        } else if (name === '') {
+            invalidAdd('Полето име е задължително');
+        } else {
+            invalidAdd('Невалидни Данни!');
+        }
+
     });
 </script>
 

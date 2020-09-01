@@ -4,9 +4,9 @@
 }
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<link href="~/assets/css/spiner.css" rel="stylesheet" />
 
 <div id="alert" role="alert"></div>
-
 <div class="d-flex justify-content-center">
     <div class="form-horizontal">
         <h4 class="text-center">Добави нова лекция</h4>
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="uploadOuter">
-            <label for="uploadFile" class="btn btn-primary">Качи видео до 10 ГБ</label>
+            <label for="uploadFile" class="btn btn-primary">Качи видео до 1 ГБ</label>
             <strong>ИЛИ</strong>
             <span class="dragBox">
                 Постави тук
@@ -37,6 +37,9 @@
                 <a asp-controller="Instructors" asp-action="Index" class="btn btn-danger">Назад</a>
             </div>
         </div>
+        <div class="d-flex justify-content-center">
+            <div class="loader"></div>
+        </div>
     </div>
 </div>
 
@@ -50,60 +53,78 @@
     });
 </script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
+<script>
+    document.getElementById('saveId').addEventListener('click', function (e) {
+        const alertDiv = document.getElementById("alert");
+        const data = document.getElementById('uploadFile').files[0];
+        const courseId = document.getElementById('courseId').value;
+        const name = document.getElementById('nameId').value;
 
-        $('#saveId').on('click', function () {
+        function successfully() {
+            document.getElementById('nameId').value = '';
+            document.getElementById('uploadFile').value = '';
+            document.querySelector('.loader').style.display = 'none'
+            alertDiv.setAttribute("class", "alert alert-success");
+            alertDiv.textContent = `Успешно добавихте лекция ${name}`;
+            document.querySelectorAll('.form-group')[0].style.display = 'block';
+            document.querySelectorAll('.form-group')[1].style.display = 'block';
+            document.querySelector('.uploadOuter').style.display = 'block';
+            document.querySelector('h4').style.display = 'block';
 
-            var data = new FormData();
+            setTimeout(() => {
+                alertDiv.setAttribute("class", "text-center");
+                alertDiv.textContent = '';
+            }, 5000)
+        }
 
-            var files = $("#uploadFile").get(0).files;
-            var name = $("#nameId").val();
+        function invalidAdd(message) {
+            alertDiv.setAttribute("class", "alert alert-danger");
+            alertDiv.innerHTML = message;
+            $("#uploadFile").val("");
+            $("#label").text("");
+        }
 
-            var size;
-            if (files.length > 0) {
-                size = document.getElementById('uploadFile').files[0].size;
-            }
-            if (size > 12000000000) {
-                let div = document.getElementById("alert");
-                div.setAttribute("class", "alert alert-danger");
-                div.innerHTML = 'Лекцията трябва да е до 10 гигабайт!';
-            }
-            else if (files.length > 0 && name.length > 0) {
-                data.append("Video", files[0]);
-                data.append("CourseId", $("#courseId").val());
-                data.append("Name", $("#nameId").val());
+        const formData = new FormData();
+        formData.append('video', data);
+        formData.append('courseId', courseId);
+        formData.append('name', name);
 
-                let div = document.getElementById("alert");
-                div.setAttribute("class", "alert alert-success");
-                div.innerHTML = `Успешно добавихте лекция ${$("#nameId").val()}.Тя ще бъде обработена и до няколко часа ще я видиде в курса си.`;
-                $("#nameId").val("");
-                $("#uploadFile").val("");
-                $("#label").text("");
+        if (data !== undefined && data.size < 1200000000 && name !== '') {
+            document.querySelector('.loader').style.display = 'block'
 
-                var ajaxRequest = $.ajax({
-                    type: "POST",
-                    url: '/Lectures/Add',
-                    data: data,
-                    datatype: "html",
-                    contentType: false,
-                    processData: false,
-                });
+            alertDiv.setAttribute("class", "alert alert-info");
+            alertDiv.textContent = `Моля, изчакайте това ще отнеме 10-15 минути`;
+            $("#label").text("");
+            document.querySelectorAll('.form-group')[0].style.display = 'none';
+            document.querySelectorAll('.form-group')[1].style.display = 'none';
+            document.querySelector('.uploadOuter').style.display = 'none';
+            document.querySelector('h4').style.display = 'none';
 
-                ajaxRequest.done(function (x) {
-                    let div = document.getElementById("alert");
-                    if (x === 'invalid') {
-                        div.setAttribute("class", "alert alert-danger");
-                        div.innerHTML = 'Неуспешно добаване на лекция!';
+            fetch('/Lectures/Add', {
+                method: 'POST',
+                body: formData
+            }).then(r => r.json())
+                .then(result => {
+                    if (result === 'Valid') {
+                        successfully();
+                    } else {
+                        alertDiv.setAttribute("class", "alert alert-danger");
+                        alertDiv.innerHTML = 'Неуспешно добавяне!';
                     }
+                }).catch((e) => {
+                    successfully();
                 });
-            }
-            else {
-                let div = document.getElementById("alert");
-                div.setAttribute("class", "alert alert-danger");
-                div.innerHTML = 'Неуспешно добаване на лекция.';
-            }
-        });
+
+        } else if (data === undefined) {
+            invalidAdd('Не сте добавили видео');
+        } else if (data.size > 1200000000) {
+            invalidAdd('Видеото трябва да е до 1 гигабайт!');
+        } else if (name === '') {
+            invalidAdd('Полето име е задължително');
+        } else {
+            invalidAdd('Невалидни Данни!');
+        }
+
     });
 </script>
 
