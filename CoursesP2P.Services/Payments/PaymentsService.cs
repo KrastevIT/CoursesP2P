@@ -73,8 +73,8 @@ namespace CoursesP2P.Services.Payments
                 intent = "sale",
                 redirect_urls = new RedirectUrls()
                 {
-                    return_url = "https://localhost:44391/Payments/Process",
-                    cancel_url = "https://localhost:44391/Payments/Cancel"
+                    return_url = "https://coursesp2p.azurewebsites.net/Payments/Process",
+                    cancel_url = "https://coursesp2p.azurewebsites.net/Payments/Cancel"
                 }
             };
 
