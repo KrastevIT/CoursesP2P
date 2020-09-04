@@ -52,6 +52,14 @@ namespace CoursesP2P.App
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CoursesP2PDbContext>();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            });
+
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;

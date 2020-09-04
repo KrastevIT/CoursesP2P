@@ -83,7 +83,7 @@
     const spanFiled = document.getElementById('span-filed');
 
     document.getElementById('skills').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' || e.keyCode === '13') {
             e.preventDefault();
             const input = document.getElementById('inputSkills');
             const skill = document.getElementById('skills');
