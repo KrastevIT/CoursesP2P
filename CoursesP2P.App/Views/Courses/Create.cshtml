@@ -21,7 +21,7 @@
                 <div class="form-group">
                     <label asp-for="@Model.Skills"></label>
                     <input type="hidden" class="form-control" asp-for="@Model.Skills" id="inputSkills" />
-                    <input class="form-control" id="skills" placeholder="Въведете умение и натиснете TAB"/>
+                    <input class="form-control" id="skills" placeholder="Въведете умение и натиснете TAB" />
 
                     <div id="span-filed"></div>
 
@@ -30,7 +30,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="Price"></label>
-                <input type="number" class="form-control" asp-for="Price" />
+                <div class="input-group mb-3">
+                    <span class="input-group-text">€</span>
+                    <input type="number" class="form-control" asp-for="Price" />
+                </div>
                 <span class="text-danger" asp-validation-for="Price"></span>
             </div>
             <div class="form-group">
