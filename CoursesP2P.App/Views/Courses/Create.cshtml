@@ -3,18 +3,20 @@
     ViewData["Title"] = "Create";
 }
 
+<div class="text-center" id="alert" role="alert"></div>
+
 <div class="container">
     <form enctype="multipart/form-data" asp-controller="Courses" asp-action="Create" method="post" class="form-horizontal">
         <div class="col-lg-7 col-md-8 mx-auto">
             <h4 class="text-center">Създай нов курс</h4>
             <div class="form-group">
                 <label asp-for="Name"></label>
-                <input class="form-control" asp-for="Name" />
+                <input class="form-control" asp-for="Name" id="name" />
                 <span class="text-danger" asp-validation-for="Name"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.Description"></label>
-                <input class="form-control" asp-for="@Model.Description" />
+                <input class="form-control" asp-for="@Model.Description" id="description" />
                 <span class="text-danger" asp-validation-for="@Model.Description"></span>
             </div>
             <div class="form-group">
@@ -32,13 +34,13 @@
                 <label asp-for="Price"></label>
                 <div class="input-group mb-3">
                     <span class="input-group-text">€</span>
-                    <input type="number" class="form-control" asp-for="Price" />
+                    <input type="number" class="form-control" asp-for="Price" id="price" />
                 </div>
                 <span class="text-danger" asp-validation-for="Price"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Category" class="col-sm-2"></label>
-                <select asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()" class="form-control text-body"></select>
+                <select asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()" class="form-control text-body" id="category"></select>
                 <span asp-validation-for="Category"></span>
             </div>
             <div class="uploadOuter">
@@ -60,11 +62,14 @@
         <hr />
         <div class="form-group">
             <div class="text-center">
-                <input type="submit" value="Добави" class="btn btn-info" />
+                <input type="submit" value="Добави" class="btn btn-info" id="saveId" />
                 <a asp-controller="Instructors" asp-action="Index" class="btn btn-danger">Назад</a>
             </div>
         </div>
     </form>
+    <div class="d-flex justify-content-center">
+        <div class="loader"></div>
+    </div>
 </div>
 
 <script>
@@ -125,6 +130,76 @@
             spanFiled.removeChild(span);
         }
     })
+</script>
+
+<script>
+    document.getElementById('saveId').addEventListener('click', function (e) {
+        e.preventDefault();
+        const alertDiv = document.getElementById("alert");
+        const data = document.getElementById('uploadVideo').files[0];
+        const image = document.getElementById('uploadFile').files[0];
+        const name = document.getElementById('name').value;
+        const description = document.getElementById('description').value;
+        const skills = document.getElementById('inputSkills').value;
+        const price = document.getElementById('price').value;
+        const category = document.getElementById('category').value;
+
+        if (!image || !name || !description || !skills || !price || !category) {
+            invalidAdd('Моля попълнете всички полета');
+            return;
+        }
+
+        function successfully() {
+            document.querySelector('.loader').style.display = 'none'
+            alertDiv.setAttribute("class", "alert alert-success");
+            alertDiv.textContent = `Успешно добавихте курс ${name}. Обработва се и скоро ще се появи в секция Лектор раздел Нови.`;
+        }
+
+        function invalidAdd(message) {
+            alertDiv.setAttribute("class", "alert alert-danger");
+            alertDiv.innerHTML = message;
+        }
+
+        const formData = new FormData();
+        formData.append('image', image);
+        formData.append('video', data);
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('skills', skills);
+        formData.append('price', price);
+        formData.append('category', category);
+
+        if (data !== undefined && data.size < 1200000000) {
+            document.querySelector('.loader').style.display = 'block'
+
+            alertDiv.setAttribute("class", "alert alert-info");
+            alertDiv.textContent = `Моля, изчакайте това ще отнеме 5-10 минути`;
+            $("#label").text("");
+            document.querySelector('.form-horizontal').style.display = 'none'
+
+            fetch('/Courses/Create', {
+                method: 'POST',
+                body: formData
+            }).then(r => r.json())
+                .then(result => {
+                    if (result === 'Valid') {
+                        successfully();
+                    } else {
+                        alertDiv.setAttribute("class", "alert alert-danger");
+                        alertDiv.innerHTML = 'Неуспешно добавяне!';
+                    }
+                }).catch((e) => {
+                    successfully();
+                });
+
+        } else if (data === undefined) {
+            invalidAdd('Не сте добавили видео ревю');
+        } else if (data.size > 1200000000) {
+            invalidAdd('Ревюто трябва да е до 1 гигабайт!');
+        } else {
+            invalidAdd('Невалидни Данни!');
+        }
+    });
 </script>
 
 @section Scripts {

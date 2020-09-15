@@ -2,10 +2,13 @@
 using CoursesP2P.Services.AzureMedia;
 using CoursesP2P.Services.AzureStorageBlob;
 using CoursesP2P.Services.Courses;
+using CoursesP2P.Services.Reviews;
 using CoursesP2P.ViewModels.Courses.BindingModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CoursesP2P.App.Controllers
@@ -15,17 +18,20 @@ namespace CoursesP2P.App.Controllers
         private const int ItemsPerPage = 6;
 
         private readonly ICoursesService coursesService;
+        private readonly IReviewService reviewService;
         private readonly UserManager<User> userManager;
         private readonly IAzureStorageBlobService azureStorageBlobService;
         private readonly IAzureStorageBlob azureMediaService;
 
         public CoursesController(
             ICoursesService coursesService,
+            IReviewService reviewService,
             UserManager<User> userManager,
             IAzureStorageBlobService azureStorageBlobService,
             IAzureStorageBlob azureMediaService)
         {
             this.coursesService = coursesService;
+            this.reviewService = reviewService;
             this.userManager = userManager;
             this.azureStorageBlobService = azureStorageBlobService;
             this.azureMediaService = azureMediaService;
@@ -53,56 +59,48 @@ namespace CoursesP2P.App.Controllers
 
         [Authorize]
         [HttpPost]
+        [RequestFormLimits(MultipartBodyLengthLimit = 1200000000)]
+        [RequestSizeLimit(1200000000)]
         public async Task<IActionResult> Create(CreateCourseBindingModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                ViewBag.Alert = "Невалидни Данни!";
+                return Json("Invalid");
             }
 
-            var user = await this.userManager.GetUserAsync(this.User);
+            try
+            {
+                var inputAsset = await this.azureMediaService.CreateInputAssetAsync(model.Video);
 
-            var imageUrl = await this.azureStorageBlobService.UploadImageAsync(model.Image);
+                var outputAsset = await this.azureMediaService.CreateOutputAssetAsync();
 
-            var courseId = await this.coursesService.CreateAsync(model, user.Id, user.FirstName, user.LastName, imageUrl);
+                var transform = await this.azureMediaService.GetOrCreateTransformAsync();
 
-            return RedirectToAction("Index", "Instructors");
+                var job = await this.azureMediaService.SubmitJobAsync(inputAsset.Name, outputAsset.Name, transform.Name);
 
-            //var userId = this.userManager.GetUserId(this.User);
-            //var modelValid = this.reviewService.GetReviewBindingModelWithCourseId(model.CourseId, userId);
-            //if (!ModelState.IsValid || modelValid == null)
-            //{
-            //    ViewBag.Alert = "Невалидни Данни!";
-            //    return Json("Invalid");
-            //}
+                await this.azureMediaService.WaitForJobToFinishAsync(transform.Name, job.Name);
 
+                var streamingLocator = await this.azureMediaService.CreateStreamingLocatorAsync(outputAsset.Name);
 
-            //try
-            //{
-            //    var inputAsset = await this.azureMediaService.CreateInputAssetAsync(model.Video);
+                var getStreamingUrls = await this.azureMediaService.GetStreamingUrlsAsync(streamingLocator.Name);
 
-            //    var outputAsset = await this.azureMediaService.CreateOutputAssetAsync();
+                await this.azureMediaService.CleanUpAsync(transform.Name, inputAsset.Name);
 
-            //    var transform = await this.azureMediaService.GetOrCreateTransformAsync();
+                var user = await this.userManager.GetUserAsync(this.User);
 
-            //    var job = await this.azureMediaService.SubmitJobAsync(inputAsset.Name, outputAsset.Name, transform.Name);
+                var imageUrl = await this.azureStorageBlobService.UploadImageAsync(model.Image);
 
-            //    await this.azureMediaService.WaitForJobToFinishAsync(transform.Name, job.Name);
+                var courseId = await this.coursesService.CreateAsync(model, user.Id, user.FirstName, user.LastName, imageUrl);
 
-            //    var streamingLocator = await this.azureMediaService.CreateStreamingLocatorAsync(outputAsset.Name);
+                await this.reviewService.SaveReviewDbAsync(courseId, outputAsset.Name, getStreamingUrls[2]);
 
-            //    var getStreamingUrls = await this.azureMediaService.GetStreamingUrlsAsync(streamingLocator.Name);
-
-            //    await this.azureMediaService.CleanUpAsync(transform.Name, inputAsset.Name);
-
-            //    await this.reviewService.SaveReviewDbAsync(model.CourseId, outputAsset.Name, getStreamingUrls[2]);
-
-            //    return Json("Valid");
-            //}
-            //catch
-            //{
-            //    throw new InvalidOperationException("Неуспешно добаване в AzureMedia");
-            //}
+                return Json("Valid");
+            }
+            catch
+            {
+                throw new InvalidOperationException("Неуспешно добаване в AzureMedia");
+            }
 
         }
 

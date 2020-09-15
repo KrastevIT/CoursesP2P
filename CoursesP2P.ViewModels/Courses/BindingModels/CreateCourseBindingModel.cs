@@ -41,6 +41,9 @@ namespace CoursesP2P.ViewModels.Courses.BindingModels
         [BytesSizeLimit(22000000, ErrorMessage = ErrorMessages.ImageLength)]
         public IFormFile Image { get; set; }
 
+        [Required]
+        [Video(ErrorMessage = "Невалиден формат")]
+        [BytesSizeLimit(12000000000)]
         public IFormFile Video { get; set; }
 
         public DateTime CreatedOn { get; set; }
