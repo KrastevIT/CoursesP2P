@@ -4,14 +4,14 @@
     ViewData["Title"] = "Index";
 }
 @*@if (@TempData["Alert"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        @TempData["Alert"]
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-}*@
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Alert"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }*@
 <div class="d-flex justify-content-center">
     <ul class="nav nav-pills nav-pills-primary nav-pills-icons nav-pills-lg" role="tablist">
         <li class="nav-item m-auto">
@@ -81,20 +81,15 @@
                                         <li class="list-group-item">@course.Orders Записани </li>
                                     </ul>
                                 </div>
+                                <div class="text-center">
+                                    <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="badge badge-primary">Ревю</a>
+                                </div>
                             </div>
                             <div class="card-footer text-center">
-                                @if (course.IsReview)
-                                {
-                                    <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-info btn-sm">Добави лекция</a>
-                                }
-                                else
-                                {
-                                    <a asp-controller="Reviews" asp-action="Index" asp-route-id="@course.Id" class="btn btn-info btn-sm">Добави ревю</a>
-                                }
+                                <a asp-controller="Lectures" asp-action="Add" asp-route-id="@course.Id" class="btn btn-info btn-sm">Добави лекция</a>
                                 @if (course.Lectures.Count() > 0)
                                 {
                                     <a asp-controller="Instructors" asp-action="Active" asp-route-courseId="@course.Id" class="btn btn-info btn-sm">Публикувай</a>
-
                                 }
                                 else
                                 {

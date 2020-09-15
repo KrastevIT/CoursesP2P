@@ -35,7 +35,6 @@ namespace CoursesP2P.Services.Instructors
                 .Where(x => x.InstructorId == userId)
                 .To<CourseInstructorViewModel>()
                 .ToList();
-            models.ForEach(x => x.IsReview = this.db.Reviews.Any(y => y.CourseId == x.Id));
 
             return models;
         }

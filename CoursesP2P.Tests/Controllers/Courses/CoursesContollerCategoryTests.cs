@@ -2,6 +2,7 @@
 using CoursesP2P.Data;
 using CoursesP2P.Models;
 using CoursesP2P.Services.Courses;
+using CoursesP2P.Services.Reviews;
 using CoursesP2P.Tests.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Xunit;
@@ -15,6 +16,7 @@ namespace CoursesP2P.Tests.Controllers.Courses
         private ICoursesService coursesService;
         private UserManager<User> userManager;
         private CoursesController coursesController;
+        private IReviewService reviewService;
 
         public CoursesContollerCategoryTests()
         {
@@ -22,7 +24,7 @@ namespace CoursesP2P.Tests.Controllers.Courses
             this.userManager = UserManagerMock.UserManagerMockTest();
 
             this.coursesService = new CoursesService(db);
-            this.coursesController = new CoursesController(coursesService, userManager, null);
+            this.coursesController = new CoursesController(coursesService, reviewService, userManager, null, null);
         }
 
         [Theory]

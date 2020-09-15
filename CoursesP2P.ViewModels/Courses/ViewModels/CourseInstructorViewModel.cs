@@ -26,8 +26,6 @@ namespace CoursesP2P.ViewModels.Courses.ViewModels
 
         public int Orders { get; set; }
 
-        public bool IsReview { get; set; }
-
         public bool Status { get; set; }
 
         public bool Active { get; set; }

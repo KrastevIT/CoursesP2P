@@ -44,6 +44,7 @@ namespace CoursesP2P.Tests.Services.Courses
                new Course
                {
                    Id = 2,
+                    Skills = "skillOne *skilTwo"
                }
             };
 
