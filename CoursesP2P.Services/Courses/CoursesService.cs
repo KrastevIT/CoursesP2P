@@ -64,7 +64,7 @@ namespace CoursesP2P.Services.Courses
             return categoryDetails;
         }
 
-        public async Task CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName, string imageUrl)
+        public async Task<int> CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName, string imageUrl)
         {
             var course = new Course
             {
@@ -79,8 +79,11 @@ namespace CoursesP2P.Services.Courses
                 InstructorId = userId
             };
 
-            await this.db.Courses.AddAsync(course);
+            var item = await this.db.Courses.AddAsync(course);
             await this.db.SaveChangesAsync();
+            var courseId = item.Entity.Id;
+
+            return courseId;
         }
 
         public CourseDetailsViewModel Details(int id)

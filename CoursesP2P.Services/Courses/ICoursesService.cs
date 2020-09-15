@@ -15,7 +15,7 @@ namespace CoursesP2P.Services.Courses
 
         CategoryViewModel GetCategoryDetails(string name, int page);
 
-        Task CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName, string imageUrl);
+        Task<int> CreateAsync(CreateCourseBindingModel model, string userId, string userFirstName, string userLastName, string imageUrl);
 
         CourseDetailsViewModel Details(int id);
 

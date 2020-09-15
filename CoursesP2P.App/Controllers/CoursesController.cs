@@ -1,4 +1,5 @@
 ﻿using CoursesP2P.Models;
+using CoursesP2P.Services.AzureMedia;
 using CoursesP2P.Services.AzureStorageBlob;
 using CoursesP2P.Services.Courses;
 using CoursesP2P.ViewModels.Courses.BindingModels;
@@ -16,15 +17,18 @@ namespace CoursesP2P.App.Controllers
         private readonly ICoursesService coursesService;
         private readonly UserManager<User> userManager;
         private readonly IAzureStorageBlobService azureStorageBlobService;
+        private readonly IAzureStorageBlob azureMediaService;
 
         public CoursesController(
             ICoursesService coursesService,
             UserManager<User> userManager,
-            IAzureStorageBlobService azureStorageBlobService)
+            IAzureStorageBlobService azureStorageBlobService,
+            IAzureStorageBlob azureMediaService)
         {
             this.coursesService = coursesService;
             this.userManager = userManager;
             this.azureStorageBlobService = azureStorageBlobService;
+            this.azureMediaService = azureMediaService;
         }
 
         public IActionResult Category(string name, int page = 1)
@@ -60,9 +64,46 @@ namespace CoursesP2P.App.Controllers
 
             var imageUrl = await this.azureStorageBlobService.UploadImageAsync(model.Image);
 
-            await this.coursesService.CreateAsync(model, user.Id, user.FirstName, user.LastName, imageUrl);
+            var courseId = await this.coursesService.CreateAsync(model, user.Id, user.FirstName, user.LastName, imageUrl);
 
             return RedirectToAction("Index", "Instructors");
+
+            //var userId = this.userManager.GetUserId(this.User);
+            //var modelValid = this.reviewService.GetReviewBindingModelWithCourseId(model.CourseId, userId);
+            //if (!ModelState.IsValid || modelValid == null)
+            //{
+            //    ViewBag.Alert = "Невалидни Данни!";
+            //    return Json("Invalid");
+            //}
+
+
+            //try
+            //{
+            //    var inputAsset = await this.azureMediaService.CreateInputAssetAsync(model.Video);
+
+            //    var outputAsset = await this.azureMediaService.CreateOutputAssetAsync();
+
+            //    var transform = await this.azureMediaService.GetOrCreateTransformAsync();
+
+            //    var job = await this.azureMediaService.SubmitJobAsync(inputAsset.Name, outputAsset.Name, transform.Name);
+
+            //    await this.azureMediaService.WaitForJobToFinishAsync(transform.Name, job.Name);
+
+            //    var streamingLocator = await this.azureMediaService.CreateStreamingLocatorAsync(outputAsset.Name);
+
+            //    var getStreamingUrls = await this.azureMediaService.GetStreamingUrlsAsync(streamingLocator.Name);
+
+            //    await this.azureMediaService.CleanUpAsync(transform.Name, inputAsset.Name);
+
+            //    await this.reviewService.SaveReviewDbAsync(model.CourseId, outputAsset.Name, getStreamingUrls[2]);
+
+            //    return Json("Valid");
+            //}
+            //catch
+            //{
+            //    throw new InvalidOperationException("Неуспешно добаване в AzureMedia");
+            //}
+
         }
 
         public IActionResult Details(int id)

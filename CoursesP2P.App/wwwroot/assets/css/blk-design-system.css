@@ -21,7 +21,6 @@
     font-weight: bold;
     line-height: 95px;
     color: #999;
-    border: 2px dashed #ccc;
     display: inline-block;
     transition: transform 0.3s;
 }

@@ -41,6 +41,8 @@ namespace CoursesP2P.ViewModels.Courses.BindingModels
         [BytesSizeLimit(22000000, ErrorMessage = ErrorMessages.ImageLength)]
         public IFormFile Image { get; set; }
 
+        public IFormFile Video { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public string InstructorFullName { get; set; }

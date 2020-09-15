@@ -41,15 +41,18 @@
                 <select asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()" class="form-control text-body"></select>
                 <span asp-validation-for="Category"></span>
             </div>
+            <div class="uploadOuter">
+                <label for="uploadFile" class="btn btn-primary">Качи изображение до 20 MБ</label>
+                <strong>&</strong>
+                <label for="uploadVideo" class="btn btn-primary">Качи видео ревю до 1 ГБ</label>
+                <span class="dragBox">
+                    <label class="text-success" id="label"></label>
+                    <input type="file" asp-for="@Model.Image" onChange="dragNdrop(event)" ondragover="drag()" ondrop="drop()" id="uploadFile" />
+                    <input type="file" asp-for="@Model.Video" id="uploadVideo" />
+                </span>
+            </div>
         </div>
-        <div class="uploadOuter">
-            <label for="uploadFile" class="btn btn-primary">Качи изображение до 20 MБ</label>
-            <strong>ИЛИ</strong>
-            <span class="dragBox">
-                Постави тук
-                <input type="file" asp-for="@Model.Image" onChange="dragNdrop(event)" ondragover="drag()" ondrop="drop()" id="uploadFile" />
-            </span>
-        </div>
+
         <div class="col-lg-7 col-md-8 mx-auto">
             <span class=" col-sm-2 text-danger" asp-validation-for="@Model.Image"></span>
         </div>
@@ -80,6 +83,14 @@
     function drop() {
         document.getElementById('uploadFile').parentNode.className = 'dragBox';
     }
+</script>
+
+<script>
+    document.getElementById('uploadVideo').addEventListener('change', function (event) {
+        let label = document.getElementById("label");
+        label.textContent = event.target.files[0].name
+    })
+
 </script>
 
 <script>
