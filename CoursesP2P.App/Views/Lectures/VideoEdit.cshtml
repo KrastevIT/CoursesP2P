@@ -22,7 +22,7 @@
                         <input type="hidden" asp-for="@Model.Asset" id="assetId" />
                         <input type="hidden" asp-for="@Model.Video" id="videoId" />
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Име</label>
+                            @*<label class="control-label col-sm-2">Име</label>*@
                             <div class="col-sm-10">
                                 <input class="form-control" asp-for="Name" id="nameId" />
                                 <span class="text-danger" asp-validation-for="Name"></span>
@@ -30,9 +30,7 @@
                         </div>
                         <div class="uploadOuter">
                             <label for="uploadFile" class="btn btn-primary">Качи ново видео до 1 ГБ</label>
-                            <strong>ИЛИ</strong>
-                            <span class="dragBox">
-                                Постави тук
+                            <span class="uploadLectures">
                                 <input asp-for="@Model.VideoUpload" type="file" id="uploadFile" />
                             </span>
                         </div>

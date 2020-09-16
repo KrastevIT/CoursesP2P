@@ -17,8 +17,7 @@
                     <div class="card-body">
                         <div class="uploadOuter">
                             <label for="uploadFile" class="btn btn-primary">Качи ново изображение до 20 MБ</label>
-                            <span class="dragBox">
-                                Или постави тук
+                            <span class="uploadLectures">
                                 <input class="form-control" type="file" asp-for="@Model.ImageUpload" onChange="dragNdrop(event)" ondragover="drag()" ondrop="drop()" id="uploadFile" />
                             </span>
                             <span class="text-danger" asp-validation-for="@Model.ImageUpload"></span>
@@ -38,7 +37,7 @@
                             <div class="form-group">
                                 <label asp-for="@Model.Skills"></label>
                                 <input type="hidden" class="form-control" asp-for="@Model.Skills" id="inputSkills" />
-                                <input class="form-control" id="skills" placeholder="Въведете умение и натиснете ENTER" />
+                                <input class="form-control" id="skills" placeholder="Въведете умение и натиснете TAB" />
 
                                 <div id="span-filed"></div>
 
@@ -131,8 +130,8 @@
         }
     })
 
-    document.getElementById('skills').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
+    document.getElementById('skills').addEventListener('focusout', function (e) {
+        if (e.target.value !== '') {
             e.preventDefault();
             const input = document.getElementById('inputSkills');
             const skill = document.getElementById('skills');
