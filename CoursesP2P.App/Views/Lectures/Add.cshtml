@@ -3,54 +3,42 @@
     ViewData["Title"] = "Add";
 }
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<link href="~/assets/css/spiner.css" rel="stylesheet" />
-
 <div id="alert" role="alert"></div>
-<div class="d-flex justify-content-center">
-    <div class="form-horizontal">
+<div class="container">
+    <div class="col-lg-7 col-md-8 mx-auto">
         <h4 class="text-center">Добави нова лекция</h4>
         <input type="hidden" asp-for="@Model.CourseId" id="courseId" />
+
         <div class="form-group">
-            <label class="control-label col-sm-2">Име</label>
-            <div class="col-sm-10">
-                <input class="form-control" asp-for="Name" id="nameId" />
-                <span class="text-danger" asp-validation-for="Name"></span>
-            </div>
+            <label asp-for="Name">Име на лекция</label>
+            <input class="form-control" asp-for="Name" id="nameId" />
+            <span class="text-danger" asp-validation-for="Name"></span>
         </div>
         <div class="uploadOuter">
             <label for="uploadFile" class="btn btn-primary">Качи видео до 1 ГБ</label>
-            <strong>ИЛИ</strong>
-            <span class="dragBox">
-                Постави тук
+            <span class="uploadLectures">
                 <input asp-for="@Model.Video" type="file" id="uploadFile" />
             </span>
         </div>
-        <span class=" col-sm-2 text-danger" asp-validation-for="@Model.Video"></span>
         <div id="vName" class="col-sm-10">
             <label class="text-success" id="label"></label>
         </div>
         <hr />
-        <div class="form-group">
-            <div class="col-sm-10 col-sm-push-2 text-center">
-                <input type="submit" value="Добави" id="saveId" class="btn btn-info" />
-                <a asp-controller="Instructors" asp-action="Index" class="btn btn-danger">Назад</a>
-            </div>
-        </div>
-        <div class="d-flex justify-content-center">
-            <div class="loader"></div>
+        <div class="text-center">
+            <input type="submit" value="Добави" id="saveId" class="btn btn-info" />
+            <a asp-controller="Instructors" asp-action="Index" class="btn btn-danger">Назад</a>
         </div>
     </div>
+    <div class="d-flex justify-content-center">
+        <div class="loader"></div>
+    </div>
 </div>
-
 <script>
-    $('#uploadFile').on('change', function () {
-        let file_path = document.getElementById('uploadFile').value;
-        let file_name = file_path.split(/(\\|\/)/g).pop();
-
+    document.getElementById('uploadFile').addEventListener('change', function (event) {
         let label = document.getElementById("label");
-        label.textContent = file_name;
-    });
+        label.textContent = event.target.files[0].name
+    })
+
 </script>
 
 <script>
@@ -61,20 +49,9 @@
         const name = document.getElementById('nameId').value;
 
         function successfully() {
-            document.getElementById('nameId').value = '';
-            document.getElementById('uploadFile').value = '';
             document.querySelector('.loader').style.display = 'none'
             alertDiv.setAttribute("class", "alert alert-success");
             alertDiv.textContent = `Успешно добавихте лекция ${name}. Обработва се и скоро ще се появи в курса`;
-            document.querySelectorAll('.form-group')[0].style.display = 'block';
-            document.querySelectorAll('.form-group')[1].style.display = 'block';
-            document.querySelector('.uploadOuter').style.display = 'block';
-            document.querySelector('h4').style.display = 'block';
-
-            setTimeout(() => {
-                alertDiv.setAttribute("class", "text-center");
-                alertDiv.textContent = '';
-            }, 5000)
         }
 
         function invalidAdd(message) {
@@ -93,12 +70,8 @@
             document.querySelector('.loader').style.display = 'block'
 
             alertDiv.setAttribute("class", "alert alert-info");
-            alertDiv.textContent = `Моля, изчакайте това ще отнеме 10-15 минути`;
-            $("#label").text("");
-            document.querySelectorAll('.form-group')[0].style.display = 'none';
-            document.querySelectorAll('.form-group')[1].style.display = 'none';
-            document.querySelector('.uploadOuter').style.display = 'none';
-            document.querySelector('h4').style.display = 'none';
+            alertDiv.textContent = `Моля, изчакайте това ще отнеме 5-10 минути`;
+            document.querySelector('.col-lg-7').style.display = 'none';
 
             fetch('/Lectures/Add', {
                 method: 'POST',

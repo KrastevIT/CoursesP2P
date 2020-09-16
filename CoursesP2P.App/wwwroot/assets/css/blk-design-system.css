@@ -1,6 +1,16 @@
-﻿/*Upload Video*/
+﻿/*Upload Lectures*/
+.uploadLectures {
+    position: relative;
+}
 
-/*End Upload Video*/
+    .uploadLectures input[type="file"] {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        top: 0;
+        left: 0;
+    }
 
 /*upload image*/
 .uploadOuter {
@@ -243,7 +253,7 @@ section {
 
 body {
     margin-top: 100px;
-   /* font-family: "Poppins", sans-serif;*/
+    /* font-family: "Poppins", sans-serif;*/
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5;
@@ -21440,7 +21450,6 @@ input.datetimepicker[data-color="yellow"] + .bootstrap-datetimepicker-widget {
             object-fit: cover;*/
             width: 100%;
             height: 100%;
-           
             min-height: 248px;
             max-height: 248px;
         }
