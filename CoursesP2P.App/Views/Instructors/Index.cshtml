@@ -51,6 +51,14 @@
                 <br />
             </div>
             <div class="row">
+                @if (Model.Where(x => !x.Status && !x.Active).Count() == 0)
+                {
+                    <div class="space-100"></div>
+                    <div class="col-md-8 ml-auto mr-auto text-center mt-4">
+                        <p class="description mb-5">Няма нови курсове.</p>
+                    </div>
+                    <div class="space-100"></div>
+                }
                 @foreach (var course in Model.Where(x => !x.Status && !x.Active))
                 {
                     <div class="col-md-4">
@@ -108,6 +116,14 @@
 
         <div class="tab-pane" id="waitingCourses">
             <div class="row">
+                @if (Model.Where(x => x.Active && !x.Status).Count() == 0)
+                {
+                    <div class="space-100"></div>
+                    <div class="col-md-8 ml-auto mr-auto text-center mt-4">
+                        <p class="description mb-5">Няма чакащи курсове.</p>
+                    </div>
+                    <div class="space-100"></div>
+                }
                 @foreach (var course in Model.Where(x => x.Active && !x.Status))
                 {
                     <div class="col-md-4">
@@ -147,6 +163,14 @@
 
         <div class="tab-pane" id="publishedCourses">
             <div class="row">
+                @if (Model.Where(x => x.Status).Count() == 0)
+                {
+                    <div class="space-100"></div>
+                    <div class="col-md-8 ml-auto mr-auto text-center mt-4">
+                        <p class="description mb-5">Няма публикувани курсове</p>
+                    </div>
+                    <div class="space-100"></div>
+                }
                 @foreach (var course in Model.Where(x => x.Status))
                 {
                     <div class="col-md-4">
