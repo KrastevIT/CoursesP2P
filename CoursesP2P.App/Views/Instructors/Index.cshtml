@@ -151,7 +151,7 @@
                                     <ul class="list-group">
                                         <li class="list-group-item">@Html.DisplayFor(e => course.Category)</li>
                                         <li class="list-group-item">@course.Lectures.Count Лекции</li>
-                                        <li class="badge badge-danger">Обработва се</li>
+                                        <li class="badge badge-danger">Чака одобрение</li>
                                     </ul>
                                 </div>
                             </div>
@@ -198,6 +198,7 @@
                                     <ul class="list-group">
                                         <li class="list-group-item">@Html.DisplayFor(e => course.Category)</li>
                                         <li class="list-group-item">@course.Lectures.Count Лекции</li>
+                                        <li class="list-group-item">@course.Orders Записани </li>
                                         <li class="badge badge-success"> Одобрен</li>
                                     </ul>
                                 </div>
