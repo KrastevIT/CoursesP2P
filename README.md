@@ -11,3 +11,5 @@ My defense project for ASP.NET Core
 * xUnit
 * Services
 * View Components
+* AzureMedia
+* AzureBlobStorage
